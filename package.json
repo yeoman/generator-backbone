@@ -1,0 +1,35 @@
+{
+  "name": "generator-backbone",
+  "version": "0.1.0",
+  "description": "Yeoman generator for Backbone.js",
+  "keywords": [
+    "yeoman",
+    "generator",
+    "framework",
+    "mvc"
+  ],
+  "homepage": "https://github.com/yeoman/generator-backbone",
+  "bugs": "https://github.com/yeoman/generator-backbone/issues",
+  "author": "Chrome Developer Relations",
+  "main": "",
+  "bin": "",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/yeoman/generator-backbone.git"
+  },
+  "scripts": {
+    "test": "node node_modules/mocha/bin/mocha test/test-*.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "~1.7.1"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "licenses": [
+    {
+      "type": "BSD"
+    }
+  ]
+}
