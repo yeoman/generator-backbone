@@ -1,7 +1,7 @@
 
 var util = require('util'),
     path = require('path'),
-    yeoman = require('../../../../');
+    yeoman = require('yeoman');
 
 module.exports = Generator;
 
@@ -9,12 +9,16 @@ function Generator() {
   yeoman.generators.Base.apply(this, arguments);
 
   this.test_framework = this.options['test-framework'] || 'mocha';
-  this.hookFor('test-framework', { as: 'app' });
+  // this.hookFor('test-framework', { as: 'app' });
 }
 
 util.inherits(Generator, yeoman.generators.Base);
 
 Generator.prototype.setupEnv = function setupEnv() {
+   // Copies the contents of the generator `templates`
+  // directory into your users new application path
+  this.sourceRoot(path.join(__dirname, 'templates'));
+
   this.directory('app/scripts/','app/scripts/', true);
   this.directory('app/styles/','app/styles/', true);
   this.template('app/.buildignore');
@@ -37,6 +41,18 @@ Generator.prototype.gruntfile = function gruntfile() {
     this.template('Gruntfile.js');
   }
 };
+
+Generator.prototype.bowerrc = function bowerrc() {
+  this.copy('.bowerrc', '.bowerrc');
+}
+
+Generator.prototype.editorconfig = function editorconfig() {
+  this.copy('.editorconfig', '.editorconfig');
+}
+
+Generator.prototype.jshintrc = function jshintrc() {
+  this.copy('.jshintrc', '.jshintrc');
+}
 
 Generator.prototype.packageJSON = function packageJSON() {
   this.template('package.json');
