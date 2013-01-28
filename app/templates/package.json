@@ -1,7 +1,9 @@
 {
-  "author": "",
-  "name": "",
+  "name": "<%= _.slugify(appname) %>",
   "version": "0.0.0",
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {},
+  "engines": {
+    "node": ">=0.8.0"
+  }
 }
