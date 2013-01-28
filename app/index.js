@@ -15,18 +15,37 @@ function Generator() {
 util.inherits(Generator, yeoman.generators.Base);
 
 Generator.prototype.setupEnv = function setupEnv() {
-  this.directory('app/scripts/','app/scripts/', true);
-  this.directory('app/styles/','app/styles/', true);
-  this.template('app/.buildignore');
-  this.template('app/.htaccess');
+  this.mkdir('app');
+  this.mkdir('app/scripts');
+  this.mkdir('app/styles');
+  this.mkdir('app/images');
   this.template('app/404.html');
   this.template('app/favicon.ico');
   this.template('app/robots.txt');
+  this.copy('app/htaccess', 'app/.htaccess');
 };
 
 Generator.prototype.git = function git() {
-  this.copy('.gitignore', '.gitignore');
-  this.copy('.gitattributes', '.gitattributes');
+  this.copy('gitignore', '.gitignore');
+  this.copy('gitattributes', '.gitattributes');
+};
+
+AppGenerator.prototype.bower = function bower() {
+  this.copy('bowerrc', '.bowerrc');
+  this.copy('component.json', 'component.json');
+  this.install('', function (err) {
+    if (err) {
+      console.error(err);
+    }
+  });
+};
+
+AppGenerator.prototype.jshint = function jshint() {
+  this.copy('jshintrc', '.jshintrc');
+};
+
+AppGenerator.prototype.editorConfig = function editorConfig() {
+  this.copy('editorconfig', '.editorconfig');
 };
 
 Generator.prototype.gruntfile = function gruntfile() {
