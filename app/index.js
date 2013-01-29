@@ -1,5 +1,5 @@
 var util = require('util');
-var yeoman = require('yeoman-generators');
+var yeoman = require('yeoman-generator');
 
 
 module.exports = Generator;

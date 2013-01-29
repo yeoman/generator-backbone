@@ -21,7 +21,7 @@
     "test": "mocha --reporter spec"
   },
   "dependencies": {
-    "yeoman-generators": "https://github.com/yeoman/generators/archive/master.tar.gz"
+    "yeoman-generator": "https://github.com/yeoman/generators/archive/master.tar.gz"
   },
   "devDependencies": {
     "mocha": "~1.7.1"
