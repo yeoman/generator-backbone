@@ -8,7 +8,7 @@ function Generator() {
   yeoman.generators.Base.apply(this, arguments);
 
   this.testFramework = this.options['test-framework'] || 'mocha';
-  this.hookFor('test-framework', { as: 'app' });
+  this.hookFor(this.testFramework , { as: 'app' });
 }
 
 util.inherits(Generator, yeoman.generators.Base);
