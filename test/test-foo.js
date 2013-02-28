@@ -1,5 +1,5 @@
-/*global describe beforeEach it*/
-
+/*global describe:true, beforeEach:true, it:true */
+'use strict';
 var path    = require('path');
 var helpers = require('yeoman-generator').test;
 var assert  = require('assert');
