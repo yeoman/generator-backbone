@@ -1,73 +1,156 @@
+'use strict';
+var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet;
+var mountFolder = function (connect, dir) {
+    return connect.static(require('path').resolve(dir));
+};
+
 module.exports = function( grunt ) {
-  'use strict';
+  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+
+  // configurable paths
+  var yeomanConfig = {
+      app: 'app',
+      dist: 'dist'
+  };
   //
   // Grunt configuration:
   //
   // https://github.com/cowboy/grunt/blob/master/docs/getting_started.md
   //
   grunt.initConfig({
-
-    // Project configuration
-    // ---------------------
-
-    // Coffee to JS compilation
-    coffee: {
-      compile: {
-        files: {
-          'temp/scripts/*.js': 'app/scripts/**/*.coffee'
+      yeoman:yeomanConfig,
+      // Project configuration
+      // ---------------------
+      watch: {
+        coffee: {
+            files: ['<%%= yeoman.app %>/scripts/{,*/}*.coffee'],
+            tasks: ['coffee:dist']
         },
-        options: {
-          basePath: 'app/scripts'
+        coffeeTest: {
+            files: ['test/spec/{,*/}*.coffee'],
+            tasks: ['coffee:test']
+        },
+        compass: {
+            files: ['<%%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+            tasks: ['compass']
+        },
+        livereload: {
+            files: [
+                '<%%= yeoman.app %>/*.html',
+                '{.tmp,<%%= yeoman.app %>}/styles/{,*/}*.css',
+                '{.tmp,<%%= yeoman.app %>}/scripts/{,*/}*.js',
+                '<%%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,webp}'
+            ],
+            tasks: ['livereload']
         }
-      }
     },
-
-    // compile .scss/.sass to .css using Compass
-    compass: {
-      dist: {
-        // http://compass-style.org/help/tutorials/configuration-reference/#configuration-properties
+    connect: {
         options: {
-          css_dir: 'temp/styles',
-          sass_dir: 'app/styles',
-          images_dir: 'app/images',
-          javascripts_dir: 'temp/scripts',
-          relative_assets: true,
-          force: true
+            port: 9000,
+            // change this to '0.0.0.0' to access the server from outside
+            hostname: 'localhost'
+        },
+        livereload: {
+            options: {
+                middleware: function (connect) {
+                    return [
+                        lrSnippet,
+                        mountFolder(connect, '.tmp'),
+                        mountFolder(connect, 'app')
+                    ];
+                }
+            }
+        },
+        test: {
+            options: {
+                middleware: function (connect) {
+                    return [
+                        mountFolder(connect, '.tmp'),
+                        mountFolder(connect, 'test')
+                    ];
+                }
+            }
+        },
+        dist: {
+            options: {
+                middleware: function (connect) {
+                    return [
+                        mountFolder(connect, 'dist')
+                    ];
+                }
+            }
         }
-      }
+    },
+    open: {
+        server: {
+            path: 'http://localhost:<%%= connect.options.port %>'
+        }
+    },
+    clean: {
+        dist: ['.tmp', '<%%= yeoman.dist %>/*'],
+        server: '.tmp'
+    },
+    jshint: {
+        options: {
+            jshintrc: '.jshintrc'
+        },
+        all: [
+            'Gruntfile.js',
+            '<%%= yeoman.app %>/scripts/{,*/}*.js',
+            '!<%%= yeoman.app %>/scripts/vendor/*',
+            'test/spec/{,*/}*.js'
+        ]
+    },
+    mocha: {
+        all: {
+            options: {
+                run: true,
+                urls: ['http://localhost:<%%= connect.options.port %>/index.html']
+            }
+        }
+    },
+    coffee: {
+        dist: {
+            files: [{
+                // rather than compiling multiple files here you should
+                // require them into your main .coffee file
+                expand: true,
+                cwd: '<%%= yeoman.app %>/scripts',
+                src: '*.coffee',
+                dest: '.tmp/scripts',
+                ext: '.js'
+            }]
+        },
+        test: {
+            files: [{
+                expand: true,
+                cwd: '.tmp/spec',
+                src: '*.coffee',
+                dest: 'test/spec'
+            }]
+        }
+    },
+    compass: {
+        options: {
+            sassDir: '<%%= yeoman.app %>/styles',
+            cssDir: '.tmp/styles',
+            imagesDir: '<%%= yeoman.app %>/images',
+            javascriptsDir: '<%%= yeoman.app %>/scripts',
+            fontsDir: '<%%= yeoman.app %>/styles/fonts',
+            importPath: 'app/components',
+            relativeAssets: true
+        },
+        dist: {},
+        server: {
+            options: {
+                debugInfo: true
+            }
+        }
     },
 
     // generate application cache manifest
     manifest:{
       dest: ''
-    },
-
-    // headless testing through PhantomJS
-    mocha: {
-      all: ['test/**/*.html']
-    },
-
-    // default watch configuration
-    watch: {
-      coffee: {
-        files: 'app/scripts/**/*.coffee',
-        tasks: 'coffee reload'
-      },
-      compass: {
-        files: [
-          'app/styles/**/*.{scss,sass}'
-        ],
-        tasks: 'compass reload'
-      },
-      reload: {
-        files: [
-          'app/*.html',
-          'app/styles/**/*.css',
-          'app/scripts/**/*.js',
-          'app/images/**/*'
-        ],
-        tasks: 'reload'
-      }
     },
 
     // default lint configuration, change this to match your setup:
@@ -166,7 +249,51 @@ module.exports = function( grunt ) {
     },
   });
 
-  // Alias the `test` task to run the `mocha` task instead
-  grunt.registerTask('test', 'mocha');
+  grunt.renameTask('regarde', 'watch');
+
+  grunt.registerTask('server', function (target) {
+      if (target === 'dist') {
+          return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
+      }
+
+      grunt.task.run([
+          'clean:server',
+          'coffee:dist',
+          'compass:server',
+          'livereload-start',
+          'connect:livereload',
+          'open',
+          'watch'
+      ]);
+  });
+
+  grunt.registerTask('test', [
+      'clean:server',
+      'coffee',
+      'compass',
+      'connect:test',
+      'mocha'
+  ]);
+
+  grunt.registerTask('build', [
+      'clean:dist',
+      'coffee',
+      'compass:dist',
+      'useminPrepare',
+      'imagemin',
+      'htmlmin',
+      'concat',
+      'cssmin',
+      'uglify',
+      'copy',
+      'usemin'
+  ]);
+
+  grunt.registerTask('default', [
+      'jshint',
+      'test',
+      'build'
+  ]);
+
 
 };
