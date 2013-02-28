@@ -111,4 +111,16 @@ describe('Backbone generator test', function() {
       done();
     });
   });
+
+  describe('Backbone Router', function() {
+    it('creates backbone router', function(done){
+      var router = helpers.createGenerator('backbone:router',['../../router'], ['foo']);
+      router.run([], function(){
+        helpers.assertFiles([
+          ['app/scripts/routes/foo-router.js', /Routers.FooRouter = Backbone.Router.extend\(\{/]
+        ]);
+      });
+      done();
+    });
+  });
 });
