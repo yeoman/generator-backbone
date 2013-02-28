@@ -2,7 +2,7 @@
 
 var path    = require('path');
 var helpers = require('yeoman-generator').test;
-var assert  = require("assert");
+var assert  = require('assert');
 
 
 // XXX With current API, (prior v2), that's a complete mess to setup generators
@@ -35,9 +35,9 @@ describe('Backbone generator test', function() {
       if(err){
         return done(err);
       }
-      this.backbone = {}
-      this.backbone.app = helpers.createGenerator("backbone:app",[
-        "../../app", [
+      this.backbone = {};
+      this.backbone.app = helpers.createGenerator('backbone:app',[
+        '../../app', [
           helpers.createDummyGenerator(),
           'mocha:app'
         ]
@@ -84,10 +84,10 @@ describe('Backbone generator test', function() {
 
   });
 
-  describe("Backbone Model", function() {
+  describe('Backbone Model', function() {
     it('creates backbone model', function(done){
       var model;
-      model = helpers.createGenerator("backbone:model",["../../model"], ["foo"]);
+      model = helpers.createGenerator('backbone:model',['../../model'], ['foo']);
 
       model.run([], function(){
         helpers.assertFiles([
@@ -98,10 +98,10 @@ describe('Backbone generator test', function() {
     });
   });
 
-  describe("Backbone Collection", function() {
+  describe('Backbone Collection', function() {
     it('creates backbone collection', function(done){
       var collection;
-      collection = helpers.createGenerator("backbone:collection",["../../collection"], ["foo"]);
+      collection = helpers.createGenerator('backbone:collection',['../../collection'], ['foo']);
 
       collection.run([], function(){
         helpers.assertFiles([
