@@ -1,4 +1,4 @@
-window.<%= grunt.util._.camelize(appname) %> =
+window.<%= _.camelize(appname) %> =
   Models: {}
   Collections: {}
   Views: {}
@@ -9,4 +9,4 @@ window.<%= grunt.util._.camelize(appname) %> =
 
 
 $ ->
-  <%= grunt.util._.camelize(appname) %>.init();
+  <%= _.camelize(appname) %>.init();
