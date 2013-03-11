@@ -11,7 +11,7 @@ function Generator() {
   this.hookFor(this.testFramework , { as: 'app' });
 
   this.on('end', function () {
-    if(this.generatorName === 'app'){
+    if(['app','backbone'].indexOf(this.generatorName) >= 0 ){
       console.log('\nI\'m all done. Just run ' + 'npm install && bower install'.bold.yellow + ' to install the required dependencies.');
     }
   });
@@ -66,4 +66,8 @@ Generator.prototype.indexFile = function indexFile() {
   } else {
     this.template('app/index.html');
   }
+};
+
+Generator.prototype.mainStylesheet = function mainStylesheet() {
+  this.write('app/styles/main.css', 'body {\n    background: #fafafa;\n}\n\n.hero-unit {\n    margin: 50px auto 0 auto;\n    width: 300px;\n}');
 };
