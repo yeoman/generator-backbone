@@ -1,5 +1,5 @@
-<%= grunt.util._.camelize(appname) %>.Views.<%= grunt.util._.classify(name) %>View = Backbone.View.extend({
+<%= _.camelize(appname) %>.Views.<%= _.classify(name) %>View = Backbone.View.extend({
 
-  //template: <%= grunt.util._.underscored(name) %>
+  //template: <%= _.underscored(name) %>
 
 });
