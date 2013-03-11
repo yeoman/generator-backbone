@@ -1,1 +1,1 @@
-class <%= grunt.util._.camelize(appname) %>.Views.<%= grunt.util._.classify(name) %>View extends Backbone.View
+class <%= _.camelize(appname) %>.Views.<%= _.classify(name) %>View extends Backbone.View
