@@ -1,12 +1,13 @@
 /*jshint latedef:false */
 var path = require('path'),
   util = require('util'),
-  yeoman = require('yeoman-generator');
+  yeoman = require('yeoman-generator'),
+  scriptBase = require('../script-base');
 
 module.exports = Generator;
 
 function Generator() {
-  yeoman.generators.NamedBase.apply(this, arguments);
+  scriptBase.apply(this,arguments);
   var dirPath = this.options.coffee ? '../templates/coffeescript/' : '../templates';
   this.sourceRoot(path.join(__dirname, dirPath));
 
@@ -24,9 +25,10 @@ function Generator() {
 
 }
 
-util.inherits(Generator, yeoman.generators.NamedBase);
+util.inherits(Generator, scriptBase);
 
 Generator.prototype.createModelFiles = function createModelFiles() {
   var ext = this.options.coffee ? 'coffee' : 'js';
   this.template('model.' + ext, path.join('app/scripts/models', this.name + '-model.' + ext));
+  this.addScriptToIndex('models/' + this.name + '-model');
 };
