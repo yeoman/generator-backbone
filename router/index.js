@@ -7,7 +7,7 @@ var path = require('path'),
 module.exports = Generator;
 
 function Generator() {
-  scriptBase.apply(this,arguments);
+  scriptBase.apply(this, arguments);
   var dirPath = this.options.coffee ? '../templates/coffeescript/' : '../templates';
   this.sourceRoot(path.join(__dirname, dirPath));
 
