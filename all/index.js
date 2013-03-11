@@ -37,6 +37,10 @@ function Generator() {
   this.hookFor('backbone:collection', {
     args: args
   });
+
+  this.on('end', function () {
+    console.log('\nI\'m all done. Just run ' + 'npm install && bower install'.bold.yellow + ' to install the required dependencies.');
+  });
 }
 
 util.inherits(Generator, yeoman.generators.Base);

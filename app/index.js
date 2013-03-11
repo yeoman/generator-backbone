@@ -9,6 +9,12 @@ function Generator() {
 
   this.testFramework = this.options['test-framework'] || 'mocha';
   this.hookFor(this.testFramework , { as: 'app' });
+
+  this.on('end', function () {
+    if(this.generatorName === 'app'){
+      console.log('\nI\'m all done. Just run ' + 'npm install && bower install'.bold.yellow + ' to install the required dependencies.');
+    }
+  });
 }
 
 util.inherits(Generator, yeoman.generators.Base);
@@ -32,11 +38,6 @@ Generator.prototype.git = function git() {
 Generator.prototype.bower = function bower() {
   this.copy('bowerrc', '.bowerrc');
   this.copy('component.json', 'component.json');
-  this.install('', function (err) {
-    if (err) {
-      console.error(err);
-    }
-  });
 };
 
 Generator.prototype.jshint = function jshint() {
