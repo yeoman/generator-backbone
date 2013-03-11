@@ -11,7 +11,7 @@ function Generator() {
   this.hookFor(this.testFramework , { as: 'app' });
 
   this.on('end', function () {
-    if(this.generatorName === 'app'){
+    if(['app','backbone'].indexOf(this.generatorName) >= 0 ){
       console.log('\nI\'m all done. Just run ' + 'npm install && bower install'.bold.yellow + ' to install the required dependencies.');
     }
   });
