@@ -1,4 +1,5 @@
 var util = require('util');
+var path = require('path');
 var yeoman = require('yeoman-generator');
 
 
@@ -10,6 +11,8 @@ function Generator() {
   this.testFramework = this.options['test-framework'] || 'mocha';
   this.hookFor(this.testFramework , { as: 'app' });
 
+  this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
+
   this.on('end', function () {
     if(['app','backbone'].indexOf(this.generatorName) >= 0 ){
       console.log('\nI\'m all done. Just run ' + 'npm install && bower install'.bold.yellow + ' to install the required dependencies.');
@@ -19,15 +22,42 @@ function Generator() {
 
 util.inherits(Generator, yeoman.generators.Base);
 
-Generator.prototype.setupEnv = function setupEnv() {
-  this.mkdir('app');
-  this.mkdir('app/scripts');
-  this.mkdir('app/styles');
-  this.mkdir('app/images');
-  this.template('app/404.html');
-  this.template('app/favicon.ico');
-  this.template('app/robots.txt');
-  this.copy('app/htaccess', 'app/.htaccess');
+Generator.prototype.askFor = function askFor() {
+  var cb = this.async();
+
+  // welcome message
+  var welcome =
+  '\n     _-----_' +
+  '\n    |       |' +
+  '\n    |'+'--(o)--'.red+'|   .--------------------------.' +
+  '\n   `---------´  |    '+'Welcome to Yeoman,'.yellow.bold+'    |' +
+  '\n    '+'( '.yellow+'_'+'´U`'.yellow+'_'+' )'.yellow+'   |   '+'ladies and gentlemen!'.yellow.bold+'  |' +
+  '\n    /___A___\\   \'__________________________\'' +
+  '\n     |  ~  |'.yellow +
+  '\n   __'+'\'.___.\''.yellow+'__' +
+  '\n ´   '+'`  |'.red+'° '+'´ Y'.red+' `\n';
+
+  console.log(welcome);
+  console.log('Out of the box I include HTML5 Boilerplate, jQuery and Modernizr.');
+
+  var prompts = [{
+    name: 'compassBootstrap',
+    message: 'Would you like to include Twitter Bootstrap for Sass?',
+    default: 'Y/n',
+    warning: 'Yes: All Twitter Bootstrap files will be placed into the styles directory.'
+  }];
+
+  this.prompt(prompts, function (err, props) {
+    if (err) {
+      return this.emit('error', err);
+    }
+
+    // manually deal with the response, get back and store the results.
+    // we change a bit this way of doing to automatically do this in the self.prompt() method.
+    this.compassBootstrap = (/y/i).test(props.compassBootstrap);
+
+    cb();
+  }.bind(this));
 };
 
 Generator.prototype.git = function git() {
@@ -60,14 +90,83 @@ Generator.prototype.packageJSON = function packageJSON() {
   this.template('package.json');
 };
 
-Generator.prototype.indexFile = function indexFile() {
-  if (this.testFramework === 'jasmine') {
-    this.write('app/index.html', this.read('app/index.html').replace(/mocha/gi, 'Jasmine'), true);
+Generator.prototype.mainStylesheet = function mainStylesheet() {
+  if (this.compassBootstrap) {
+    this.write('app/styles/main.scss', '@import \'sass-bootstrap/lib/bootstrap\';\n\n.hero-unit {\n    margin: 50px auto 0 auto;\n    width: 300px;\n}');
   } else {
-    this.template('app/index.html');
+    this.write('app/styles/main.css', 'body {\n    background: #fafafa;\n}\n\n.hero-unit {\n    margin: 50px auto 0 auto;\n    width: 300px;\n}');
   }
 };
 
-Generator.prototype.mainStylesheet = function mainStylesheet() {
-  this.write('app/styles/main.css', 'body {\n    background: #fafafa;\n}\n\n.hero-unit {\n    margin: 50px auto 0 auto;\n    width: 300px;\n}');
+Generator.prototype.writeIndex = function writeIndex() {
+  // prepare default content text
+  var defaults = ['HTML5 Boilerplate', 'jQuery', 'Backbone.js', 'Underscore.js', 'Mocha'];
+  var contentText = [
+    '        <div class="container">',
+    '            <div class="hero-unit">',
+    '                <h1>\'Allo, \'Allo!</h1>',
+    '                <p>You now have</p>',
+    '                <ul>'
+  ];
+
+
+  this.indexFile = this.appendScripts(this.indexFile, 'scripts/vendor.js', [
+    'components/jquery/jquery.min.js',
+    'components/underscore/underscore-min.js',
+    'components/backbone/backbone-min.js'
+  ]);
+
+  if (this.compassBootstrap) {
+    // wire Twitter Bootstrap plugins
+    this.indexFile = this.appendScripts(this.indexFile, 'scripts/plugins.js', [
+      'components/sass-bootstrap/js/bootstrap-affix.js',
+      'components/sass-bootstrap/js/bootstrap-alert.js',
+      'components/sass-bootstrap/js/bootstrap-dropdown.js',
+      'components/sass-bootstrap/js/bootstrap-tooltip.js',
+      'components/sass-bootstrap/js/bootstrap-modal.js',
+      'components/sass-bootstrap/js/bootstrap-transition.js',
+      'components/sass-bootstrap/js/bootstrap-button.js',
+      'components/sass-bootstrap/js/bootstrap-popover.js',
+      'components/sass-bootstrap/js/bootstrap-typeahead.js',
+      'components/sass-bootstrap/js/bootstrap-carousel.js',
+      'components/sass-bootstrap/js/bootstrap-scrollspy.js',
+      'components/sass-bootstrap/js/bootstrap-collapse.js',
+      'components/sass-bootstrap/js/bootstrap-tab.js'
+    ]);
+
+    contentText.push('                    <li>Twitter Bootstrap</li>');
+  }
+
+  this.indexFile = this.appendScripts(this.indexFile, 'scripts/main.js', [
+    'scripts/main.js'
+  ]);
+
+  // iterate over defaults and create content string
+  defaults.forEach(function (el) {
+    contentText.push('                    <li>' + el  +'</li>');
+  });
+
+  contentText = contentText.concat([
+    '                </ul>',
+    '                <p>installed.</p>',
+    '                <h3>Enjoy coding! - Yeoman</h3>',
+    '            </div>',
+    '        </div>',
+    ''
+  ]);
+
+  // append the default content
+  this.indexFile = this.indexFile.replace('<body>', '<body>\n' + contentText.join('\n'));
+};
+
+Generator.prototype.setupEnv = function setupEnv() {
+  this.mkdir('app');
+  this.mkdir('app/scripts');
+  this.mkdir('app/styles');
+  this.mkdir('app/images');
+  this.template('app/404.html');
+  this.template('app/favicon.ico');
+  this.template('app/robots.txt');
+  this.copy('app/htaccess', 'app/.htaccess');
+  this.write('app/index.html', this.indexFile);
 };
