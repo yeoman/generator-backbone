@@ -6,7 +6,7 @@ You also get access to a number of sub-generators which can be
 used to easily create individual models, views, collections and
 so on.
 
-Usage: `yeoman init backbone`
+Usage: `yo backbone`
 
 Available sub-generators:
 
