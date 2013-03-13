@@ -38,7 +38,7 @@ Generator.prototype.askFor = function askFor() {
   '\n ´   '+'`  |'.red+'° '+'´ Y'.red+' `\n';
 
   console.log(welcome);
-  console.log('Out of the box I include HTML5 Boilerplate, jQuery and Modernizr.');
+  console.log('Out of the box I include HTML5 Boilerplate, jQuery, Backbone.js and Modernizr.');
 
   var prompts = [{
     name: 'compassBootstrap',
