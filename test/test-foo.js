@@ -77,6 +77,10 @@ describe('Backbone generator test', function() {
       'package.json'
     ];
 
+    helpers.mockPrompt(this.backbone.app, {
+      'compassBootstrap': 'Y'
+    });
+
     this.backbone.app.run({}, function () {
       helpers.assertFiles(expected);
       done();
