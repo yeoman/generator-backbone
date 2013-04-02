@@ -74,7 +74,8 @@ describe('Backbone generator test', function() {
       '.jshintrc',
       '.editorconfig',
       'Gruntfile.js',
-      'package.json'
+      'package.json',
+      'app/scripts/templates.js'
     ];
 
     helpers.mockPrompt(this.backbone.app, {
@@ -122,6 +123,19 @@ describe('Backbone generator test', function() {
       router.run([], function(){
         helpers.assertFiles([
           ['app/scripts/routes/foo-router.js', /Routers.FooRouter = Backbone.Router.extend\(\{/]
+        ]);
+      });
+      done();
+    });
+  });
+
+  describe('Backbone View', function() {
+    it('creates backbone view', function(done){
+      var view = helpers.createGenerator('backbone:view',['../../view'], ['foo']);
+      view.run([], function(){
+        helpers.assertFiles([
+          ['app/scripts/views/foo-view.js', /Views.FooView = Backbone.View.extend\(\{(.|\n)*app\/scripts\/templates\/foo.ejs/],
+          'app/scripts/templates/foo.ejs'
         ]);
       });
       done();
