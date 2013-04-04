@@ -98,6 +98,10 @@ Generator.prototype.mainStylesheet = function mainStylesheet() {
   }
 };
 
+Generator.prototype.jstTemplates = function jstTemplates() {
+  this.copy('templates.js', 'app/scripts/templates.js');
+};
+
 Generator.prototype.writeIndex = function writeIndex() {
   // prepare default content text
   var defaults = ['HTML5 Boilerplate', 'jQuery', 'Backbone.js', 'Underscore.js', 'Mocha'];
@@ -138,7 +142,8 @@ Generator.prototype.writeIndex = function writeIndex() {
   }
 
   this.indexFile = this.appendScripts(this.indexFile, 'scripts/main.js', [
-    'scripts/main.js'
+    'scripts/main.js',
+    'scripts/templates.js'
   ]);
 
   // iterate over defaults and create content string
