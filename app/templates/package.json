@@ -16,11 +16,12 @@
     "grunt-contrib-clean": "0.4.0",
     "grunt-contrib-htmlmin": "0.1.1",
     "grunt-contrib-imagemin": "0.1.2",
-    "grunt-contrib-livereload": "0.1.1",
+    "grunt-contrib-livereload": "0.1.1",<% if (testFramework === 'jasmine') { %>
+    "grunt-contrib-jasmine": "~0.4.1",<% }else{ %>
+    "grunt-mocha": "~0.2.2",<% } %>
     "grunt-bower-hooks": "~0.2.0",
     "grunt-usemin": "~0.1.9",
     "grunt-regarde": "~0.1.1",
-    "grunt-mocha": "~0.2.2",
     "grunt-open": "~0.2.0",
     "matchdep": "~0.1.1"
   },
