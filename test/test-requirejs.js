@@ -91,4 +91,22 @@ describe('Backbone generator with RequireJS', function() {
     });
   });
 
+  describe('Backbone Model', function() {
+    it('creates backbone model', function(done){
+      var model = helpers.createGenerator('backbone:model',['../../model'], ['foo']);
+
+      model.isUsingRequireJS = function(){
+        return true;
+      };
+
+      model.run([], function(){
+        helpers.assertFiles([
+          ['app/scripts/models/foo-model.js', /var FooModel = Backbone.Model.extend\(\{/]
+        ]);
+      });
+
+      done();
+    });
+  });
+
 });

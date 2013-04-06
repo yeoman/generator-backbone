@@ -92,8 +92,11 @@ describe('Backbone generator test', function() {
 
   describe('Backbone Model', function() {
     it('creates backbone model', function(done){
-      var model;
-      model = helpers.createGenerator('backbone:model',['../../model'], ['foo']);
+      var model = helpers.createGenerator('backbone:model',['../../model'], ['foo']);
+
+      model.isUsingRequireJS = function(){
+        return false;
+      };
 
       model.run([], function(){
         helpers.assertFiles([
