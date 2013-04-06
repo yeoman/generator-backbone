@@ -145,4 +145,22 @@ describe('Backbone generator with RequireJS', function() {
     });
   });
 
+  describe('Backbone View', function() {
+    it('creates backbone view', function(done){
+      var view = helpers.createGenerator('backbone:view',['../../view'], ['foo']);
+
+      view.isUsingRequireJS = function(){
+        return true;
+      };
+
+      view.run([], function(){
+        helpers.assertFiles([
+          ['app/scripts/views/foo-view.js', /var FooView = Backbone.View.extend\(\{(.|\n)*app\/scripts\/templates\/foo.ejs/],
+          'app/scripts/templates/foo.ejs'
+        ]);
+      });
+      done();
+    });
+  });
+
 });
