@@ -109,4 +109,22 @@ describe('Backbone generator with RequireJS', function() {
     });
   });
 
+  describe('Backbone Collection with RequireJS', function() {
+    it('creates backbone collection', function(done){
+      var collection = helpers.createGenerator('backbone:collection',['../../collection'], ['foo']);
+
+      collection.isUsingRequireJS = function(){
+        return true;
+      };
+
+      collection.run([], function(){
+        helpers.assertFiles([
+          ['app/scripts/collections/foo-collection.js', /var FooCollection = Backbone.Collection.extend\(\{/]
+        ]);
+      });
+
+      done();
+    });
+  });
+
 });

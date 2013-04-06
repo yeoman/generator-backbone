@@ -109,8 +109,11 @@ describe('Backbone generator test', function() {
 
   describe('Backbone Collection', function() {
     it('creates backbone collection', function(done){
-      var collection;
-      collection = helpers.createGenerator('backbone:collection',['../../collection'], ['foo']);
+      var collection = helpers.createGenerator('backbone:collection',['../../collection'], ['foo']);
+
+      collection.isUsingRequireJS = function(){
+        return false;
+      };
 
       collection.run([], function(){
         helpers.assertFiles([
