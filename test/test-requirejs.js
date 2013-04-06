@@ -62,7 +62,7 @@ describe('Backbone generator with RequireJS', function() {
       var expected = [
         ['component.json', /("name": "temp")(|.|\n)*(requirejs)/],
         ['package.json', /"name": "temp"/],
-        'Gruntfile.js',
+        ['Gruntfile.js',/requirejs/],
         'app/404.html',
         'app/favicon.ico',
         'app/robots.txt',
