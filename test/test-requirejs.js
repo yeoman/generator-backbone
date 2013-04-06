@@ -127,4 +127,22 @@ describe('Backbone generator with RequireJS', function() {
     });
   });
 
+  describe('Backbone Router with RequireJS', function() {
+    it('creates backbone router', function(done){
+      var router = helpers.createGenerator('backbone:router',['../../router'], ['foo']);
+
+      router.isUsingRequireJS = function(){
+        return true;
+      };
+
+      router.run([], function(){
+        helpers.assertFiles([
+          ['app/scripts/routes/foo-router.js', /var FooRouter = Backbone.Router.extend\(\{/]
+        ]);
+      });
+
+      done();
+    });
+  });
+
 });
