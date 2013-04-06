@@ -79,7 +79,8 @@ describe('Backbone generator test', function() {
     ];
 
     helpers.mockPrompt(this.backbone.app, {
-      'compassBootstrap': 'Y'
+      'compassBootstrap': 'Y',
+      'includeRequireJS': 'N'
     });
 
     this.backbone.app.run({}, function () {

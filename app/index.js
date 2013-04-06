@@ -45,6 +45,12 @@ Generator.prototype.askFor = function askFor() {
     message: 'Would you like to include Twitter Bootstrap for Sass?',
     default: 'Y/n',
     warning: 'Yes: All Twitter Bootstrap files will be placed into the styles directory.'
+  },
+  {
+    name: 'includeRequireJS',
+    message: 'Would you like to include RequireJS (for AMD support)?',
+    default: 'Y/n',
+    warning: 'Yes: RequireJS will be placed into the JavaScript vendor directory.'
   }];
 
   this.prompt(prompts, function (err, props) {
@@ -55,6 +61,7 @@ Generator.prototype.askFor = function askFor() {
     // manually deal with the response, get back and store the results.
     // we change a bit this way of doing to automatically do this in the self.prompt() method.
     this.compassBootstrap = (/y/i).test(props.compassBootstrap);
+    this.includeRequireJS = (/y/i).test(props.includeRequireJS);
 
     cb();
   }.bind(this));
@@ -103,6 +110,10 @@ Generator.prototype.jstTemplates = function jstTemplates() {
 };
 
 Generator.prototype.writeIndex = function writeIndex() {
+  if(this.includeRequireJS){
+    return;
+  }
+
   // prepare default content text
   var defaults = ['HTML5 Boilerplate', 'jQuery', 'Backbone.js', 'Underscore.js'];
   var contentText = [
@@ -164,9 +175,58 @@ Generator.prototype.writeIndex = function writeIndex() {
   this.indexFile = this.indexFile.replace('<body>', '<body>\n' + contentText.join('\n'));
 };
 
+Generator.prototype.bootstrapJs = function bootstrapJs() {
+  // TODO: create a Bower component for this
+  if (this.includeRequireJS && this.compassBootstrap) {
+    this.copy('bootstrap.js', 'app/scripts/vendor/bootstrap.js');
+  }
+};
+
+Generator.prototype.writeIndexWithRequirejs = function writeIndexWithRequirejs(){
+  if(!this.includeRequireJS){
+    return;
+  }
+
+  // prepare default content text
+  var defaults = ['HTML5 Boilerplate', 'jQuery', 'Backbone.js', 'Underscore.js', 'RequireJS'];
+  var contentText = [
+    '        <div class="container">',
+    '            <div class="hero-unit">',
+    '                <h1>\'Allo, \'Allo!</h1>',
+    '                <p>You now have</p>',
+    '                <ul>'
+  ];
+
+  if (this.compassBootstrap) {
+    defaults.push('Twitter Bootstrap');
+  }
+
+  this.indexFile = this.appendScripts(this.indexFile, '', [
+    'components/requirejs/require.js',
+  ],{'data-main':'scripts/main.js'});
+
+    // iterate over defaults and create content string
+  defaults.forEach(function (el) {
+    contentText.push('                    <li>' + el  +'</li>');
+  });
+
+  contentText = contentText.concat([
+    '                </ul>',
+    '                <p>installed.</p>',
+    '                <h3>Enjoy coding! - Yeoman</h3>',
+    '            </div>',
+    '        </div>',
+    ''
+  ]);
+
+  // append the default content
+  this.indexFile = this.indexFile.replace('<body>', '<body>\n' + contentText.join('\n'));
+};
+
 Generator.prototype.setupEnv = function setupEnv() {
   this.mkdir('app');
   this.mkdir('app/scripts');
+  this.mkdir('app/scripts/vendor/');
   this.mkdir('app/styles');
   this.mkdir('app/images');
   this.template('app/404.html');
