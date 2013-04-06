@@ -42,7 +42,8 @@ describe('Backbone generator with RequireJS', function() {
         'Gruntfile.js',
         'package.json',
         'app/scripts/templates.js',
-        'app/scripts/vendor/bootstrap.js'
+        'app/scripts/vendor/bootstrap.js',
+        ['app/scripts/main.js',/bootstrap/]
       ];
 
       helpers.mockPrompt(this.backbone.app, {

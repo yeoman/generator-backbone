@@ -235,3 +235,52 @@ Generator.prototype.setupEnv = function setupEnv() {
   this.copy('app/htaccess', 'app/.htaccess');
   this.write('app/index.html', this.indexFile);
 };
+
+Generator.prototype.mainJs = function mainJs(){
+  if(!this.includeRequireJS){
+    return;
+  }
+
+  var mainJsFile = [
+    'require.config({',
+    '    shim: {',
+    '        underscore: {',
+    '            exports: \'_\'',
+    '        },',
+    '        backbone: {',
+    '           deps: [',
+    '             \'underscore\',',
+    '             \'jquery\'',
+    '           ],',
+    '           exports: \'Backbone\'',
+    '        },',
+  ];
+
+  if(this.compassBootstrap){
+    mainJsFile.push(
+      '        bootstrap: {',
+      '            deps: [\'jquery\'],',
+      '            exports: \'jquery\'',
+      '        }'
+    );
+  }
+
+  mainJsFile.push(
+    '    },',
+    '    paths: {',
+    '        jquery: \'../components/jquery/jquery\',',
+    '        backbone: \'../components/backbone-amd/backbone\',',
+    '        underscore: \'../components/underscore-amd/underscore\','
+  );
+
+  if(this.compassBootstrap){
+    mainJsFile.push('        bootstrap: \'vendor/bootstrap\'');
+  }
+
+  mainJsFile.push(
+    '    }',
+    '});'
+  );
+
+  this.write('app/scripts/main.js', mainJsFile.join('\n'));
+};
