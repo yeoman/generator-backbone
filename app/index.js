@@ -242,17 +242,20 @@ Generator.prototype.mainJs = function mainJs(){
   }
 
   var mainJsFile = [
+    '/*global require*/',
+    '\'use strict\';',
+    '',
     'require.config({',
     '    shim: {',
     '        underscore: {',
     '            exports: \'_\'',
     '        },',
     '        backbone: {',
-    '           deps: [',
-    '             \'underscore\',',
-    '             \'jquery\'',
-    '           ],',
-    '           exports: \'Backbone\'',
+    '            deps: [',
+    '               \'underscore\',',
+    '              \'jquery\'',
+    '            ],',
+    '            exports: \'Backbone\'',
     '        },',
   ];
 
@@ -279,6 +282,15 @@ Generator.prototype.mainJs = function mainJs(){
 
   mainJsFile.push(
     '    }',
+    '});'
+  );
+
+  mainJsFile.push(
+    '',
+    'require([',
+    '  \'backbone\'',
+    '], function (Backbone) {',
+    '',
     '});'
   );
 
