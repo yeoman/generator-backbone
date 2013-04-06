@@ -80,7 +80,7 @@ Generator.prototype.editorConfig = function editorConfig() {
 
 Generator.prototype.gruntfile = function gruntfile() {
   if (this.testFramework === 'jasmine') {
-    this.write('Gruntfile.js', this.read('Gruntfile.js').replace(/mocha/g,'jasmine'));
+    this.write('Gruntfile.js', this.engine(this.read('Gruntfile.js')).replace(/mocha/g, 'jasmine'));
   } else {
     this.template('Gruntfile.js');
   }
@@ -98,9 +98,13 @@ Generator.prototype.mainStylesheet = function mainStylesheet() {
   }
 };
 
+Generator.prototype.jstTemplates = function jstTemplates() {
+  this.copy('templates.js', 'app/scripts/templates.js');
+};
+
 Generator.prototype.writeIndex = function writeIndex() {
   // prepare default content text
-  var defaults = ['HTML5 Boilerplate', 'jQuery', 'Backbone.js', 'Underscore.js', 'Mocha'];
+  var defaults = ['HTML5 Boilerplate', 'jQuery', 'Backbone.js', 'Underscore.js'];
   var contentText = [
     '        <div class="container">',
     '            <div class="hero-unit">',
@@ -138,7 +142,8 @@ Generator.prototype.writeIndex = function writeIndex() {
   }
 
   this.indexFile = this.appendScripts(this.indexFile, 'scripts/main.js', [
-    'scripts/main.js'
+    'scripts/main.js',
+    'scripts/templates.js'
   ]);
 
   // iterate over defaults and create content string
