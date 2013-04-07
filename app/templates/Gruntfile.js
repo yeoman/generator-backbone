@@ -154,6 +154,25 @@ module.exports = function (grunt) {
         }
       }
     },
+    <% if (includeRequireJS) { %>requirejs: {
+      dist: {
+          // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
+        options: {
+          // `name` and `out` is set by grunt-usemin
+          baseUrl: 'app/scripts',
+          optimize: 'none',
+          // TODO: Figure out how to make sourcemaps work with grunt-usemin
+          // https://github.com/yeoman/grunt-usemin/issues/30
+          //generateSourceMaps: true,
+          // required to support SourceMaps
+          // http://requirejs.org/docs/errors.html#sourcemapcomments
+          preserveLicenseComments: false,
+          useStrict: true,
+          wrap: true,
+          //uglify2: {} // https://github.com/mishoo/UglifyJS2
+          }
+        }
+      },<% } else { %>
     uglify: {
       dist: {
         files: {
@@ -162,7 +181,7 @@ module.exports = function (grunt) {
           ],
         }
       }
-    },
+    },<% } %>
     useminPrepare: {
       html: '<%%= yeoman.app %>/index.html',
       options: {
@@ -237,7 +256,10 @@ module.exports = function (grunt) {
         rjsConfig: '<%%= yeoman.app %>/scripts/main.js'
       }
     },
-    jst: {
+    jst: {<% if (includeRequireJS) { %>
+      options:{
+        amd: true
+      },<% } %>
       compile: {
         files: {
           '.tmp/scripts/templates.js': ['<%%= yeoman.app %>/scripts/templates/*.ejs']
@@ -279,7 +301,8 @@ module.exports = function (grunt) {
     'coffee',
     'jst',
     'compass:dist',
-    'useminPrepare',
+    'useminPrepare',<% if (includeRequireJS) { %>
+    'requirejs',<% } %>
     'imagemin',
     'htmlmin',
     'concat',
