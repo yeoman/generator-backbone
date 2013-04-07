@@ -36,3 +36,12 @@ Generator.prototype.addScriptToIndex = function (script) {
     console.log('\nUnable to find '.yellow + fullPath + '. Reference to '.yellow + script + '.js ' + 'not added.\n'.yellow);
   }
 };
+
+/*
+ * Check whether the App is a RequireJS app or not
+ *
+ * @return boolean
+ */
+Generator.prototype.isUsingRequireJS = function isUsingRequireJS(){
+  return (/require\.config\(/).test(this.read(path.join(process.cwd(), 'app/scripts/main.js')));
+};
