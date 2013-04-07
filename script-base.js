@@ -42,6 +42,6 @@ Generator.prototype.addScriptToIndex = function (script) {
  *
  * @return boolean
  */
-Generator.prototype.isUsingRequireJS = function isUsingRequireJS(){
+Generator.prototype.isUsingRequireJS = function isUsingRequireJS() {
   return (/require\.config\(/).test(this.read(path.join(process.cwd(), 'app/scripts/main.js')));
 };

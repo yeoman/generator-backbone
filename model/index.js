@@ -15,7 +15,7 @@ function Generator() {
   this.argument('attributes', { type: Array, defaults: [], banner: 'field[:type] field[:type]' });
 
   // parse back the attributes provided, build an array of attr
-  this.attrs = this.attributes.map(function(attr) {
+  this.attrs = this.attributes.map(function (attr) {
     var parts = attr.split(':');
     return {
       name: parts[0],
@@ -32,7 +32,7 @@ Generator.prototype.createModelFiles = function createModelFiles() {
   var destFile = path.join('app/scripts/models', this.name + '-model.' + ext);
   this.isRequireJsApp = this.isUsingRequireJS();
 
-  if(!this.isRequireJsApp){
+  if (!this.isRequireJsApp) {
     this.template('model.' + ext, destFile);
     this.addScriptToIndex('models/' + this.name + '-model');
     return;

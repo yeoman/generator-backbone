@@ -4,14 +4,14 @@ var path    = require('path');
 var helpers = require('yeoman-generator').test;
 var assert  = require('assert');
 
-describe('Backbone generator with RequireJS', function() {
-  beforeEach(function(done){
-    helpers.testDirectory(path.join(__dirname, './temp'), function(err){
-      if(err){
+describe('Backbone generator with RequireJS', function () {
+  beforeEach(function (done) {
+    helpers.testDirectory(path.join(__dirname, './temp'), function (err) {
+      if (err) {
         return done(err);
       }
       this.backbone = {};
-      this.backbone.app = helpers.createGenerator('backbone:app',[
+      this.backbone.app = helpers.createGenerator('backbone:app', [
         '../../app', [
           helpers.createDummyGenerator(),
           'mocha:app'
@@ -22,8 +22,8 @@ describe('Backbone generator with RequireJS', function() {
 
   });
 
-  describe('creates expected files', function(done){
-    it('with compassBootstrap', function(done) {
+  describe('creates expected files', function (done) {
+    it('with compassBootstrap', function (done) {
       var expected = [
         ['component.json', /("name": "temp")(|.|\n)*(requirejs)/],
         ['package.json', /"name": "temp"/],
@@ -31,7 +31,7 @@ describe('Backbone generator with RequireJS', function() {
         'app/404.html',
         'app/favicon.ico',
         'app/robots.txt',
-        ['app/index.html',/(Bootstrap)(|.|\n)*(RequireJS)/i],
+        ['app/index.html', /(Bootstrap)(|.|\n)*(RequireJS)/i],
         'app/.htaccess',
         '.gitignore',
         '.gitattributes',
@@ -43,7 +43,7 @@ describe('Backbone generator with RequireJS', function() {
         'package.json',
         'app/scripts/templates.js',
         'app/scripts/vendor/bootstrap.js',
-        ['app/scripts/main.js',/bootstrap/]
+        ['app/scripts/main.js', /bootstrap/]
       ];
 
       helpers.mockPrompt(this.backbone.app, {
@@ -58,15 +58,15 @@ describe('Backbone generator with RequireJS', function() {
 
     });
 
-    it('without compassBootstrap', function(done){
+    it('without compassBootstrap', function (done) {
       var expected = [
         ['component.json', /("name": "temp")(|.|\n)*(requirejs)/],
         ['package.json', /"name": "temp"/],
-        ['Gruntfile.js',/requirejs/],
+        ['Gruntfile.js', /requirejs/],
         'app/404.html',
         'app/favicon.ico',
         'app/robots.txt',
-        ['app/index.html',/(RequireJS)/i],
+        ['app/index.html', /(RequireJS)/i],
         'app/.htaccess',
         '.gitignore',
         '.gitattributes',
@@ -91,15 +91,15 @@ describe('Backbone generator with RequireJS', function() {
     });
   });
 
-  describe('Backbone Model', function() {
-    it('creates backbone model', function(done){
-      var model = helpers.createGenerator('backbone:model',['../../model'], ['foo']);
+  describe('Backbone Model', function () {
+    it('creates backbone model', function (done) {
+      var model = helpers.createGenerator('backbone:model', ['../../model'], ['foo']);
 
-      model.isUsingRequireJS = function(){
+      model.isUsingRequireJS = function () {
         return true;
       };
 
-      model.run([], function(){
+      model.run([], function () {
         helpers.assertFiles([
           ['app/scripts/models/foo-model.js', /var FooModel = Backbone.Model.extend\(\{/]
         ]);
@@ -109,15 +109,15 @@ describe('Backbone generator with RequireJS', function() {
     });
   });
 
-  describe('Backbone Collection with RequireJS', function() {
-    it('creates backbone collection', function(done){
-      var collection = helpers.createGenerator('backbone:collection',['../../collection'], ['foo']);
+  describe('Backbone Collection with RequireJS', function () {
+    it('creates backbone collection', function (done) {
+      var collection = helpers.createGenerator('backbone:collection', ['../../collection'], ['foo']);
 
-      collection.isUsingRequireJS = function(){
+      collection.isUsingRequireJS = function () {
         return true;
       };
 
-      collection.run([], function(){
+      collection.run([], function () {
         helpers.assertFiles([
           ['app/scripts/collections/foo-collection.js', /var FooCollection = Backbone.Collection.extend\(\{/]
         ]);
@@ -127,15 +127,15 @@ describe('Backbone generator with RequireJS', function() {
     });
   });
 
-  describe('Backbone Router with RequireJS', function() {
-    it('creates backbone router', function(done){
-      var router = helpers.createGenerator('backbone:router',['../../router'], ['foo']);
+  describe('Backbone Router with RequireJS', function () {
+    it('creates backbone router', function (done) {
+      var router = helpers.createGenerator('backbone:router', ['../../router'], ['foo']);
 
-      router.isUsingRequireJS = function(){
+      router.isUsingRequireJS = function () {
         return true;
       };
 
-      router.run([], function(){
+      router.run([], function () {
         helpers.assertFiles([
           ['app/scripts/routes/foo-router.js', /var FooRouter = Backbone.Router.extend\(\{/]
         ]);
@@ -145,15 +145,15 @@ describe('Backbone generator with RequireJS', function() {
     });
   });
 
-  describe('Backbone View', function() {
-    it('creates backbone view', function(done){
-      var view = helpers.createGenerator('backbone:view',['../../view'], ['foo']);
+  describe('Backbone View', function () {
+    it('creates backbone view', function (done) {
+      var view = helpers.createGenerator('backbone:view', ['../../view'], ['foo']);
 
-      view.isUsingRequireJS = function(){
+      view.isUsingRequireJS = function () {
         return true;
       };
 
-      view.run([], function(){
+      view.run([], function () {
         helpers.assertFiles([
           ['app/scripts/views/foo-view.js', /var FooView = Backbone.View.extend\(\{(.|\n)*app\/scripts\/templates\/foo.ejs/],
           'app/scripts/templates/foo.ejs'

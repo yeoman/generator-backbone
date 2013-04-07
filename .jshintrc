@@ -15,5 +15,6 @@
   "trailing"     : true,
   "smarttabs"    : true,
   "quotmark"     : "single",
-  "indent"       : 2
+  "indent"       : 2,
+  "white"        : true
 }

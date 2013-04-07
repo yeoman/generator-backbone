@@ -8,7 +8,7 @@ module.exports = {
   rewriteFile: rewriteFile
 };
 
-function rewriteFile (args) {
+function rewriteFile(args) {
   args.path = args.path || process.cwd();
   var fullPath = path.join(args.path, args.file);
 
@@ -22,7 +22,7 @@ function escapeRegExp(str) {
   return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
 }
 
-function rewrite (args) {
+function rewrite(args) {
   // check if splicable is already in the body text
   var re = new RegExp(args.splicable.map(function (line) {
     return '\s*' + escapeRegExp(line);

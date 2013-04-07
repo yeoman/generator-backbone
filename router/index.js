@@ -21,7 +21,7 @@ Generator.prototype.createControllerFiles = function createControllerFiles() {
   var destFile = path.join('app/scripts/routes', this.name + '-router.' + ext);
   this.isRequireJsApp = this.isUsingRequireJS();
 
-  if(!this.isRequireJsApp){
+  if (!this.isRequireJsApp) {
     this.template('router.' + ext, destFile);
     this.addScriptToIndex('routes/' + this.name + '-router');
     return;
@@ -42,7 +42,7 @@ Generator.prototype.createControllerFiles = function createControllerFiles() {
     '',
     '  });',
     '',
-    '  return '+ this._.classify(this.name) + 'Router;',
+    '  return ' + this._.classify(this.name) + 'Router;',
     '});'
   ].join('\n');
 

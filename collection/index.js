@@ -21,7 +21,7 @@ Generator.prototype.createControllerFiles = function createControllerFiles() {
   var destFile = path.join('app/scripts/collections', this.name + '-collection.' + ext);
   var isRequireJsApp = this.isUsingRequireJS();
 
-  if(!isRequireJsApp){
+  if (!isRequireJsApp) {
     this.template('collection.' + ext, destFile);
     this.addScriptToIndex('collections/' + this.name + '-collection');
     return;
@@ -34,7 +34,7 @@ Generator.prototype.createControllerFiles = function createControllerFiles() {
     '    \'underscore\',',
     '    \'backbone\',',
     '    \'models/' + this.name + '-model\'',
-    '], function (_, Backbone, '+ this._.classify(this.name) + 'Model' +') {',
+    '], function (_, Backbone, ' + this._.classify(this.name) + 'Model' + ') {',
     '    \'use strict\';',
     '',
     '    var ' + this._.classify(this.name) + 'Collection = Backbone.Collection.extend({',
