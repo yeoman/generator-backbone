@@ -201,9 +201,9 @@ Generator.prototype.writeIndexWithRequirejs = function writeIndexWithRequirejs()
     defaults.push('Twitter Bootstrap');
   }
 
-  this.indexFile = this.appendScripts(this.indexFile, '', [
+  this.indexFile = this.appendScripts(this.indexFile, 'scripts/main.js', [
     'components/requirejs/require.js',
-  ],{'data-main':'scripts/main.js'});
+  ],{'data-main':'scripts/main'});
 
     // iterate over defaults and create content string
   defaults.forEach(function (el) {
