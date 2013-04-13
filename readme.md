@@ -39,6 +39,19 @@ Available generators:
 - backbone:all
 
 
+## Options
+
+* `--skip-install`
+
+  Skips the automatic execution of `bower` and `npm` after
+  scaffolding has finished.
+
+* `--test-framework=[framework]`
+
+  Defaults to `mocha`. Can be switched for
+  another supported testing framework like `jasmine`.
+
+
 ## Contribute
 
 See the [contributing docs](https://github.com/yeoman/yeoman/blob/master/contributing.md)
