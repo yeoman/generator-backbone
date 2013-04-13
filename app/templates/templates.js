@@ -1,1 +1,1 @@
-this["JST"] = this["JST"] || {};
+this.JST = this.JST || {};

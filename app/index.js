@@ -252,8 +252,8 @@ Generator.prototype.mainJs = function mainJs(){
     '        },',
     '        backbone: {',
     '            deps: [',
-    '               \'underscore\',',
-    '              \'jquery\'',
+    '                \'underscore\',',
+    '                \'jquery\'',
     '            ],',
     '            exports: \'Backbone\'',
     '        },',
@@ -288,9 +288,9 @@ Generator.prototype.mainJs = function mainJs(){
   mainJsFile.push(
     '',
     'require([',
-    '  \'backbone\'',
+    '    \'backbone\'',
     '], function (Backbone) {',
-    '',
+    '    Backbone.history.start();',
     '});'
   );
 
