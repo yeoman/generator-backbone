@@ -52,7 +52,7 @@ Generator.prototype.createModelFiles = function createModelFiles() {
     '    \'use strict\';',
     '',
     '    var ' + this._.classify(this.name) + 'Model = Backbone.Model.extend({',
-    '        defaults:{',
+    '        defaults: {',
     '        }',
     '    });',
     '',
