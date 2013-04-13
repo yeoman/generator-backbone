@@ -36,13 +36,13 @@ Generator.prototype.createControllerFiles = function createControllerFiles() {
     '], function ($, Backbone) {',
     '    \'use strict\';',
     '',
-    '  var ' + this._.classify(this.name) + 'Router = Backbone.Router.extend({',
-    '    routes: {',
-    '    },',
+    '    var ' + this._.classify(this.name) + 'Router = Backbone.Router.extend({',
+    '        routes: {',
+    '        },',
     '',
-    '  });',
+    '    });',
     '',
-    '  return ' + this._.classify(this.name) + 'Router;',
+    '    return ' + this._.classify(this.name) + 'Router;',
     '});'
   ].join('\n');
 
