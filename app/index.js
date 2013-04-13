@@ -5,7 +5,7 @@ var yeoman = require('yeoman-generator');
 
 module.exports = Generator;
 
-function Generator() {
+function Generator(args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
 
   this.testFramework = this.options['test-framework'] || 'mocha';
@@ -15,7 +15,7 @@ function Generator() {
 
   this.on('end', function () {
     if (['app', 'backbone'].indexOf(this.generatorName) >= 0) {
-      console.log('\nI\'m all done. Just run ' + 'npm install && bower install'.bold.yellow + ' to install the required dependencies.');
+      this.installDependencies({ skipInstall: options['skip-install'] });
     }
   });
 }

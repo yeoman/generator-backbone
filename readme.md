@@ -23,10 +23,6 @@ Run `yo backbone`, optionally passing an app name:
 yo backbone [app-name]
 ```
 
-Finally, install npm and bower dependencies:
-```
-npm install && bower install --dev
-```
 
 ## Generators
 
