@@ -15,7 +15,7 @@ mkdir my-new-project && cd $_
 
 Then install `generator-backbone`:
 ```
-npm install generator-backbone
+npm install -g generator-backbone
 ```
 
 Run `yo backbone`, optionally passing an app name:
