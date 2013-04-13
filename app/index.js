@@ -74,7 +74,7 @@ Generator.prototype.git = function git() {
 
 Generator.prototype.bower = function bower() {
   this.copy('bowerrc', '.bowerrc');
-  this.copy('component.json', 'component.json');
+  this.copy('_component.json', 'component.json');
 };
 
 Generator.prototype.jshint = function jshint() {
@@ -94,7 +94,7 @@ Generator.prototype.gruntfile = function gruntfile() {
 };
 
 Generator.prototype.packageJSON = function packageJSON() {
-  this.template('package.json');
+  this.template('_package.json', 'package.json');
 };
 
 Generator.prototype.mainStylesheet = function mainStylesheet() {
