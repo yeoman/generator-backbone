@@ -9,12 +9,12 @@ function Generator() {
   yeoman.generators.Base.apply(this, arguments);
 
   this.testFramework = this.options['test-framework'] || 'mocha';
-  this.hookFor(this.testFramework , { as: 'app' });
+  this.hookFor(this.testFramework, { as: 'app' });
 
   this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
 
   this.on('end', function () {
-    if(['app','backbone'].indexOf(this.generatorName) >= 0 ){
+    if (['app', 'backbone'].indexOf(this.generatorName) >= 0) {
       console.log('\nI\'m all done. Just run ' + 'npm install && bower install'.bold.yellow + ' to install the required dependencies.');
     }
   });
@@ -110,7 +110,7 @@ Generator.prototype.jstTemplates = function jstTemplates() {
 };
 
 Generator.prototype.writeIndex = function writeIndex() {
-  if(this.includeRequireJS){
+  if (this.includeRequireJS) {
     return;
   }
 
@@ -123,7 +123,6 @@ Generator.prototype.writeIndex = function writeIndex() {
     '                <p>You now have</p>',
     '                <ul>'
   ];
-
 
   this.indexFile = this.appendScripts(this.indexFile, 'scripts/vendor.js', [
     'components/jquery/jquery.min.js',
@@ -183,7 +182,7 @@ Generator.prototype.bootstrapJs = function bootstrapJs() {
 };
 
 Generator.prototype.writeIndexWithRequirejs = function writeIndexWithRequirejs(){
-  if(!this.includeRequireJS){
+  if (!this.includeRequireJS) {
     return;
   }
 
@@ -203,11 +202,11 @@ Generator.prototype.writeIndexWithRequirejs = function writeIndexWithRequirejs()
 
   this.indexFile = this.appendScripts(this.indexFile, 'scripts/main.js', [
     'components/requirejs/require.js',
-  ],{'data-main':'scripts/main'});
+  ], {'data-main': 'scripts/main'});
 
     // iterate over defaults and create content string
   defaults.forEach(function (el) {
-    contentText.push('                    <li>' + el  +'</li>');
+    contentText.push('                    <li>' + el  + '</li>');
   });
 
   contentText = contentText.concat([
@@ -236,8 +235,8 @@ Generator.prototype.setupEnv = function setupEnv() {
   this.write('app/index.html', this.indexFile);
 };
 
-Generator.prototype.mainJs = function mainJs(){
-  if(!this.includeRequireJS){
+Generator.prototype.mainJs = function mainJs() {
+  if (!this.includeRequireJS) {
     return;
   }
 
@@ -259,7 +258,7 @@ Generator.prototype.mainJs = function mainJs(){
     '        },',
   ];
 
-  if(this.compassBootstrap){
+  if (this.compassBootstrap) {
     mainJsFile.push(
       '        bootstrap: {',
       '            deps: [\'jquery\'],',
@@ -276,7 +275,7 @@ Generator.prototype.mainJs = function mainJs(){
     '        underscore: \'../components/underscore-amd/underscore\','
   );
 
-  if(this.compassBootstrap){
+  if (this.compassBootstrap) {
     mainJsFile.push('        bootstrap: \'vendor/bootstrap\'');
   }
 

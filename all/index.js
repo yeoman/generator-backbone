@@ -1,7 +1,6 @@
-
-var path = require('path'),
-    util = require('util'),
-    yeoman = require('yeoman-generator');
+var path = require('path');
+var util = require('util');
+var yeoman = require('yeoman-generator');
 
 module.exports = Generator;
 
@@ -47,11 +46,10 @@ util.inherits(Generator, yeoman.generators.Base);
 
 
 Generator.prototype.createDirLayout = function createDirLayout() {
-  var self = this;
   this.dirs.forEach(function (dir) {
-    self.log.create('app/scripts/' + dir);
-    self.mkdir(path.join('app/scripts', dir));
-  });
+    this.log.create('app/scripts/' + dir);
+    this.mkdir(path.join('app/scripts', dir));
+  }.bind(this));
 };
 
 Generator.prototype.createAppFile = function createAppFile() {

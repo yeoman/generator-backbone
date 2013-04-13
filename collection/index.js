@@ -1,8 +1,8 @@
 /*jshint latedef:false */
-var path = require('path'),
-  util = require('util'),
-  yeoman = require('yeoman-generator'),
-  scriptBase = require('../script-base');
+var path = require('path');
+var util = require('util');
+var yeoman = require('yeoman-generator');
+var scriptBase = require('../script-base');
 
 module.exports = Generator;
 
