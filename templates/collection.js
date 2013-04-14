@@ -1,4 +1,4 @@
-/*global <%= _.camelize(appname) %> Backbone*/
+/*global <%= _.camelize(appname) %>, Backbone*/
 
 <%= _.camelize(appname) %>.Collections.<%= _.classify(name) %>Collection = Backbone.Collection.extend({
 
