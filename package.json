@@ -12,6 +12,7 @@
   "homepage": "https://github.com/yeoman/generator-backbone",
   "bugs": "https://github.com/yeoman/generator-backbone/issues",
   "author": "Chrome Developer Relations",
+  "main": "app/index.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/yeoman/generator-backbone.git"
