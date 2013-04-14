@@ -161,6 +161,9 @@ module.exports = function (grunt) {
                     // `name` and `out` is set by grunt-usemin
                     baseUrl: 'app/scripts',
                     optimize: 'none',
+                    paths: {
+                        'templates': '../../.tmp/scripts/templates'
+                    },
                     // TODO: Figure out how to make sourcemaps work with grunt-usemin
                     // https://github.com/yeoman/grunt-usemin/issues/30
                     //generateSourceMaps: true,
@@ -177,7 +180,8 @@ module.exports = function (grunt) {
             dist: {
                 files: {
                     '<%%= yeoman.dist %>/scripts/main.js': [
-                        '<%%= yeoman.app %>/scripts/{,*/}*.js'
+                        '<%%= yeoman.app %>/scripts/{,*/}*.js',
+                        '.tmp/scripts/templates.js'
                     ],
                 }
             }
