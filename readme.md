@@ -6,16 +6,14 @@ A Backbone generator for Yeoman that provides a functional boilerplate Backbone 
 
 Optional RequireJS (AMD) support has recently been added as a prompt when using the generator on new projects.
 
+
 ## Usage
 
-First make a new directory, and `cd` into it:
+Install: `npm install -g generator-backbone`
+
+Make a new directory and `cd` into it:
 ```
 mkdir my-new-project && cd $_
-```
-
-Then install `generator-backbone`:
-```
-npm install -g generator-backbone
 ```
 
 Run `yo backbone`, optionally passing an app name:
