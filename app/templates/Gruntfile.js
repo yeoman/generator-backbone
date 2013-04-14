@@ -241,6 +241,14 @@ module.exports = function (grunt) {
             }
         },
         copy: {
+            defaultTemplate: {
+                files: [{
+                    expand: true,
+                    cwd: require('path').dirname(require.resolve('generator-backbone/app/templates/templates.js')),
+                    dest: '.tmp/scripts/',
+                    src: [ 'templates.js' ]
+                }]
+            },
             dist: {
                 files: [{
                     expand: true,
@@ -282,6 +290,7 @@ module.exports = function (grunt) {
         grunt.task.run([
             'clean:server',
             'coffee:dist',
+            'copy:defaultTemplate',
             'jst',
             'compass:server',
             'livereload-start',
@@ -294,6 +303,7 @@ module.exports = function (grunt) {
     grunt.registerTask('test', [
         'clean:server',
         'coffee',
+        'copy:defaultTemplate',
         'jst',
         'compass',
         'connect:test',
@@ -303,6 +313,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'coffee',
+        'copy:defaultTemplate',
         'jst',
         'compass:dist',
         'useminPrepare',<% if (includeRequireJS) { %>
@@ -312,7 +323,7 @@ module.exports = function (grunt) {
         'concat',
         'cssmin',
         'uglify',
-        'copy',
+        'copy:dist',
         'usemin'
     ]);
 
