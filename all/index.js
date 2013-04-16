@@ -38,7 +38,7 @@ function Generator(args, options, config) {
   });
 
   this.on('end', function () {
-    this.installDependencies({ skipInstall: options['skip-install'] });
+    this.installDependencies({ skipInstall: this.options['skip-install'] });
   });
 }
 
@@ -51,9 +51,3 @@ Generator.prototype.createDirLayout = function createDirLayout() {
     this.mkdir(path.join('app/scripts', dir));
   }.bind(this));
 };
-
-Generator.prototype.createAppFile = function createAppFile() {
-  var ext = this.options.coffee ? 'coffee' : 'js';
-  this.template('app.' + ext, 'app/scripts/main.' + ext);
-};
-
