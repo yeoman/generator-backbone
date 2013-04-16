@@ -42,6 +42,7 @@ describe('Backbone generator test', function () {
           'mocha:app'
         ]
       ]);
+      this.backbone.app.options['skip-install'] = true;
       done();
     }.bind(this));
 

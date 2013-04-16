@@ -17,6 +17,7 @@ describe('Backbone generator with RequireJS', function () {
           'mocha:app'
         ]
       ]);
+      this.backbone.app.options['skip-install'] = true;
       done();
     }.bind(this));
 
