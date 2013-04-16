@@ -161,6 +161,9 @@ module.exports = function (grunt) {
                     // `name` and `out` is set by grunt-usemin
                     baseUrl: 'app/scripts',
                     optimize: 'none',
+                    paths: {
+                        'templates': '../../.tmp/scripts/templates'
+                    },
                     // TODO: Figure out how to make sourcemaps work with grunt-usemin
                     // https://github.com/yeoman/grunt-usemin/issues/30
                     //generateSourceMaps: true,
@@ -172,12 +175,12 @@ module.exports = function (grunt) {
                     //uglify2: {} // https://github.com/mishoo/UglifyJS2
                 }
             }
-        },<% } else { %>
-        uglify: {
+        },<% } else { %>uglify: {
             dist: {
                 files: {
                     '<%%= yeoman.dist %>/scripts/main.js': [
-                        '<%%= yeoman.app %>/scripts/{,*/}*.js'
+                        '<%%= yeoman.app %>/scripts/{,*/}*.js',
+                        '.tmp/scripts/templates.js'
                     ],
                 }
             }
@@ -237,6 +240,14 @@ module.exports = function (grunt) {
             }
         },
         copy: {
+            defaultTemplate: {
+                files: [{
+                    expand: true,
+                    cwd: require('path').dirname(require.resolve('generator-backbone/app/templates/templates.js')),
+                    dest: '.tmp/scripts/',
+                    src: [ 'templates.js' ]
+                }]
+            },
             dist: {
                 files: [{
                     expand: true,
@@ -278,6 +289,7 @@ module.exports = function (grunt) {
         grunt.task.run([
             'clean:server',
             'coffee:dist',
+            'copy:defaultTemplate',
             'jst',
             'compass:server',
             'livereload-start',
@@ -290,6 +302,7 @@ module.exports = function (grunt) {
     grunt.registerTask('test', [
         'clean:server',
         'coffee',
+        'copy:defaultTemplate',
         'jst',
         'compass',
         'connect:test',
@@ -299,6 +312,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'coffee',
+        'copy:defaultTemplate',
         'jst',
         'compass:dist',
         'useminPrepare',<% if (includeRequireJS) { %>
@@ -308,7 +322,7 @@ module.exports = function (grunt) {
         'concat',
         'cssmin',
         'uglify',
-        'copy',
+        'copy:dist',
         'usemin'
     ]);
 

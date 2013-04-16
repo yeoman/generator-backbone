@@ -105,10 +105,6 @@ Generator.prototype.mainStylesheet = function mainStylesheet() {
   }
 };
 
-Generator.prototype.jstTemplates = function jstTemplates() {
-  this.copy('templates.js', 'app/scripts/templates.js');
-};
-
 Generator.prototype.writeIndex = function writeIndex() {
   if (this.includeRequireJS) {
     return;
