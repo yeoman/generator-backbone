@@ -1,4 +1,4 @@
-/*global <%= _.camelize(appname) %> $*/
+/*global <%= _.camelize(appname) %>, $*/
 'use strict';
 
 

@@ -1,4 +1,4 @@
-/*global <%= _.camelize(appname) %> Backbone JST*/
+/*global <%= _.camelize(appname) %>, Backbone, JST*/
 
 <%= _.camelize(appname) %>.Views.<%= _.classify(name) %>View = Backbone.View.extend({
 
