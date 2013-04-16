@@ -291,3 +291,11 @@ Generator.prototype.mainJs = function mainJs() {
 
   this.write('app/scripts/main.js', mainJsFile.join('\n'));
 };
+
+Generator.prototype.createAppFile = function createAppFile() {
+  var dirPath = this.options.coffee ? '../templates/coffeescript/' : '../templates';
+  this.sourceRoot(path.join(__dirname, dirPath));
+
+  var ext = this.options.coffee ? 'coffee' : 'js';
+  this.template('app.' + ext, 'app/scripts/main.' + ext);
+};

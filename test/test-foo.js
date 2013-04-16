@@ -76,6 +76,7 @@ describe('Backbone generator test', function () {
       '.editorconfig',
       'Gruntfile.js',
       'package.json',
+      'app/scripts/main.js',
     ];
 
     helpers.mockPrompt(this.backbone.app, {
