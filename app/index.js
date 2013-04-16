@@ -15,7 +15,7 @@ function Generator(args, options, config) {
 
   this.on('end', function () {
     if (['app', 'backbone'].indexOf(this.generatorName) >= 0) {
-      this.installDependencies({ skipInstall: options['skip-install'] });
+      this.installDependencies({ skipInstall: this.options['skip-install'] });
     }
   });
 }
