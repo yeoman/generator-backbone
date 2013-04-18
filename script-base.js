@@ -16,6 +16,19 @@ function Generator() {
     this.env.options.appPath = this.env.options.appPath || 'app';
   }
 
+  if (typeof this.env.options.coffee === 'undefined') {
+    this.option('coffee');
+
+    // attempt to detect if user is using CS or not
+    // if cml arg provided, use that; else look for the existence of cs
+    if (!this.options.coffee &&
+      this.expandFiles(path.join(this.env.options.appPath, '/scripts/**/*.coffee'), {}).length > 0) {
+      this.options.coffee = true;
+    }
+
+    this.env.options.coffee = this.options.coffee;
+  }
+
 }
 
 util.inherits(Generator, yeoman.generators.NamedBase);
@@ -43,5 +56,6 @@ Generator.prototype.addScriptToIndex = function (script) {
  * @return boolean
  */
 Generator.prototype.isUsingRequireJS = function isUsingRequireJS() {
-  return (/require\.config\(/).test(this.read(path.join(process.cwd(), 'app/scripts/main.js')));
+  var ext = this.env.options.coffee ? '.coffee' : '.js';
+  return (/require\.config/).test(this.read(path.join(process.cwd(), 'app/scripts/main' + ext)));
 };
