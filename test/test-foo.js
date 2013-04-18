@@ -43,6 +43,12 @@ describe('Backbone generator test', function () {
         ]
       ]);
       this.backbone.app.options['skip-install'] = true;
+
+      helpers.mockPrompt(this.backbone.app, {
+        'compassBootstrap': 'Y',
+        'includeRequireJS': 'N'
+      });
+
       done();
     }.bind(this));
 
@@ -79,11 +85,6 @@ describe('Backbone generator test', function () {
       'app/scripts/main.js',
     ];
 
-    helpers.mockPrompt(this.backbone.app, {
-      'compassBootstrap': 'Y',
-      'includeRequireJS': 'N'
-    });
-
     this.backbone.app.run({}, function () {
       helpers.assertFiles(expected);
       done();
@@ -95,16 +96,14 @@ describe('Backbone generator test', function () {
     it('creates backbone model', function (done) {
       var model = helpers.createGenerator('backbone:model', ['../../model'], ['foo']);
 
-      model.isUsingRequireJS = function () {
-        return false;
-      };
-
-      model.run([], function () {
-        helpers.assertFiles([
-          ['app/scripts/models/foo-model.js', /Models.FooModel = Backbone.Model.extend\(\{/]
-        ]);
+      this.backbone.app.run({}, function () {
+        model.run([], function () {
+          helpers.assertFiles([
+            ['app/scripts/models/foo-model.js', /Models.FooModel = Backbone.Model.extend\(\{/]
+          ]);
+        });
+        done();
       });
-      done();
     });
   });
 
@@ -112,16 +111,14 @@ describe('Backbone generator test', function () {
     it('creates backbone collection', function (done) {
       var collection = helpers.createGenerator('backbone:collection', ['../../collection'], ['foo']);
 
-      collection.isUsingRequireJS = function () {
-        return false;
-      };
-
-      collection.run([], function () {
-        helpers.assertFiles([
-          ['app/scripts/collections/foo-collection.js', /Collections.FooCollection = Backbone.Collection.extend\(\{/]
-        ]);
+      this.backbone.app.run({}, function () {
+        collection.run([], function () {
+          helpers.assertFiles([
+            ['app/scripts/collections/foo-collection.js', /Collections.FooCollection = Backbone.Collection.extend\(\{/]
+          ]);
+        });
+        done();
       });
-      done();
     });
   });
 
@@ -129,16 +126,14 @@ describe('Backbone generator test', function () {
     it('creates backbone router', function (done) {
       var router = helpers.createGenerator('backbone:router', ['../../router'], ['foo']);
 
-      router.isUsingRequireJS = function () {
-        return false;
-      };
-
-      router.run([], function () {
-        helpers.assertFiles([
-          ['app/scripts/routes/foo-router.js', /Routers.FooRouter = Backbone.Router.extend\(\{/]
-        ]);
+      this.backbone.app.run({}, function () {
+        router.run([], function () {
+          helpers.assertFiles([
+            ['app/scripts/routes/foo-router.js', /Routers.FooRouter = Backbone.Router.extend\(\{/]
+          ]);
+        });
+        done();
       });
-      done();
     });
   });
 
@@ -146,17 +141,15 @@ describe('Backbone generator test', function () {
     it('creates backbone view', function (done) {
       var view = helpers.createGenerator('backbone:view', ['../../view'], ['foo']);
 
-      view.isUsingRequireJS = function () {
-        return false;
-      };
-
-      view.run([], function () {
-        helpers.assertFiles([
-          ['app/scripts/views/foo-view.js', /Views.FooView = Backbone.View.extend\(\{(.|\n)*app\/scripts\/templates\/foo.ejs/],
-          'app/scripts/templates/foo.ejs'
-        ]);
+      this.backbone.app.run({}, function () {
+        view.run([], function () {
+          helpers.assertFiles([
+            ['app/scripts/views/foo-view.js', /Views.FooView = Backbone.View.extend\(\{(.|\n)*app\/scripts\/templates\/foo.ejs/],
+            'app/scripts/templates/foo.ejs'
+          ]);
+        });
+        done();
       });
-      done();
     });
   });
 });
