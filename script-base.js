@@ -59,3 +59,16 @@ Generator.prototype.isUsingRequireJS = function isUsingRequireJS() {
   var ext = this.env.options.coffee ? '.coffee' : '.js';
   return (/require\.config/).test(this.read(path.join(process.cwd(), 'app/scripts/main' + ext)));
 };
+
+Generator.prototype.getTemplateFramework = function getTemplateFramework () {
+  if (!(require('fs').existsSync(path.join(process.cwd(), 'Gruntfile.js')))) {
+    return 'lodash';
+  }
+  var ftest = (/templateFramework: '([^\']*)'/);
+  var match = ftest.exec(this.read(path.join(process.cwd(), 'Gruntfile.js')));
+  if (match) {
+    return match[1];
+  } else {
+    return 'lodash';
+  }
+};

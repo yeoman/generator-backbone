@@ -9,6 +9,7 @@ function Generator(args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
 
   this.testFramework = this.options['test-framework'] || 'mocha';
+  this.templateFramework = this.options['template-framework'] || 'lodash';
   this.hookFor(this.testFramework, { as: 'app' });
 
   this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
@@ -293,6 +294,9 @@ Generator.prototype.mainJs = function mainJs() {
 };
 
 Generator.prototype.createAppFile = function createAppFile() {
+  if (this.includeRequireJS) {
+    return;
+  }
   var dirPath = this.options.coffee ? '../templates/coffeescript/' : '../templates';
   this.sourceRoot(path.join(__dirname, dirPath));
 
