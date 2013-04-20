@@ -6,8 +6,10 @@
     "grunt": "~0.4.1",
     "grunt-contrib-copy": "~0.4.0",
     "grunt-contrib-concat": "~0.2.0",
-    "grunt-contrib-coffee": "~0.6.6",
-    "grunt-contrib-jst": "~0.5.0",
+    "grunt-contrib-coffee": "~0.6.6",<% if (templateFramework === 'mustache') { %>
+    "grunt-mustache": "~0.1.4",<% } else if (templateFramework === 'handlebars') { %>
+    "grunt-contrib-handlebars": "~0.5.8",<% } else { %>
+    "grunt-contrib-jst": "~0.5.0",<% } %>
     "grunt-contrib-uglify": "~0.2.0",
     "grunt-contrib-compass": "~0.2.0",
     "grunt-contrib-jshint": "~0.4.3",

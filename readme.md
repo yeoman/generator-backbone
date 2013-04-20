@@ -45,6 +45,10 @@ Available generators:
   Defaults to `mocha`. Can be switched for
   another supported testing framework like `jasmine`.
 
+* `--template-framework=[framework]`
+
+  Defaults to `lodash` templating with grunt-contrib-jst.
+  `handlebars` and `mustache` are also supported.
 
 ## Contribute
 
