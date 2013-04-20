@@ -1,0 +1,6 @@
+v0.1.1:
+  changes:
+    - Support for handlebars and mustache templates
+    - auto detect js or coffee for subgenerators
+    - moved creating main.js from 'all' to 'app' sub generator
+    - Add skip-install to the tests and ensure that the generator uses it.
