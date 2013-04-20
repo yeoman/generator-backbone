@@ -20,6 +20,14 @@ function Generator(args, options, config) {
     args.push('--coffee');
   }
 
+  if (this.options['template-framework']) {
+    this.env.options['template-framework'] = this.options['template-framework'];
+  }
+
+  if (this.options['test-framework']) {
+    this.env.options['test-framework'] = this.options['test-framework'];
+  }
+
   // the api to hookFor and pass arguments may vary a bit.
   this.hookFor('backbone:app', {
     args: args
