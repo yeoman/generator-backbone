@@ -88,7 +88,7 @@ Generator.prototype.editorConfig = function editorConfig() {
 
 Generator.prototype.gruntfile = function gruntfile() {
   if (this.testFramework === 'jasmine') {
-    this.write('Gruntfile.js', this.engine(this.read('Gruntfile.js')).replace(/mocha/g, 'jasmine'));
+    this.write('Gruntfile.js', this.engine(this.read('Gruntfile.js'), this).replace(/mocha/g, 'jasmine'));
   } else {
     this.template('Gruntfile.js');
   }
