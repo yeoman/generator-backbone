@@ -20,7 +20,7 @@ Generator.prototype.createViewFiles = function createViewFiles() {
   var templateFramework = this.getTemplateFramework();
   var templateExt = '.ejs';
   if (templateFramework === 'mustache') {
-    templateExt = '.mustache';
+    templateExt = '-template.mustache';
   } else if (templateFramework === 'handlebars') {
     templateExt = '.hbs';
   }
@@ -29,7 +29,10 @@ Generator.prototype.createViewFiles = function createViewFiles() {
   var isRequireJsApp = this.isUsingRequireJS();
 
   this.template('view.ejs', this.jst_path);
-  if(!isRequireJsApp){
+  if (templateFramework === 'mustache') {
+    this.jst_path = this.name + '-template';
+  }
+  if (!isRequireJsApp) {
     this.template('view.' + ext, destFile);
     this.addScriptToIndex('views/' + this.name + '-view');
     return;
