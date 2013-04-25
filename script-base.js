@@ -4,9 +4,7 @@ var util = require('util');
 var yeoman = require('yeoman-generator');
 var backboneUtils = require('./util.js');
 
-module.exports = Generator;
-
-function Generator() {
+var Generator = module.exports = function Generator() {
   yeoman.generators.NamedBase.apply(this, arguments);
 
   if (typeof this.env.options.appPath === 'undefined') {
@@ -28,8 +26,7 @@ function Generator() {
 
     this.env.options.coffee = this.options.coffee;
   }
-
-}
+};
 
 util.inherits(Generator, yeoman.generators.NamedBase);
 
@@ -60,7 +57,7 @@ Generator.prototype.isUsingRequireJS = function isUsingRequireJS() {
   return (/require\.config/).test(this.read(path.join(process.cwd(), 'app/scripts/main' + ext)));
 };
 
-Generator.prototype.getTemplateFramework = function getTemplateFramework () {
+Generator.prototype.getTemplateFramework = function getTemplateFramework() {
   if (!(require('fs').existsSync(path.join(process.cwd(), 'Gruntfile.js')))) {
     return 'lodash';
   }

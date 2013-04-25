@@ -14,7 +14,7 @@ function Generator(args, options, config) {
 
   this.option('coffee');
 
-  var args = ['application'];
+  args = ['application'];
 
   if (this.options.coffee) {
     args.push('--coffee');
