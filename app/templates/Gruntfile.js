@@ -9,6 +9,7 @@ var mountFolder = function (connect, dir) {
 // 'test/spec/{,*/}*.js'
 // use this if you want to match all subfolders:
 // 'test/spec/**/*.js'
+// templateFramework: '<%= templateFramework %>'
 
 module.exports = function (grunt) {
     // load all grunt tasks
@@ -43,13 +44,25 @@ module.exports = function (grunt) {
                     '<%%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}'
                 ],
                 tasks: ['livereload']
-            },
+            },<% if (templateFramework === 'mustache') { %>
+            mustache: {
+                files: [
+                    '<%%= yeoman.app %>/scripts/templates/*.mustache'
+                ],
+                tasks: ['mustache']
+            }<% } else if (templateFramework === 'handlebars') { %>
+            handlebars: {
+                files: [
+                    '<%%= yeoman.app %>/scripts/templates/*.hbs'
+                ],
+                tasks: ['handlebars']
+            }<% } else { %>
             jst: {
                 files: [
                     '<%%= yeoman.app %>/scripts/templates/*.ejs'
                 ],
                 tasks: ['jst']
-            }
+            }<% } %>
         },
         connect: {
             options: {
@@ -266,7 +279,30 @@ module.exports = function (grunt) {
             all: {
                 rjsConfig: '<%%= yeoman.app %>/scripts/main.js'
             }
-        },
+        },<% if (templateFramework === 'mustache') { %>
+        mustache: {
+            files: {
+                src: '<%%= yeoman.app %>/scripts/templates/',
+                dest: '.tmp/scripts/templates.js',
+                options: {<% if (includeRequireJS) { %>
+                    prefix: 'define(function() { this.JST = ',
+                    postfix: '; return this.JST;});'<% } else { %>
+                    prefix: 'this.JST = ',
+                    postfix: ';'<% } %>
+                }
+            }
+        }<% } else if (templateFramework === 'handlebars') { %>
+        handlebars: {
+            compile: {
+                options: {
+                    namespace: 'JST'<% if (includeRequireJS) { %>,
+                    amd: true<% } %>
+                },
+                files: {
+                    '.tmp/scripts/templates.js': ['<%%= yeoman.app %>/scripts/templates/*.hbs']
+                }
+            }
+        }<% } else { %>
         jst: {<% if (includeRequireJS) { %>
             options: {
                 amd: true
@@ -276,7 +312,7 @@ module.exports = function (grunt) {
                     '.tmp/scripts/templates.js': ['<%%= yeoman.app %>/scripts/templates/*.ejs']
                 }
             }
-        }
+        }<% } %>
     });
 
     grunt.renameTask('regarde', 'watch');
@@ -289,8 +325,10 @@ module.exports = function (grunt) {
         grunt.task.run([
             'clean:server',
             'coffee:dist',
-            'copy:defaultTemplate',
-            'jst',
+            'copy:defaultTemplate',<% if (templateFramework === 'mustache') { %>
+            'mustache',<% } else if (templateFramework === 'handlebars') { %>
+            'handlebars',<% } else { %>
+            'jst',<% } %>
             'compass:server',
             'livereload-start',
             'connect:livereload',
@@ -302,8 +340,10 @@ module.exports = function (grunt) {
     grunt.registerTask('test', [
         'clean:server',
         'coffee',
-        'copy:defaultTemplate',
-        'jst',
+        'copy:defaultTemplate',<% if (templateFramework === 'mustache' ) { %>
+        'mustache',<% } else if (templateFramework === 'handlebars') { %>
+        'handlebars',<% } else { %>
+        'jst',<% } %>
         'compass',
         'connect:test',
         'mocha'
@@ -312,8 +352,10 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'coffee',
-        'copy:defaultTemplate',
-        'jst',
+        'copy:defaultTemplate',<% if (templateFramework === 'mustache' ) { %>
+        'mustache',<% } else if (templateFramework === 'handlebars') { %>
+        'handlebars',<% } else { %>
+        'jst',<% } %>
         'compass:dist',
         'useminPrepare',<% if (includeRequireJS) { %>
         'requirejs',<% } %>

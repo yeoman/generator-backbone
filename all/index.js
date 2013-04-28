@@ -14,10 +14,18 @@ function Generator(args, options, config) {
 
   this.option('coffee');
 
-  var args = ['application'];
+  args = ['application'];
 
   if (this.options.coffee) {
     args.push('--coffee');
+  }
+
+  if (this.options['template-framework']) {
+    this.env.options['template-framework'] = this.options['template-framework'];
+  }
+
+  if (this.options['test-framework']) {
+    this.env.options['test-framework'] = this.options['test-framework'];
   }
 
   // the api to hookFor and pass arguments may vary a bit.
