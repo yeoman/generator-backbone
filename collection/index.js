@@ -35,13 +35,12 @@ Generator.prototype.createControllerFiles = function createControllerFiles() {
     '   var Backbone = require(\'backbone\');',
     '   var ' + this._.classify(this.name) + 'Model = require(\'' + this.name + '\');',
     '   \'use strict\';',
-    '});',
+    '   var ' + this._.classify(this.name) + 'Collection = Backbone.Collection.extend({',
+    '       ' + 'model: ' + this._.classify(this.name) + 'Model',
+    '   });',
     '',
-    '    var ' + this._.classify(this.name) + 'Collection = Backbone.Collection.extend({',
-    '        ' + 'model: ' + this._.classify(this.name) + 'Model',
-    '    });',
+    '   return ' + this._.classify(this.name) + 'Collection;',
     '',
-    '    return ' + this._.classify(this.name) + 'Collection;',
     '});'
   ].join('\n');
 

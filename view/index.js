@@ -47,13 +47,12 @@ Generator.prototype.createViewFiles = function createViewFiles() {
     '   var Backbone = require(\'backbone\');',
     '   var JST = require(\'templates\');',
     '   \'use strict\';',
-    '});',
+    '   var ' + this._.classify(this.name) + 'View = Backbone.View.extend({',
+    '       ' + 'template: JST[\'' + this.jst_path + '\']',
+    '   });',
     '',
-    '    var ' + this._.classify(this.name) + 'View = Backbone.View.extend({',
-    '        ' + 'template: JST[\'' + this.jst_path + '\']',
-    '    });',
+    '   return ' + this._.classify(this.name) + 'View;',
     '',
-    '    return ' + this._.classify(this.name) + 'View;',
     '});'
   ].join('\n');
 

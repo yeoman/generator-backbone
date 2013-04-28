@@ -49,14 +49,13 @@ Generator.prototype.createModelFiles = function createModelFiles() {
     '   var _ = require(\'underscore\');',
     '   var Backbone = require(\'backbone\');',
     '   \'use strict\';',
-    '});',
+    '   var ' + this._.classify(this.name) + 'Model = Backbone.Model.extend({',
+    '       defaults: {',
+    '       }',
+    '   });',
     '',
-    '    var ' + this._.classify(this.name) + 'Model = Backbone.Model.extend({',
-    '        defaults: {',
-    '        }',
-    '    });',
+    '   return ' + this._.classify(this.name) + 'Model;',
     '',
-    '    return ' + this._.classify(this.name) + 'Model;',
     '});'
   ].join('\n');
 
