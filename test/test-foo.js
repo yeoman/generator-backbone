@@ -66,7 +66,7 @@ describe('Backbone generator test', function () {
 
   it('creates expected files', function (done) {
     var expected = [
-      ['component.json', /"name": "temp"/],
+      ['bower.json', /"name": "temp"/],
       ['package.json', /"name": "temp"/],
       'Gruntfile.js',
       'app/404.html',
@@ -77,7 +77,6 @@ describe('Backbone generator test', function () {
       '.gitignore',
       '.gitattributes',
       '.bowerrc',
-      'component.json',
       '.jshintrc',
       '.editorconfig',
       'Gruntfile.js',
