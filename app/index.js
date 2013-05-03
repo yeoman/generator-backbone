@@ -75,7 +75,7 @@ Generator.prototype.git = function git() {
 
 Generator.prototype.bower = function bower() {
   this.copy('bowerrc', '.bowerrc');
-  this.copy('_component.json', 'component.json');
+  this.copy('_bower.json', 'bower.json');
 };
 
 Generator.prototype.jshint = function jshint() {
@@ -122,27 +122,27 @@ Generator.prototype.writeIndex = function writeIndex() {
   ];
 
   this.indexFile = this.appendScripts(this.indexFile, 'scripts/vendor.js', [
-    'components/jquery/jquery.min.js',
-    'components/underscore/underscore-min.js',
-    'components/backbone/backbone-min.js'
+    'bower_components/jquery/jquery.min.js',
+    'bower_components/underscore/underscore-min.js',
+    'bower_components/backbone/backbone-min.js'
   ]);
 
   if (this.compassBootstrap) {
     // wire Twitter Bootstrap plugins
     this.indexFile = this.appendScripts(this.indexFile, 'scripts/plugins.js', [
-      'components/sass-bootstrap/js/bootstrap-affix.js',
-      'components/sass-bootstrap/js/bootstrap-alert.js',
-      'components/sass-bootstrap/js/bootstrap-dropdown.js',
-      'components/sass-bootstrap/js/bootstrap-tooltip.js',
-      'components/sass-bootstrap/js/bootstrap-modal.js',
-      'components/sass-bootstrap/js/bootstrap-transition.js',
-      'components/sass-bootstrap/js/bootstrap-button.js',
-      'components/sass-bootstrap/js/bootstrap-popover.js',
-      'components/sass-bootstrap/js/bootstrap-typeahead.js',
-      'components/sass-bootstrap/js/bootstrap-carousel.js',
-      'components/sass-bootstrap/js/bootstrap-scrollspy.js',
-      'components/sass-bootstrap/js/bootstrap-collapse.js',
-      'components/sass-bootstrap/js/bootstrap-tab.js'
+      'bower_components/sass-bootstrap/js/bootstrap-affix.js',
+      'bower_components/sass-bootstrap/js/bootstrap-alert.js',
+      'bower_components/sass-bootstrap/js/bootstrap-dropdown.js',
+      'bower_components/sass-bootstrap/js/bootstrap-tooltip.js',
+      'bower_components/sass-bootstrap/js/bootstrap-modal.js',
+      'bower_components/sass-bootstrap/js/bootstrap-transition.js',
+      'bower_components/sass-bootstrap/js/bootstrap-button.js',
+      'bower_components/sass-bootstrap/js/bootstrap-popover.js',
+      'bower_components/sass-bootstrap/js/bootstrap-typeahead.js',
+      'bower_components/sass-bootstrap/js/bootstrap-carousel.js',
+      'bower_components/sass-bootstrap/js/bootstrap-scrollspy.js',
+      'bower_components/sass-bootstrap/js/bootstrap-collapse.js',
+      'bower_components/sass-bootstrap/js/bootstrap-tab.js'
     ]);
 
     contentText.push('                    <li>Twitter Bootstrap</li>');
@@ -198,7 +198,7 @@ Generator.prototype.writeIndexWithRequirejs = function writeIndexWithRequirejs()
   }
 
   this.indexFile = this.appendScripts(this.indexFile, 'scripts/main.js', [
-    'components/requirejs/require.js',
+    'bower_components/requirejs/require.js',
   ], {'data-main': 'scripts/main'});
 
     // iterate over defaults and create content string
@@ -267,9 +267,9 @@ Generator.prototype.mainJs = function mainJs() {
   mainJsFile.push(
     '    },',
     '    paths: {',
-    '        jquery: \'../components/jquery/jquery\',',
-    '        backbone: \'../components/backbone-amd/backbone\',',
-    '        underscore: \'../components/underscore-amd/underscore\','
+    '        jquery: \'../bower_components/jquery/jquery\',',
+    '        backbone: \'../bower_components/backbone-amd/backbone\',',
+    '        underscore: \'../bower_components/underscore-amd/underscore\','
   );
 
   if (this.compassBootstrap) {

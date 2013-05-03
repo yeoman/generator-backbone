@@ -32,7 +32,7 @@ describe('Backbone generator with RequireJS', function () {
   describe('creates expected files', function (done) {
     it('with compassBootstrap', function (done) {
       var expected = [
-        ['component.json', /("name": "temp")(|.|\n)*(requirejs)/],
+        ['bower.json', /("name": "temp")(|.|\n)*(requirejs)/],
         ['package.json', /"name": "temp"/],
         'Gruntfile.js',
         'app/404.html',
@@ -43,7 +43,6 @@ describe('Backbone generator with RequireJS', function () {
         '.gitignore',
         '.gitattributes',
         '.bowerrc',
-        'component.json',
         '.jshintrc',
         '.editorconfig',
         'Gruntfile.js',
@@ -61,7 +60,7 @@ describe('Backbone generator with RequireJS', function () {
 
     it('without compassBootstrap', function (done) {
       var expected = [
-        ['component.json', /("name": "temp")(|.|\n)*(requirejs)/],
+        ['bower.json', /("name": "temp")(|.|\n)*(requirejs)/],
         ['package.json', /"name": "temp"/],
         ['Gruntfile.js', /requirejs/],
         'app/404.html',
@@ -72,7 +71,6 @@ describe('Backbone generator with RequireJS', function () {
         '.gitignore',
         '.gitattributes',
         '.bowerrc',
-        'component.json',
         '.jshintrc',
         '.editorconfig',
         'Gruntfile.js',
