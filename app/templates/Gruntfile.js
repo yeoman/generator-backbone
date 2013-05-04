@@ -253,14 +253,6 @@ module.exports = function (grunt) {
             }
         },
         copy: {
-            defaultTemplate: {
-                files: [{
-                    expand: true,
-                    cwd: require('path').dirname(require.resolve('generator-backbone/app/templates/templates.js')),
-                    dest: '.tmp/scripts/',
-                    src: [ 'templates.js' ]
-                }]
-            },
             dist: {
                 files: [{
                     expand: true,
@@ -317,6 +309,10 @@ module.exports = function (grunt) {
 
     grunt.renameTask('regarde', 'watch');
 
+    grunt.registerTask('createDefaultTemplate', function () {
+        grunt.file.write('.tmp/scripts/templates.js', 'this.JST = this.JST || {};');
+    });
+
     grunt.registerTask('server', function (target) {
         if (target === 'dist') {
             return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
@@ -325,7 +321,7 @@ module.exports = function (grunt) {
         grunt.task.run([
             'clean:server',
             'coffee:dist',
-            'copy:defaultTemplate',<% if (templateFramework === 'mustache') { %>
+            'createDefaultTemplate',<% if (templateFramework === 'mustache') { %>
             'mustache',<% } else if (templateFramework === 'handlebars') { %>
             'handlebars',<% } else { %>
             'jst',<% } %>
@@ -340,7 +336,7 @@ module.exports = function (grunt) {
     grunt.registerTask('test', [
         'clean:server',
         'coffee',
-        'copy:defaultTemplate',<% if (templateFramework === 'mustache' ) { %>
+        'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
         'mustache',<% } else if (templateFramework === 'handlebars') { %>
         'handlebars',<% } else { %>
         'jst',<% } %>
@@ -352,7 +348,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'coffee',
-        'copy:defaultTemplate',<% if (templateFramework === 'mustache' ) { %>
+        'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
         'mustache',<% } else if (templateFramework === 'handlebars') { %>
         'handlebars',<% } else { %>
         'jst',<% } %>
@@ -364,7 +360,7 @@ module.exports = function (grunt) {
         'concat',
         'cssmin',
         'uglify',
-        'copy:dist',
+        'copy',
         'usemin'
     ]);
 

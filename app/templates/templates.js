@@ -1,1 +1,0 @@
-this.JST = this.JST || {};
