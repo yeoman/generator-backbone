@@ -122,9 +122,9 @@ Generator.prototype.writeIndex = function writeIndex() {
   ];
 
   this.indexFile = this.appendScripts(this.indexFile, 'scripts/vendor.js', [
-    'bower_components/jquery/jquery.min.js',
-    'bower_components/underscore/underscore-min.js',
-    'bower_components/backbone/backbone-min.js'
+    'bower_components/jquery/jquery.js',
+    'bower_components/underscore/underscore.js',
+    'bower_components/backbone/backbone.js'
   ]);
 
   if (this.compassBootstrap) {
