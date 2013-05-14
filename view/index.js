@@ -41,20 +41,19 @@ Generator.prototype.createViewFiles = function createViewFiles() {
   var template = [
     '/*global define*/',
     '',
-    'define([',
-    '    \'jquery\',',
-    '    \'underscore\',',
-    '    \'backbone\',',
-    '    \'templates\',',
-    '], function ($, _, Backbone, JST) {',
-    '    \'use strict\';',
+    'define( function(require) {',
+    '   var $ = require(\'jquery\');',
+    '   var _ = require(\'underscore\');',
+    '   var Backbone = require(\'backbone\');',
+    '   var JST = require(\'templates\');',
+    '   \'use strict\';',
+    '   var ' + this._.classify(this.name) + 'View = Backbone.View.extend({',
+    '       ' + 'template: JST[\'' + this.jst_path + '\']',
+    '   });',
     '',
-    '    var ' + this._.classify(this.name) + 'View = Backbone.View.extend({',
-    '        ' + 'template: JST[\'' + this.jst_path + '\']',
-    '    });',
+    '   return ' + this._.classify(this.name) + 'View;',
     '',
-    '    return ' + this._.classify(this.name) + 'View;',
-    '});',
+    '});'
   ].join('\n');
 
   this.write(destFile, template);
