@@ -1,3 +1,8 @@
+v0.1.2:
+  changes:
+    - updated to bower 0.9
+    - various bug fixes
+
 v0.1.1:
   changes:
     - Support for handlebars and mustache templates
