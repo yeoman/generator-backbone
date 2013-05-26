@@ -158,7 +158,7 @@ module.exports = function (grunt) {
                 imagesDir: '<%%= yeoman.app %>/images',
                 javascriptsDir: '<%%= yeoman.app %>/scripts',
                 fontsDir: '<%%= yeoman.app %>/styles/fonts',
-                importPath: 'app/bower_components',
+                importPath: '<%%= yeoman.app %>/bower_components',
                 relativeAssets: true
             },
             dist: {},
@@ -173,7 +173,7 @@ module.exports = function (grunt) {
                 // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
                 options: {
                     // `name` and `out` is set by grunt-usemin
-                    baseUrl: 'app/scripts',
+                    baseUrl: '<%%= yeoman.app %>/scripts',
                     optimize: 'none',
                     paths: {
                         'templates': '../../.tmp/scripts/templates'
