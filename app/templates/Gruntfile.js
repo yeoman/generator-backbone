@@ -195,7 +195,7 @@ module.exports = function (grunt) {
                     '<%%= yeoman.dist %>/scripts/main.js': [
                         '<%%= yeoman.app %>/scripts/{,*/}*.js',
                         '.tmp/scripts/templates.js'
-                    ],
+                    ]
                 }
             }
         },<% } %>
