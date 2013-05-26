@@ -15,6 +15,5 @@
   "smarttabs"    : true,
   "quotmark"     : "single",
   "indent"       : 2,
-  "white"        : true,
-  "jquery"       : true
+  "white"        : true
 }
