@@ -54,7 +54,13 @@ Generator.prototype.addScriptToIndex = function (script) {
  */
 Generator.prototype.isUsingRequireJS = function isUsingRequireJS() {
   var ext = this.env.options.coffee ? '.coffee' : '.js';
-  return (/require\.config/).test(this.read(path.join(process.cwd(), 'app/scripts/main' + ext)));
+  var filepath = path.join(process.cwd(), 'app/scripts/main' + ext);
+
+  try {
+    return (/require\.config/).test(this.read(filepath));
+  } catch (e) {
+    return false;
+  }
 };
 
 Generator.prototype.getTemplateFramework = function getTemplateFramework() {
