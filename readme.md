@@ -20,7 +20,7 @@ Run `yo backbone`, optionally passing an app name:
 ```
 yo backbone [app-name]
 ```
-
+Note: This generator relies on the [Mocha](https://github.com/yeoman/generator-mocha) generator
 
 ## Generators
 
