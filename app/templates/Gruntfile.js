@@ -1,5 +1,6 @@
 'use strict';
-var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet;
+var LIVERELOAD_PORT = 35729;
+var lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT});
 var mountFolder = function (connect, dir) {
     return connect.static(require('path').resolve(dir));
 };
@@ -24,6 +25,9 @@ module.exports = function (grunt) {
     grunt.initConfig({
         yeoman: yeomanConfig,
         watch: {
+            options: {
+                nospawn: true
+            },
             coffee: {
                 files: ['<%%= yeoman.app %>/scripts/{,*/}*.coffee'],
                 tasks: ['coffee:dist']
@@ -37,13 +41,15 @@ module.exports = function (grunt) {
                 tasks: ['compass']
             },
             livereload: {
+                options: {
+                    livereload: LIVERELOAD_PORT
+                },
                 files: [
                     '<%%= yeoman.app %>/*.html',
                     '{.tmp,<%%= yeoman.app %>}/styles/{,*/}*.css',
                     '{.tmp,<%%= yeoman.app %>}/scripts/{,*/}*.js',
                     '<%%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}'
-                ],
-                tasks: ['livereload']
+                ]
             },<% if (templateFramework === 'mustache') { %>
             mustache: {
                 files: [
@@ -307,8 +313,6 @@ module.exports = function (grunt) {
         }<% } %>
     });
 
-    grunt.renameTask('regarde', 'watch');
-
     grunt.registerTask('createDefaultTemplate', function () {
         grunt.file.write('.tmp/scripts/templates.js', 'this.JST = this.JST || {};');
     });
@@ -326,7 +330,6 @@ module.exports = function (grunt) {
             'handlebars',<% } else { %>
             'jst',<% } %>
             'compass:server',
-            'livereload-start',
             'connect:livereload',
             'open',
             'watch'
