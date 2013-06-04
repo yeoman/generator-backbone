@@ -305,7 +305,19 @@ module.exports = function (grunt) {
                     '.tmp/scripts/templates.js': ['<%%= yeoman.app %>/scripts/templates/*.ejs']
                 }
             }
-        }<% } %>
+        }<% } %>,
+        rev: {
+            dist: {
+                files: {
+                    src: [
+                        '<%%= yeoman.dist %>/scripts/{,*/}*.js',
+                        '<%%= yeoman.dist %>/styles/{,*/}*.css',
+                        '<%%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
+                        '<%%= yeoman.dist %>/styles/fonts/*'
+                    ]
+                }
+            }
+        }
     });
 
     grunt.renameTask('regarde', 'watch');
@@ -362,6 +374,7 @@ module.exports = function (grunt) {
         'cssmin',
         'uglify',
         'copy',
+        'rev',
         'usemin'
     ]);
 
