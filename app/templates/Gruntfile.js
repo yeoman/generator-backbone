@@ -29,6 +29,9 @@ module.exports = function (grunt) {
                 nospawn: true
             },
             coffee: {
+                options: {
+                    livereload: true
+                },
                 files: ['<%%= yeoman.app %>/scripts/{,*/}*.coffee'],
                 tasks: ['coffee:dist']
             },
@@ -37,6 +40,9 @@ module.exports = function (grunt) {
                 tasks: ['coffee:test']
             },
             compass: {
+                options: {
+                    livereload: true
+                },
                 files: ['<%%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
                 tasks: ['compass']
             },
