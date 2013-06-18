@@ -10,7 +10,14 @@ function Generator(args, options, config) {
 
   this.testFramework = this.options['test-framework'] || 'mocha';
   this.templateFramework = this.options['template-framework'] || 'lodash';
-  this.hookFor(this.testFramework, { as: 'app' });
+  this.hookFor(this.testFramework, {
+    as: 'app',
+    options: {
+      options: {
+        'skip-install': this.options['skip-install']
+      }
+    }
+  });
 
   this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
 
