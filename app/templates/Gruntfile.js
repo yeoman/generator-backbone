@@ -26,23 +26,14 @@ module.exports = function (grunt) {
         yeoman: yeomanConfig,
         watch: {
             options: {
-                nospawn: true
-            },
-            coffee: {
-                options: {
-                    livereload: true
-                },
-                files: ['<%%= yeoman.app %>/scripts/{,*/}*.coffee'],
-                tasks: ['coffee:dist']
+                nospawn: true,
+                livereload: true
             },
             coffeeTest: {
                 files: ['test/spec/{,*/}*.coffee'],
                 tasks: ['coffee:test']
             },
             compass: {
-                options: {
-                    livereload: true
-                },
                 files: ['<%%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
                 tasks: ['compass']
             },
@@ -62,19 +53,23 @@ module.exports = function (grunt) {
                     '<%%= yeoman.app %>/scripts/templates/*.mustache'
                 ],
                 tasks: ['mustache']
-            }<% } else if (templateFramework === 'handlebars') { %>
+            },<% } else if (templateFramework === 'handlebars') { %>
             handlebars: {
                 files: [
                     '<%%= yeoman.app %>/scripts/templates/*.hbs'
                 ],
                 tasks: ['handlebars']
-            }<% } else { %>
+            },<% } else { %>
             jst: {
                 files: [
                     '<%%= yeoman.app %>/scripts/templates/*.ejs'
                 ],
                 tasks: ['jst']
-            }<% } %>
+            },<% } %>
+            neuter: {
+                files: ['{.tmp,<%%= yeoman.app %>}/scripts/{,*/}*.{js,coffee}'],
+                tasks: ['coffee:dist', 'neuter']
+            }
         },
         connect: {
             options: {
@@ -179,8 +174,8 @@ module.exports = function (grunt) {
                     debugInfo: true
                 }
             }
-        },
-        <% if (includeRequireJS) { %>requirejs: {
+        },<% if (includeRequireJS) { %>
+        requirejs: {
             dist: {
                 // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
                 options: {
@@ -199,15 +194,6 @@ module.exports = function (grunt) {
                     useStrict: true,
                     wrap: true,
                     //uglify2: {} // https://github.com/mishoo/UglifyJS2
-                }
-            }
-        },<% } else { %>uglify: {
-            dist: {
-                files: {
-                    '<%%= yeoman.dist %>/scripts/main.js': [
-                        '<%%= yeoman.app %>/scripts/{,*/}*.js',
-                        '.tmp/scripts/{,*/}*.js'
-                    ]
                 }
             }
         },<% } %>
@@ -329,6 +315,12 @@ module.exports = function (grunt) {
                     ]
                 }
             }
+        },
+        neuter: {
+            app: {
+                src: '<%%= yeoman.app %>/scripts/main.js',
+                dest: '.tmp/scripts/combined-scripts.js'
+            }
         }
     });
 
@@ -348,6 +340,7 @@ module.exports = function (grunt) {
             'mustache',<% } else if (templateFramework === 'handlebars') { %>
             'handlebars',<% } else { %>
             'jst',<% } %>
+            'neuter:app',
             'compass:server',
             'connect:livereload',
             'open',
@@ -362,6 +355,7 @@ module.exports = function (grunt) {
         'mustache',<% } else if (templateFramework === 'handlebars') { %>
         'handlebars',<% } else { %>
         'jst',<% } %>
+        'neuter:app',
         'compass',
         'connect:test',
         'mocha'
@@ -374,6 +368,7 @@ module.exports = function (grunt) {
         'mustache',<% } else if (templateFramework === 'handlebars') { %>
         'handlebars',<% } else { %>
         'jst',<% } %>
+        'neuter:app',
         'compass:dist',
         'useminPrepare',<% if (includeRequireJS) { %>
         'requirejs',<% } %>
