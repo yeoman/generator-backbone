@@ -45,8 +45,8 @@ describe('Backbone generator test', function () {
       this.backbone.app.options['skip-install'] = true;
 
       helpers.mockPrompt(this.backbone.app, {
-        'compassBootstrap': 'Y',
-        'includeRequireJS': 'N'
+        'compassBootstrap': true,
+        'includeRequireJS': false
       });
 
       done();
@@ -98,7 +98,8 @@ describe('Backbone generator test', function () {
       this.backbone.app.run({}, function () {
         model.run([], function () {
           helpers.assertFiles([
-            ['app/scripts/models/foo-model.js', /Models.FooModel = Backbone.Model.extend\(\{/]
+            ['app/scripts/models/foo-model.js',
+              /Models.FooModel = Backbone.Model.extend\(\{/]
           ]);
         });
         done();
