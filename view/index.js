@@ -34,7 +34,6 @@ Generator.prototype.createViewFiles = function createViewFiles() {
   }
   if (!isRequireJsApp) {
     this.template('view.' + ext, destFile);
-    this.addScriptToIndex('views/' + this.name + '-view');
     return;
   }
 
