@@ -10,7 +10,14 @@ function Generator(args, options, config) {
 
   this.testFramework = this.options['test-framework'] || 'mocha';
   this.templateFramework = this.options['template-framework'] || 'lodash';
-  this.hookFor(this.testFramework, { as: 'app' });
+  this.hookFor(this.testFramework, {
+    as: 'app',
+    options: {
+      options: {
+        'skip-install': this.options['skip-install']
+      }
+    }
+  });
 
   this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
 
@@ -133,10 +140,9 @@ Generator.prototype.writeIndex = function writeIndex() {
     contentText.push('                    <li>Twitter Bootstrap</li>');
   }
 
-  this.indexFile = this.appendScripts(this.indexFile, 'scripts/main.js', [
-    'scripts/main.js',
-    'scripts/templates.js'
-  ]);
+  this.indexFile = this.appendFiles(this.indexFile, 'js', 'scripts/main.js', [
+    'scripts/combined-scripts.js'
+  ], null, '.tmp');
 
   // iterate over defaults and create content string
   defaults.forEach(function (el) {
