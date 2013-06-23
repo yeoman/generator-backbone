@@ -23,7 +23,6 @@ Generator.prototype.createControllerFiles = function createControllerFiles() {
 
   if (!isRequireJsApp) {
     this.template('collection.' + ext, destFile);
-    this.addScriptToIndex('collections/' + this.name + '-collection');
     return;
   }
 
