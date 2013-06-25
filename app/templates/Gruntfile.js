@@ -65,11 +65,11 @@ module.exports = function (grunt) {
                     '<%%= yeoman.app %>/scripts/templates/*.ejs'
                 ],
                 tasks: ['jst']
-            },<% } %>
+            }<% } %><% if (!includeRequireJS) { %>,
             neuter: {
                 files: ['{.tmp,<%%= yeoman.app %>}/scripts/{,*/}*.{js,coffee}'],
                 tasks: ['coffee:dist', 'neuter']
-            }
+            }<% } %>
         },
         connect: {
             options: {
@@ -315,13 +315,13 @@ module.exports = function (grunt) {
                     ]
                 }
             }
-        },
+        }<% if (!includeRequireJS) { %>,
         neuter: {
             app: {
                 src: '<%%= yeoman.app %>/scripts/main.js',
                 dest: '.tmp/scripts/combined-scripts.js'
             }
-        }
+        }<% } %>
     });
 
     grunt.registerTask('createDefaultTemplate', function () {
@@ -339,8 +339,8 @@ module.exports = function (grunt) {
             'createDefaultTemplate',<% if (templateFramework === 'mustache') { %>
             'mustache',<% } else if (templateFramework === 'handlebars') { %>
             'handlebars',<% } else { %>
-            'jst',<% } %>
-            'neuter:app',
+            'jst',<% } %><% if (!includeRequireJS) { %>
+            'neuter:app',<% } %>
             'compass:server',
             'connect:livereload',
             'open',
@@ -354,8 +354,8 @@ module.exports = function (grunt) {
         'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
         'mustache',<% } else if (templateFramework === 'handlebars') { %>
         'handlebars',<% } else { %>
-        'jst',<% } %>
-        'neuter:app',
+        'jst',<% } %><% if (!includeRequireJS) { %>
+        'neuter:app',<% } %>
         'compass',
         'connect:test',
         'mocha'
@@ -368,10 +368,10 @@ module.exports = function (grunt) {
         'mustache',<% } else if (templateFramework === 'handlebars') { %>
         'handlebars',<% } else { %>
         'jst',<% } %>
-        'neuter:app',
         'compass:dist',
         'useminPrepare',<% if (includeRequireJS) { %>
-        'requirejs',<% } %>
+        'requirejs',<% } else {  %>
+        'neuter:app',<% }  %>
         'imagemin',
         'htmlmin',
         'concat',
