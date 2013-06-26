@@ -1,3 +1,11 @@
+v0.1.3:
+  changes:
+    - Updated to new interactive prompt
+    - Added generator-mocha as peerDependency
+    - Moved to grunt-contrib-watch and connect-livereload v2.0
+    - Using grunt-neuter to custom order for uglify
+    - various minor bug fixes and enhancements
+
 v0.1.2:
   changes:
     - updated to bower 0.9
