@@ -1,4 +1,4 @@
-# Backbone.js generator [![Build Status](https://secure.travis-ci.org/yeoman/generator-backbone.png?branch=master)](http://travis-ci.org/yeoman/generator-backbone)
+# Backbone.js generator [![Build Status](https://secure.travis-ci.org/yeoman/generator-backbone.png?branch=master)](http://travis-ci.org/yeoman/generator-backbone) [![Dependency Status](https://gemnasium.com/yeoman/generator-backbone.png)](https://gemnasium.com/yeoman/generator-backbone)
 
 Maintainer: [Revath S Kumar](https://github.com/revathskumar)
 
