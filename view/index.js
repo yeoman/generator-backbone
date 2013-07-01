@@ -44,7 +44,7 @@ Generator.prototype.createViewFiles = function createViewFiles() {
     '    \'jquery\',',
     '    \'underscore\',',
     '    \'backbone\',',
-    '    \'templates\',',
+    '    \'templates\'',
     '], function ($, _, Backbone, JST) {',
     '    \'use strict\';',
     '',

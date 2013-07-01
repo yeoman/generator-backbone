@@ -47,19 +47,19 @@ module.exports = function (grunt) {
                     '{.tmp,<%%= yeoman.app %>}/scripts/{,*/}*.js',
                     '<%%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}'
                 ]
-            },<% if (templateFramework === 'mustache') { %>
+            }<% if (templateFramework === 'mustache') { %>
             mustache: {
                 files: [
                     '<%%= yeoman.app %>/scripts/templates/*.mustache'
                 ],
                 tasks: ['mustache']
-            },<% } else if (templateFramework === 'handlebars') { %>
+            }<% } else if (templateFramework === 'handlebars') { %>,
             handlebars: {
                 files: [
                     '<%%= yeoman.app %>/scripts/templates/*.hbs'
                 ],
                 tasks: ['handlebars']
-            },<% } else { %>
+            }<% } else { %>,
             jst: {
                 files: [
                     '<%%= yeoman.app %>/scripts/templates/*.ejs'
