@@ -16,13 +16,17 @@ require.config({
         bootstrap: {
             deps: ['jquery'],
             exports: 'jquery'
+        }<% } %><% if (templateFramework === 'handlebars') { %>,
+        handlebars: {
+            exports: 'Handlebars'
         }<% } %>
     },
     paths: {
         jquery: '../bower_components/jquery/jquery',
         backbone: '../bower_components/backbone-amd/backbone',
         underscore: '../bower_components/underscore-amd/underscore'<% if (compassBootstrap) { %>,
-        bootstrap: 'vendor/bootstrap'<% } %>
+        bootstrap: 'vendor/bootstrap'<% } %><% if (templateFramework === 'handlebars') { %>,
+        handlebars: '../bower_components/handlebars/handlebars'<% } %>
     }
 });
 

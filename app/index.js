@@ -113,11 +113,17 @@ Generator.prototype.writeIndex = function writeIndex() {
     '                <ul>'
   ];
 
-  this.indexFile = this.appendScripts(this.indexFile, 'scripts/vendor.js', [
+  var vendorJS = [
     'bower_components/jquery/jquery.js',
     'bower_components/underscore/underscore.js',
     'bower_components/backbone/backbone.js'
-  ]);
+  ];
+
+  if (this.templateFramework === 'handlebars') {
+    vendorJS.push('bower_components/handlebars/handlebars.js')
+  }
+
+  this.indexFile = this.appendScripts(this.indexFile, 'scripts/vendor.js', vendorJS);
 
   if (this.compassBootstrap) {
     // wire Twitter Bootstrap plugins
