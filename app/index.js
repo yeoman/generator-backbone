@@ -228,60 +228,12 @@ Generator.prototype.mainJs = function mainJs() {
     return;
   }
 
-  var mainJsFile = [
-    '/*global require*/',
-    '\'use strict\';',
-    '',
-    'require.config({',
-    '    shim: {',
-    '        underscore: {',
-    '            exports: \'_\'',
-    '        },',
-    '        backbone: {',
-    '            deps: [',
-    '                \'underscore\',',
-    '                \'jquery\'',
-    '            ],',
-    '            exports: \'Backbone\'',
-    '        },',
-  ];
+  var dirPath = this.options.coffee ? '../templates/coffeescript/' : '../templates';
+  this.sourceRoot(path.join(__dirname, dirPath));
 
-  if (this.compassBootstrap) {
-    mainJsFile.push(
-      '        bootstrap: {',
-      '            deps: [\'jquery\'],',
-      '            exports: \'jquery\'',
-      '        }'
-    );
-  }
+  var mainJsFile = this.engine(this.read('requirejs_app.js'), this);
 
-  mainJsFile.push(
-    '    },',
-    '    paths: {',
-    '        jquery: \'../bower_components/jquery/jquery\',',
-    '        backbone: \'../bower_components/backbone-amd/backbone\',',
-    '        underscore: \'../bower_components/underscore-amd/underscore\','
-  );
-
-  if (this.compassBootstrap) {
-    mainJsFile.push('        bootstrap: \'vendor/bootstrap\'');
-  }
-
-  mainJsFile.push(
-    '    }',
-    '});'
-  );
-
-  mainJsFile.push(
-    '',
-    'require([',
-    '    \'backbone\'',
-    '], function (Backbone) {',
-    '    Backbone.history.start();',
-    '});'
-  );
-
-  this.write('app/scripts/main.js', mainJsFile.join('\n'));
+  this.write('app/scripts/main.js', mainJsFile);
 };
 
 Generator.prototype.createAppFile = function createAppFile() {
