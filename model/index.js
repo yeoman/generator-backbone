@@ -46,7 +46,7 @@ Generator.prototype.createModelFiles = function createModelFiles() {
     '',
     'define([',
     '    \'underscore\',',
-    '    \'backbone\',',
+    '    \'backbone\'',
     '], function (_, Backbone) {',
     '    \'use strict\';',
     '',

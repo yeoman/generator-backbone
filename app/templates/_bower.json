@@ -10,7 +10,8 @@
     "requirejs-text": "~2.0.5",
     "backbone-amd": "~1.0.0",
     "underscore-amd": "~1.4.4",<% } %>
-    "modernizr": "~2.6.2"
+    "modernizr": "~2.6.2"<% if (templateFramework === 'handlebars') { %>,
+    "handlebars": "~1.0.0"<% } %>
   },
   "devDependencies": {}
 }
