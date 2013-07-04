@@ -82,6 +82,9 @@ describe('Backbone generator test', function () {
       'Gruntfile.js',
       'package.json',
       'app/scripts/main.js',
+      'app/styles/main.scss',
+      'app/images/glyphicons-halflings-white.png',
+      'app/images/glyphicons-halflings.png'
     ];
 
     this.backbone.app.run({}, function () {

@@ -90,12 +90,28 @@ Generator.prototype.packageJSON = function packageJSON() {
   this.template('_package.json', 'package.json');
 };
 
-Generator.prototype.mainStylesheet = function mainStylesheet() {
+Generator.prototype.bootstrapImg = function bootstrapImg(){
   if (this.compassBootstrap) {
-    this.write('app/styles/main.scss', '@import \'sass-bootstrap/lib/bootstrap\';\n\n.hero-unit {\n    margin: 50px auto 0 auto;\n    width: 300px;\n}');
-  } else {
-    this.write('app/styles/main.css', 'body {\n    background: #fafafa;\n}\n\n.hero-unit {\n    margin: 50px auto 0 auto;\n    width: 300px;\n}');
+    this.copy('glyphicons-halflings.png', 'app/images/glyphicons-halflings.png');
+    this.copy('glyphicons-halflings-white.png', 'app/images/glyphicons-halflings-white.png');
   }
+}
+
+Generator.prototype.mainStylesheet = function mainStylesheet() {
+  var contentText = [
+    'body {\n    background: #fafafa;\n}',
+    '\n.hero-unit {\n    margin: 50px auto 0 auto;\n    width: 300px;\n}'
+  ];
+  var ext = '.css';
+  if (this.compassBootstrap) {
+    contentText = [
+      '$iconSpritePath: \'/images/glyphicons-halflings.png\';',
+      '@import \'sass-bootstrap/lib/bootstrap\';',
+      '\n.hero-unit {\n    margin: 50px auto 0 auto;\n    width: 300px;\n}'
+    ];
+    ext = '.scss';
+  }
+  this.write('app/styles/main' + ext, contentText.join('\n'));
 };
 
 Generator.prototype.writeIndex = function writeIndex() {
