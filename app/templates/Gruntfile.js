@@ -69,6 +69,10 @@ module.exports = function (grunt) {
             neuter: {
                 files: ['{.tmp,<%%= yeoman.app %>}/scripts/{,*/}*.{js,coffee}'],
                 tasks: ['coffee:dist', 'neuter']
+            }<% } %><% if (testFramework === 'jasmine') { %>,
+            test: {
+                files: ['<%%= yeoman.app %>/scripts/{,*/}*.js', 'test/spec/**/*.js'],
+                tasks: ['test']
             }<% } %>
         },
         connect: {
@@ -128,7 +132,7 @@ module.exports = function (grunt) {
                 '!<%%= yeoman.app %>/scripts/vendor/*',
                 'test/spec/{,*/}*.js'
             ]
-        },
+        }<% if (testFramework === 'mocha') { %>,
         mocha: {
             all: {
                 options: {
@@ -136,7 +140,21 @@ module.exports = function (grunt) {
                     urls: ['http://localhost:<%%= connect.options.port %>/index.html']
                 }
             }
-        },
+        }<% } else { %>,
+        jasmine: {
+            all:{
+                src : '.tmp/scripts/combined-scripts.js',
+                options: {
+                    keepRunner: true,
+                    specs : 'test/spec/**/*.js',
+                    vendor : [
+                        '<%%= yeoman.app %>/bower_components/jquery/jquery.js',
+                        '<%%= yeoman.app %>/bower_components/underscore/underscore.js',
+                        '<%%= yeoman.app %>/bower_components/backbone/backbone.js'
+                    ]
+                }
+            }
+        }<% } %>,
         coffee: {
             dist: {
                 files: [{
@@ -356,9 +374,11 @@ module.exports = function (grunt) {
         'handlebars',<% } else { %>
         'jst',<% } %><% if (!includeRequireJS) { %>
         'neuter:app',<% } %>
-        'compass',
+        'compass',<% if(testFramework === 'mocha') { %>
         'connect:test',
-        'mocha'
+        'mocha'<% } else { %>
+        'jasmine',
+        'watch:test'<% } %>
     ]);
 
     grunt.registerTask('build', [
