@@ -35,6 +35,11 @@ Available generators:
 
 ## Options
 
+* `--coffee`
+  
+  Generate scaffolds in CoffeeScript.
+  RequireJS is not supported with `--coffee` option for now.
+
 * `--skip-install`
 
   Skips the automatic execution of `bower` and `npm` after
