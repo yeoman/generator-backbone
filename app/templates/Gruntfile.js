@@ -47,7 +47,7 @@ module.exports = function (grunt) {
                     '{.tmp,<%%= yeoman.app %>}/scripts/{,*/}*.js',
                     '<%%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}'
                 ]
-            }<% if (templateFramework === 'mustache') { %>
+            }<% if (templateFramework === 'mustache') { %>,
             mustache: {
                 files: [
                     '<%%= yeoman.app %>/scripts/templates/*.mustache'
