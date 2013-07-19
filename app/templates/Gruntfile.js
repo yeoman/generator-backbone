@@ -336,7 +336,7 @@ module.exports = function (grunt) {
         }<% if (!includeRequireJS) { %>,
         neuter: {
             app: {
-                src: '<%%= yeoman.app %>/scripts/main.js',
+                src: '{.tmp,<%%= yeoman.app %>}/scripts/main.js',
                 dest: '.tmp/scripts/combined-scripts.js'
             }
         }<% } %>
