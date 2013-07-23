@@ -1,3 +1,11 @@
+v0.1.6:
+  date: 2013-07-16
+  changes:
+    - Adds yo as peerDependency
+    - Updated jasmine task
+    - Jasmine tests will watch spec and keepalive
+    - Various bug fixes.
+
 v0.1.5:
   date: 2013-07-16
   changes:
