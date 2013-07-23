@@ -23,8 +23,8 @@ require.config({
     },
     paths: {
         jquery: '../bower_components/jquery/jquery',
-        backbone: '../bower_components/backbone-amd/backbone',
-        underscore: '../bower_components/underscore-amd/underscore'<% if (compassBootstrap) { %>,
+        backbone: '../bower_components/backbone/backbone',
+        underscore: '../bower_components/underscore/underscore'<% if (compassBootstrap) { %>,
         bootstrap: 'vendor/bootstrap'<% } %><% if (templateFramework === 'handlebars') { %>,
         handlebars: '../bower_components/handlebars/handlebars'<% } %>
     }
