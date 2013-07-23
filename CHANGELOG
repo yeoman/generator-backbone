@@ -1,5 +1,5 @@
 v0.1.6:
-  date: 2013-07-16
+  date: 2013-07-24
   changes:
     - Adds yo as peerDependency
     - Updated jasmine task
