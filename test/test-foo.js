@@ -132,7 +132,7 @@ describe('Backbone generator test', function () {
       this.backbone.app.run({}, function () {
         router.run([], function () {
           helpers.assertFiles([
-            ['app/scripts/routes/foo-router.js', /Routers.FooRouter = Backbone.Router.extend\(\{/]
+            ['app/scripts/routers/foo-router.js', /Routers.FooRouter = Backbone.Router.extend\(\{/]
           ]);
         });
         done();
