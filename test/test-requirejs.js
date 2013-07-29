@@ -123,7 +123,7 @@ describe('Backbone generator with RequireJS', function () {
       this.backbone.app.run({}, function () {
         router.run([], function () {
           helpers.assertFiles([
-            ['app/scripts/routes/foo-router.js', /var FooRouter = Backbone.Router.extend\(\{/]
+           ['app/scripts/routers/foo-router.js', /var FooRouter = Backbone.Router.extend\(\{/]
           ]);
         });
 

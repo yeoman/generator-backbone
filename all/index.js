@@ -10,7 +10,7 @@ function Generator(args, options, config) {
   var dirPath = this.options.coffee ? '../templates/coffeescript/' : '../templates';
   this.sourceRoot(path.join(__dirname, dirPath));
 
-  this.dirs = 'models collections views routes helpers templates'.split(' ');
+  this.dirs = 'models collections views routers helpers templates'.split(' ');
 
   this.option('coffee');
 

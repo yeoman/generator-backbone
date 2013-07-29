@@ -18,7 +18,7 @@ util.inherits(Generator, scriptBase);
 
 Generator.prototype.createControllerFiles = function createControllerFiles() {
   var ext = this.options.coffee ? 'coffee' : 'js';
-  var destFile = path.join('app/scripts/routes', this.name + '-router.' + ext);
+  var destFile = path.join('app/scripts/routers', this.name + '-router.' + ext);
   this.isRequireJsApp = this.isUsingRequireJS();
 
   if (!this.isRequireJsApp) {
