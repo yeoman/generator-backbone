@@ -10,8 +10,8 @@ window.<%= _.camelize(appname) %> =
 require('.tmp/scripts/templates');
 require('.tmp/scripts/views/*');
 require('.tmp/scripts/models/*');
-require('.tmp/scripts/controllers/*');
-require('.tmp/scripts/routers/*');
+require('.tmp/scripts/collections/*');
+require('.tmp/scripts/routes/*');
 
 $ ->
   <%= _.camelize(appname) %>.init();
