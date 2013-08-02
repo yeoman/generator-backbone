@@ -16,7 +16,7 @@ require('.tmp/scripts/templates');
 require('app/scripts/views/*');
 require('app/scripts/models/*');
 require('app/scripts/collections/*');
-require('app/scripts/routers/*');
+require('app/scripts/routes/*');
 
 $(document).ready(function () {
     <%= _.camelize(appname) %>.init();
