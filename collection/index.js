@@ -17,12 +17,12 @@ function Generator() {
 util.inherits(Generator, scriptBase);
 
 Generator.prototype.createControllerFiles = function createControllerFiles() {
-  var ext = this.options.coffee ? 'coffee' : 'js';
-  var destFile = path.join('app/scripts/collections', this.name + '-collection.' + ext);
+  var ext = this.options.coffee ? '.coffee' : '.js';
+  var destFile = path.join('app/scripts/collections', this.name + ext);
   var isRequireJsApp = this.isUsingRequireJS();
 
   if (!isRequireJsApp) {
-    this.template('collection.' + ext, destFile);
+    this.template('collection' + ext, destFile);
     return;
   }
 
@@ -32,7 +32,7 @@ Generator.prototype.createControllerFiles = function createControllerFiles() {
     'define([',
     '    \'underscore\',',
     '    \'backbone\',',
-    '    \'models/' + this.name + '-model\'',
+    '    \'models/' + this.name + '\'',
     '], function (_, Backbone, ' + this._.classify(this.name) + 'Model' + ') {',
     '    \'use strict\';',
     '',
@@ -41,7 +41,7 @@ Generator.prototype.createControllerFiles = function createControllerFiles() {
     '    });',
     '',
     '    return ' + this._.classify(this.name) + 'Collection;',
-    '});',
+    '});'
   ].join('\n');
 
   this.write(destFile, template);

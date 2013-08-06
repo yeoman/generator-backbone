@@ -74,7 +74,7 @@ describe('Backbone generator with RequireJS', function () {
         '.jshintrc',
         '.editorconfig',
         'Gruntfile.js',
-        'package.json',
+        'package.json'
       ];
 
       this.backbone.app.run({}, function () {
@@ -91,7 +91,7 @@ describe('Backbone generator with RequireJS', function () {
       this.backbone.app.run({}, function () {
         model.run([], function () {
           helpers.assertFiles([
-            ['app/scripts/models/foo-model.js', /var FooModel = Backbone.Model.extend\(\{/]
+            ['app/scripts/models/foo.js', /var FooModel = Backbone.Model.extend\(\{/]
           ]);
         });
 
@@ -107,7 +107,7 @@ describe('Backbone generator with RequireJS', function () {
       this.backbone.app.run({}, function () {
         collection.run([], function () {
           helpers.assertFiles([
-            ['app/scripts/collections/foo-collection.js', /var FooCollection = Backbone.Collection.extend\(\{/]
+            ['app/scripts/collections/foo.js', /var FooCollection = Backbone.Collection.extend\(\{/]
           ]);
         });
 
@@ -123,7 +123,7 @@ describe('Backbone generator with RequireJS', function () {
       this.backbone.app.run({}, function () {
         router.run([], function () {
           helpers.assertFiles([
-            ['app/scripts/routes/foo-router.js', /var FooRouter = Backbone.Router.extend\(\{/]
+            ['app/scripts/routes/foo.js', /var FooRouter = Backbone.Router.extend\(\{/]
           ]);
         });
 
@@ -139,7 +139,7 @@ describe('Backbone generator with RequireJS', function () {
       this.backbone.app.run({}, function () {
         view.run([], function () {
           helpers.assertFiles([
-            ['app/scripts/views/foo-view.js', /var FooView = Backbone.View.extend\(\{(.|\n)*app\/scripts\/templates\/foo.ejs/],
+            ['app/scripts/views/foo.js', /var FooView = Backbone.View.extend\(\{(.|\n)*app\/scripts\/templates\/foo.ejs/],
             'app/scripts/templates/foo.ejs'
           ]);
         });

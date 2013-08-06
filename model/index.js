@@ -32,12 +32,12 @@ function Generator() {
 util.inherits(Generator, scriptBase);
 
 Generator.prototype.createModelFiles = function createModelFiles() {
-  var ext = this.options.coffee ? 'coffee' : 'js';
-  var destFile = path.join('app/scripts/models', this.name + '-model.' + ext);
+  var ext = this.options.coffee ? '.coffee' : '.js';
+  var destFile = path.join('app/scripts/models', this.name + ext);
   this.isRequireJsApp = this.isUsingRequireJS();
 
   if (!this.isRequireJsApp) {
-    this.template('model.' + ext, destFile);
+    this.template('model' + ext, destFile);
     return;
   }
 
@@ -56,7 +56,7 @@ Generator.prototype.createModelFiles = function createModelFiles() {
     '    });',
     '',
     '    return ' + this._.classify(this.name) + 'Model;',
-    '});',
+    '});'
   ].join('\n');
 
   this.write(destFile, template);

@@ -17,12 +17,12 @@ function Generator() {
 util.inherits(Generator, scriptBase);
 
 Generator.prototype.createControllerFiles = function createControllerFiles() {
-  var ext = this.options.coffee ? 'coffee' : 'js';
-  var destFile = path.join('app/scripts/routes', this.name + '-router.' + ext);
+  var ext = this.options.coffee ? '.coffee' : '.js';
+  var destFile = path.join('app/scripts/routes', this.name + ext);
   this.isRequireJsApp = this.isUsingRequireJS();
 
   if (!this.isRequireJsApp) {
-    this.template('router.' + ext, destFile);
+    this.template('router' + ext, destFile);
     return;
   }
 
