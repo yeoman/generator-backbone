@@ -16,7 +16,7 @@ function Generator() {
 util.inherits(Generator, scriptBase);
 
 Generator.prototype.createViewFiles = function createViewFiles() {
-  var ext = this.options.coffee ? 'coffee' : 'js';
+  var ext = this.options.coffee ? '.coffee' : '.js';
   var templateFramework = this.getTemplateFramework();
   var templateExt = '.ejs';
   if (templateFramework === 'mustache') {
@@ -25,7 +25,7 @@ Generator.prototype.createViewFiles = function createViewFiles() {
     templateExt = '.hbs';
   }
   this.jst_path = 'app/scripts/templates/' + this.name + templateExt;
-  var destFile = path.join('app/scripts/views', this.name + '-view.' + ext);
+  var destFile = path.join('app/scripts/views', this.name + ext);
   var isRequireJsApp = this.isUsingRequireJS();
 
   this.template('view.ejs', this.jst_path);
@@ -33,7 +33,7 @@ Generator.prototype.createViewFiles = function createViewFiles() {
     this.jst_path = this.name + '-template';
   }
   if (!isRequireJsApp) {
-    this.template('view.' + ext, destFile);
+    this.template('view' + ext, destFile);
     return;
   }
 
@@ -53,7 +53,7 @@ Generator.prototype.createViewFiles = function createViewFiles() {
     '    });',
     '',
     '    return ' + this._.classify(this.name) + 'View;',
-    '});',
+    '});'
   ].join('\n');
 
   this.write(destFile, template);

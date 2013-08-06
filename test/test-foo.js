@@ -101,7 +101,7 @@ describe('Backbone generator test', function () {
       this.backbone.app.run({}, function () {
         model.run([], function () {
           helpers.assertFiles([
-            ['app/scripts/models/foo-model.js',
+            ['app/scripts/models/foo.js',
               /Models.FooModel = Backbone.Model.extend\(\{/]
           ]);
         });
@@ -117,7 +117,7 @@ describe('Backbone generator test', function () {
       this.backbone.app.run({}, function () {
         collection.run([], function () {
           helpers.assertFiles([
-            ['app/scripts/collections/foo-collection.js', /Collections.FooCollection = Backbone.Collection.extend\(\{/]
+            ['app/scripts/collections/foo.js', /Collections.FooCollection = Backbone.Collection.extend\(\{/]
           ]);
         });
         done();
@@ -132,7 +132,7 @@ describe('Backbone generator test', function () {
       this.backbone.app.run({}, function () {
         router.run([], function () {
           helpers.assertFiles([
-            ['app/scripts/routes/foo-router.js', /Routers.FooRouter = Backbone.Router.extend\(\{/]
+            ['app/scripts/routes/foo.js', /Routers.FooRouter = Backbone.Router.extend\(\{/]
           ]);
         });
         done();
@@ -147,7 +147,7 @@ describe('Backbone generator test', function () {
       this.backbone.app.run({}, function () {
         view.run([], function () {
           helpers.assertFiles([
-            ['app/scripts/views/foo-view.js', /Views.FooView = Backbone.View.extend\(\{(.|\n)*app\/scripts\/templates\/foo.ejs/],
+            ['app/scripts/views/foo.js', /Views.FooView = Backbone.View.extend\(\{(.|\n)*app\/scripts\/templates\/foo.ejs/],
             'app/scripts/templates/foo.ejs'
           ]);
         });
