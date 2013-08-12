@@ -8,12 +8,12 @@ window.<%= _.camelize(appname) %> = {
     Views: {},
     Routers: {},
     init: function () {
-    	'use strict';
+        'use strict';
         console.log('Hello from Backbone!');
     }
 };
 
 $(document).ready(function () {
-	'use strict';
+    'use strict';
     <%= _.camelize(appname) %>.init();
 });
