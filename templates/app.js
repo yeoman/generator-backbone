@@ -7,6 +7,7 @@ window.<%= _.camelize(appname) %> = {
     Views: {},
     Routers: {},
     init: function () {
+        'use strict';
         console.log('Hello from Backbone!');
     }
 };
@@ -19,5 +20,6 @@ require('app/scripts/collections/*');
 require('app/scripts/routes/*');
 
 $(document).ready(function () {
+    'use strict';
     <%= _.camelize(appname) %>.init();
 });
