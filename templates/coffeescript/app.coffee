@@ -4,6 +4,7 @@ window.<%= _.camelize(appname) %> =
   Views: {}
   Routers: {}
   init: ->
+    'use strict'
     console.log 'Hello from Backbone!'
 
 # Order and include as you please.
@@ -14,4 +15,5 @@ require('.tmp/scripts/collections/*');
 require('.tmp/scripts/routes/*');
 
 $ ->
+  'use strict'
   <%= _.camelize(appname) %>.init();
