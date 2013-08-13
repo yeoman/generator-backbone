@@ -36,7 +36,7 @@ util.inherits(Generator, yeoman.generators.NamedBase);
  */
 Generator.prototype.isUsingRequireJS = function isUsingRequireJS() {
   var ext = this.env.options.coffee ? '.coffee' : '.js';
-  var filepath = path.join(process.cwd(), 'app/scripts/main' + ext);
+  var filepath = path.join(process.cwd(), this.env.options.appPath + '/scripts/main' + ext);
 
   try {
     return (/require\.config/).test(this.read(filepath));
