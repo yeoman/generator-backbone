@@ -8,9 +8,14 @@ function Generator(args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
 
   if (typeof this.env.options.appPath === 'undefined') {
-    try {
-        this.env.options.appPath = require(path.join(process.cwd(), 'bower.json')).appPath;
-    } catch (err) {}
+
+      if (typeof this.options.appPath !== 'undefined'){
+          this.env.options.appPath = this.options.appPath;
+      }else{
+         try {
+            this.env.options.appPath = require(path.join(process.cwd(), 'bower.json')).appPath;
+         } catch (err) {}
+      }
 
     this.env.options.appPath = this.env.options.appPath || 'app';
   }
