@@ -45,8 +45,7 @@ describe('Backbone generator test', function () {
       this.backbone.app.options['skip-install'] = true;
 
       helpers.mockPrompt(this.backbone.app, {
-        'compassBootstrap': true,
-        'includeRequireJS': false
+        features: ['compassBootstrap']
       });
 
       done();
