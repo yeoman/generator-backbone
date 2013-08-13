@@ -38,23 +38,29 @@ Generator.prototype.askFor = function askFor() {
   console.log('Out of the box I include HTML5 Boilerplate, jQuery, Backbone.js and Modernizr.');
 
   var prompts = [{
-    type: 'confirm',
-    name: 'compassBootstrap',
-    message: 'Would you like to include Twitter Bootstrap for Sass?',
-    default: false
-  },
-  {
-    type: 'confirm',
-    name: 'includeRequireJS',
-    message: 'Would you like to include RequireJS (for AMD support)?',
-    default: false
+    type: 'checkbox',
+    name: 'features',
+    message: 'What more would you like?',
+    choices: [{
+      name: 'Twitter Bootstrap for Sass',
+      value: 'compassBootstrap',
+      checked: true
+    }, {
+      name: 'RequireJS',
+      value: 'includeRequireJS',
+      checked: true
+    }]
   }];
 
-  this.prompt(prompts, function (props) {
+  this.prompt(prompts, function (answers) {
+    var features = answers.features;
+
+    function hasFeature(feat) { return features.indexOf(feat) !== -1; }
+
     // manually deal with the response, get back and store the results.
     // we change a bit this way of doing to automatically do this in the self.prompt() method.
-    this.compassBootstrap = props.compassBootstrap;
-    this.includeRequireJS = props.includeRequireJS;
+    this.compassBootstrap = hasFeature('compassBootstrap');
+    this.includeRequireJS = hasFeature('includeRequireJS');
 
     cb();
   }.bind(this));
