@@ -31,9 +31,6 @@ module.exports = function (grunt) {
                 nospawn: true
             },
             coffee: {
-                options: {
-                    livereload: true
-                },
                 files: ['<%%= yeoman.app %>/scripts/{,*/}*.coffee'],
                 tasks: ['coffee:dist']
             },
