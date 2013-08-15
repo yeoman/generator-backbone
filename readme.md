@@ -21,7 +21,6 @@ Run `yo backbone`, optionally passing an app name:
 yo backbone [app-name]
 ```
 
-
 ## Generators
 
 Available generators:
@@ -31,6 +30,19 @@ Available generators:
 - backbone:collection
 - backbone:router
 - backbone:all
+
+## Typical workflow
+
+```
+yo backbone # generates your application base and build workflow
+yo backbone:model blog
+yo backbone:collection blog
+yo backbone:router blog
+yo backbone:view blog
+grunt server
+```
+
+Also checkout this [NetTuts write-up](http://net.tutsplus.com/tutorials/javascript-ajax/building-apps-with-the-yeoman-workflow/) for a guide to building Backbone.js apps using this generator.
 
 
 ## Options
