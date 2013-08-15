@@ -28,8 +28,14 @@ module.exports = function (grunt) {
         yeoman: yeomanConfig,
         watch: {
             options: {
-                nospawn: true,
-                livereload: true
+                nospawn: true
+            },
+            coffee: {
+                options: {
+                    livereload: true
+                },
+                files: ['<%%= yeoman.app %>/scripts/{,*/}*.coffee'],
+                tasks: ['coffee:dist']
             },
             coffeeTest: {
                 files: ['test/spec/{,*/}*.coffee'],
@@ -67,10 +73,6 @@ module.exports = function (grunt) {
                     '<%%= yeoman.app %>/scripts/templates/*.ejs'
                 ],
                 tasks: ['jst']
-            }<% } %><% if (!includeRequireJS) { %>,
-            neuter: {
-                files: ['{.tmp,<%%= yeoman.app %>}/scripts/{,*/}*.{js,coffee}'],
-                tasks: ['coffee:dist', 'neuter']
             }<% } %><% if (testFramework === 'jasmine') { %>,
             test: {
                 files: ['<%%= yeoman.app %>/scripts/{,*/}*.js', 'test/spec/**/*.js'],
@@ -216,6 +218,15 @@ module.exports = function (grunt) {
                     //uglify2: {} // https://github.com/mishoo/UglifyJS2
                 }
             }
+        },<% } else { %>uglify: {
+            dist: {
+                files: {
+                    '<%%= yeoman.dist %>/scripts/main.js': [
+                        '<%%= yeoman.app %>/scripts/{,*/}*.js',
+                        '.tmp/scripts/{,*/}*.js'
+                    ]
+                }
+            }
         },<% } %>
         useminPrepare: {
             html: '<%%= yeoman.app %>/index.html',
@@ -335,13 +346,7 @@ module.exports = function (grunt) {
                     ]
                 }
             }
-        }<% if (!includeRequireJS) { %>,
-        neuter: {
-            app: {
-                src: '{.tmp,<%%= yeoman.app %>}/scripts/main.js',
-                dest: '.tmp/scripts/combined-scripts.js'
-            }
-        }<% } %>
+        }
     });
 
     grunt.registerTask('createDefaultTemplate', function () {
@@ -359,8 +364,7 @@ module.exports = function (grunt) {
             'createDefaultTemplate',<% if (templateFramework === 'mustache') { %>
             'mustache',<% } else if (templateFramework === 'handlebars') { %>
             'handlebars',<% } else { %>
-            'jst',<% } %><% if (!includeRequireJS) { %>
-            'neuter:app',<% } %>
+            'jst',<% } %>
             'compass:server',
             'connect:livereload',
             'open',
@@ -374,8 +378,7 @@ module.exports = function (grunt) {
         'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
         'mustache',<% } else if (templateFramework === 'handlebars') { %>
         'handlebars',<% } else { %>
-        'jst',<% } %><% if (!includeRequireJS) { %>
-        'neuter:app',<% } %>
+        'jst',<% } %>
         'compass',<% if(testFramework === 'mocha') { %>
         'connect:test',
         'mocha'<% } else { %>
@@ -392,8 +395,7 @@ module.exports = function (grunt) {
         'jst',<% } %>
         'compass:dist',
         'useminPrepare',<% if (includeRequireJS) { %>
-        'requirejs',<% } else {  %>
-        'neuter:app',<% }  %>
+        'requirejs',<% } %>
         'imagemin',
         'htmlmin',
         'concat',
