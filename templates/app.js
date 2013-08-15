@@ -12,13 +12,6 @@ window.<%= _.camelize(appname) %> = {
     }
 };
 
-/* Order and include as you please. */
-require('.tmp/scripts/templates');
-require('app/scripts/views/*');
-require('app/scripts/models/*');
-require('app/scripts/collections/*');
-require('app/scripts/routes/*');
-
 $(document).ready(function () {
     'use strict';
     <%= _.camelize(appname) %>.init();

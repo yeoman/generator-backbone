@@ -2,6 +2,7 @@
 var path = require('path');
 var util = require('util');
 var yeoman = require('yeoman-generator');
+var backboneUtils = require('./util.js');
 
 var Generator = module.exports = function Generator() {
   yeoman.generators.NamedBase.apply(this, arguments);
@@ -28,6 +29,24 @@ var Generator = module.exports = function Generator() {
 };
 
 util.inherits(Generator, yeoman.generators.NamedBase);
+
+
+Generator.prototype.addScriptToIndex = function (script) {
+  try {
+    var appPath = this.env.options.appPath;
+    var fullPath = path.join(appPath, 'index.html');
+
+    backboneUtils.rewriteFile({
+      file: fullPath,
+      needle: '<!-- endbuild -->',
+      splicable: [
+        '<script src="scripts/' + script + '.js"></script>'
+      ]
+    });
+  } catch (e) {
+    console.log('\nUnable to find '.yellow + fullPath + '. Reference to '.yellow + script + '.js ' + 'not added.\n'.yellow);
+  }
+};
 
 /*
  * Check whether the App is a RequireJS app or not
