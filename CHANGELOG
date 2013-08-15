@@ -1,3 +1,11 @@
+v0.1.8:
+  date: 2013-08-15
+    - New checkbox prompts
+    - Added time-grunt for build times
+    - Reverted to automatically wiring up index.html with models/collections/etc. Improves `grunt server` debugging experience.
+    - Improvements to RequireJS config
+    - Updated to latest generator system
+
 v0.1.7:
   date: 2013-07-24
   changes:
