@@ -383,6 +383,17 @@ module.exports = function (grunt) {
         'watch:test'<% } %>
     ]);
 
+    grunt.registerTask('testserver', [
+        'clean:server',
+        'coffee',
+        'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
+        'mustache',<% } else if (templateFramework === 'handlebars') { %>
+        'handlebars',<% } else { %>
+        'jst',<% } %>
+        'compass:server',
+        'connect:test:keepalive'
+    ]);
+
     grunt.registerTask('build', [
         'clean:dist',
         'coffee',
