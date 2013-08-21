@@ -215,7 +215,8 @@ module.exports = function (grunt) {
                     //uglify2: {} // https://github.com/mishoo/UglifyJS2
                 }
             }
-        },<% } else { %>uglify: {
+        },<% } else { %>
+        uglify: {
             dist: {
                 files: {
                     '<%%= yeoman.dist %>/scripts/main.js': [
