@@ -171,9 +171,10 @@ module.exports = function (grunt) {
             test: {
                 files: [{
                     expand: true,
-                    cwd: '.tmp/spec',
-                    src: '*.coffee',
-                    dest: 'test/spec'
+                    cwd: 'test/spec',
+                    src: '{,*/}*.coffee',
+                    dest: '.tmp/spec',
+                    ext: '.js'
                 }]
             }
         },
@@ -215,16 +216,13 @@ module.exports = function (grunt) {
                     //uglify2: {} // https://github.com/mishoo/UglifyJS2
                 }
             }
-        },<% } else { %>uglify: {
-            dist: {
-                files: {
-                    '<%%= yeoman.dist %>/scripts/main.js': [
-                        '<%%= yeoman.app %>/scripts/{,*/}*.js',
-                        '.tmp/scripts/{,*/}*.js'
-                    ]
-                }
-            }
-        },<% } %>
+        },<% } else { %>
+        // not enabled since usemin task does concat and uglify
+        // check index.html to edit your build targets
+        // enable this task if you prefer defining your build targets here
+        /*uglify: {
+            dist: {}
+        },*/<% } %>
         useminPrepare: {
             html: '<%%= yeoman.app %>/index.html',
             options: {

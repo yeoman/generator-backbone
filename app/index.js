@@ -164,10 +164,17 @@ Generator.prototype.writeIndex = function writeIndex() {
     contentText.push('                    <li>Twitter Bootstrap</li>');
   }
 
-  this.indexFile = this.appendScripts(this.indexFile, 'scripts/main.js', [
-    'scripts/main.js',
-    'scripts/templates.js'
-  ]);
+  this.indexFile = this.appendFiles({
+   html: this.indexFile,
+   fileType: 'js',
+   searchPath: ['.tmp', 'app'],
+   optimizedPath: 'scripts/main.js',
+   sourceFileList: [
+     'scripts/main.js',
+     'scripts/templates.js'
+   ]
+  });
+
 
 
   // iterate over defaults and create content string
