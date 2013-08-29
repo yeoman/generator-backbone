@@ -2,7 +2,7 @@
   "name": "<%= _.slugify(appname) %>",
   "version": "0.0.0",
   "dependencies": {<% if (compassBootstrap) { %>
-    "sass-bootstrap": "~2.3.0",<% } %>
+    "sass-bootstrap": "~3.0.0",<% } %>
     "jquery": "~1.9.0",
     "underscore": "~1.4.3",
     "backbone": "~1.0.0",<% if (includeRequireJS) { %>
