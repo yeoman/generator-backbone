@@ -92,12 +92,12 @@ Generator.prototype.packageJSON = function packageJSON() {
   this.template('_package.json', 'package.json');
 };
 
-Generator.prototype.bootstrapImg = function bootstrapImg(){
+Generator.prototype.bootstrapImg = function bootstrapImg() {
   if (this.compassBootstrap) {
     this.copy('glyphicons-halflings.png', 'app/images/glyphicons-halflings.png');
     this.copy('glyphicons-halflings-white.png', 'app/images/glyphicons-halflings-white.png');
   }
-}
+};
 
 Generator.prototype.mainStylesheet = function mainStylesheet() {
   var contentText = [
@@ -138,7 +138,7 @@ Generator.prototype.writeIndex = function writeIndex() {
   ];
 
   if (this.templateFramework === 'handlebars') {
-    vendorJS.push('bower_components/handlebars/handlebars.js')
+    vendorJS.push('bower_components/handlebars/handlebars.js');
   }
 
   this.indexFile = this.appendScripts(this.indexFile, 'scripts/vendor.js', vendorJS);
@@ -165,21 +165,21 @@ Generator.prototype.writeIndex = function writeIndex() {
   }
 
   this.indexFile = this.appendFiles({
-   html: this.indexFile,
-   fileType: 'js',
-   searchPath: ['.tmp', 'app'],
-   optimizedPath: 'scripts/main.js',
-   sourceFileList: [
-     'scripts/main.js',
-     'scripts/templates.js'
-   ]
+    html: this.indexFile,
+    fileType: 'js',
+    searchPath: ['.tmp', 'app'],
+    optimizedPath: 'scripts/main.js',
+    sourceFileList: [
+      'scripts/main.js',
+      'scripts/templates.js'
+    ]
   });
 
 
 
   // iterate over defaults and create content string
   defaults.forEach(function (el) {
-    contentText.push('                    <li>' + el  +'</li>');
+    contentText.push('                    <li>' + el  + '</li>');
   });
 
   contentText = contentText.concat([
@@ -202,7 +202,7 @@ Generator.prototype.bootstrapJs = function bootstrapJs() {
   }
 };
 
-Generator.prototype.writeIndexWithRequirejs = function writeIndexWithRequirejs(){
+Generator.prototype.writeIndexWithRequirejs = function writeIndexWithRequirejs() {
   if (!this.includeRequireJS) {
     return;
   }
@@ -222,7 +222,7 @@ Generator.prototype.writeIndexWithRequirejs = function writeIndexWithRequirejs()
   }
 
   this.indexFile = this.appendScripts(this.indexFile, 'scripts/main.js', [
-    'bower_components/requirejs/require.js',
+    'bower_components/requirejs/require.js'
   ], {'data-main': 'scripts/main'});
 
     // iterate over defaults and create content string
