@@ -1,3 +1,13 @@
+v0.1.9:
+  date: 2013-09-02
+  changes:
+    - Switch to load-grunt-tasks
+    - remove uglify configuration from Gruntfile
+    - fix coffee:test task
+    - Adding server:test task
+    - Adding prompt for Coffeescript
+    - Adding IIFE for generated models, collections, views and routes.
+
 v0.1.8:
   date: 2013-08-15
     - New checkbox prompts
