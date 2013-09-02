@@ -45,12 +45,16 @@ Generator.prototype.askFor = function askFor() {
       name: 'Twitter Bootstrap for Sass',
       value: 'compassBootstrap',
       checked: true
-    }, {
-      name: 'RequireJS',
-      value: 'includeRequireJS',
-      checked: true
     }]
   }];
+
+  if (!this.options.coffee) {
+    prompts[0].choices.push({
+      name: 'Use CoffeeScript',
+      value: 'coffee',
+      checked: true
+    });
+  }
 
   this.prompt(prompts, function (answers) {
     var features = answers.features;
@@ -60,9 +64,25 @@ Generator.prototype.askFor = function askFor() {
     // manually deal with the response, get back and store the results.
     // we change a bit this way of doing to automatically do this in the self.prompt() method.
     this.compassBootstrap = hasFeature('compassBootstrap');
-    this.includeRequireJS = hasFeature('includeRequireJS');
 
-    cb();
+    if (!this.options.coffee) {
+      this.options.coffee   = hasFeature('coffee');
+    }
+
+    if (!this.options.coffee) {
+      this.prompt([{
+        type: 'confirm',
+        name: 'includeRequireJS',
+        message: 'Add RequireJS ?'
+      }], function (answers) {
+        this.includeRequireJS = answers.includeRequireJS;
+
+        cb();
+      }.bind(this));
+    } else {
+      this.includeRequireJS = false;
+      cb();
+    }
   }.bind(this));
 };
 
