@@ -66,6 +66,30 @@ Also checkout this [NetTuts write-up](http://net.tutsplus.com/tutorials/javascri
 
   Defaults to `lodash` templating with grunt-contrib-jst.
   `handlebars` and `mustache` are also supported.
+  
+## A note regading JST templates and strict mode
+
+If you use strict mode in your app and JST templates the default grunt-jst implementation will cause your app to error out as the templates will be precompiled using a 'with' statement.
+
+This can be addressed by changing the jst grunt task as follows:
+
+```
+jst: {
+    compile: {
+        options:
+        {
+            templateSettings:
+            {
+                variable: 'data'
+            }
+        },
+        files: {
+            '.tmp/scripts/templates.js': ['<%= yeoman.app %>/scripts/templates/*.ejs']
+        }
+    }
+},
+```
+A result of this change is that your template variable definitions must also be updated from `<%= templateVariable %>` to `<%= data.templateVariable %>`. More information on this can be found in the [Underscore documentation](http://underscorejs.org/#template).
 
 ## Contribute
 
