@@ -6,7 +6,7 @@
     'use strict';
 
     <%= _.camelize(appname) %>.Models.<%= _.classify(name) %>Model = Backbone.Model.extend({
-
+        name: '<%= _.classify(name) %>Model'
     });
 
 })();

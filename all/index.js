@@ -13,6 +13,7 @@ function Generator(args, options, config) {
   this.dirs = 'models collections views routes helpers templates'.split(' ');
 
   this.option('coffee');
+  this.options.coffee = false;
 
   args = ['application'];
 
@@ -30,9 +31,6 @@ function Generator(args, options, config) {
 
   // the api to hookFor and pass arguments may vary a bit.
   this.hookFor('backbone:app', {
-    args: args
-  });
-  this.hookFor('backbone:router', {
     args: args
   });
   this.hookFor('backbone:view', {

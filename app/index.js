@@ -49,11 +49,11 @@ Generator.prototype.askFor = function askFor() {
   }];
 
   if (!this.options.coffee) {
-    prompts[0].choices.push({
-      name: 'Use CoffeeScript',
-      value: 'coffee',
-      checked: true
-    });
+//    prompts[0].choices.push({
+//      name: 'Use CoffeeScript',
+//      value: 'coffee',
+//      checked: true
+//    });
   }
 
   this.prompt(prompts, function (answers) {
@@ -70,15 +70,17 @@ Generator.prototype.askFor = function askFor() {
     }
 
     if (!this.options.coffee) {
-      this.prompt([{
-        type: 'confirm',
-        name: 'includeRequireJS',
-        message: 'Add RequireJS ?'
-      }], function (answers) {
-        this.includeRequireJS = answers.includeRequireJS;
+        this.includeRequireJS = true;
 
-        cb();
-      }.bind(this));
+//      this.prompt([{
+//        type: 'confirm',
+//        name: 'includeRequireJS',
+//        message: 'Add RequireJS ?'
+//      }], function (answers) {
+//        this.includeRequireJS = answers.includeRequireJS;
+//
+//        cb();
+//      }.bind(this));
     } else {
       this.includeRequireJS = false;
       cb();
@@ -133,7 +135,7 @@ Generator.prototype.mainStylesheet = function mainStylesheet() {
     ];
     ext = '.scss';
   }
-  this.write('app/styles/main' + ext, contentText.join('\n'));
+  this.write('app/css/main' + ext, contentText.join('\n'));
 };
 
 Generator.prototype.writeIndex = function writeIndex() {
@@ -267,7 +269,7 @@ Generator.prototype.setupEnv = function setupEnv() {
   this.mkdir('app');
   this.mkdir('app/scripts');
   this.mkdir('app/scripts/vendor/');
-  this.mkdir('app/styles');
+  this.mkdir('app/css');
   this.mkdir('app/images');
   this.template('app/404.html');
   this.template('app/favicon.ico');
@@ -299,3 +301,39 @@ Generator.prototype.createAppFile = function createAppFile() {
   var ext = this.options.coffee ? 'coffee' : 'js';
   this.template('app.' + ext, 'app/scripts/main.' + ext);
 };
+
+Generator.prototype.createRouter = function createRouter() {
+    var ext = this.options.coffee ? '.coffee' : '.js';
+    var destFile = path.join('app/scripts/router'+ext);
+    this.isRequireJsApp = this.isUsingRequireJS();
+
+    if (!this.isRequireJsApp) {
+        this.template('router' + ext, destFile);
+        this.addScriptToIndex('router'+ext);
+        return;
+    }
+
+    var template = [
+        '/*global define*/',
+        '',
+        'define([',
+        '    \'jquery\',',
+        '    \'backbone\'',
+        '], function ($, Backbone) {',
+        '    \'use strict\';',
+        '',
+        '    var ' + this._.classify(this.name) + 'Router = Backbone.Router.extend({',
+        '        routes: {',
+        '           "*actions": "defaultRoute"',
+        '        },',
+        '        defaultRoute: function() {',
+        '        }',
+        '',
+        '    });',
+        '',
+        '    return ' + this._.classify(this.name) + 'Router;',
+        '});'
+    ].join('\n');
+
+    this.write(destFile, template);
+}
