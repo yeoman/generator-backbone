@@ -25,6 +25,8 @@ module.exports = function (grunt) {
     };
 
     grunt.initConfig({
+        envconfig: {},
+        pkg: grunt.file.readJSON('package.json'),
         yeoman: yeomanConfig,
         watch: {
             options: {
@@ -74,7 +76,18 @@ module.exports = function (grunt) {
             test: {
                 files: ['<%%= yeoman.app %>/scripts/{,*/}*.js', 'test/spec/**/*.js'],
                 tasks: ['test']
-            }<% } %>
+            }<% } %>,
+            "replace:dev": {
+                files: [
+                    "!.tmp/scripts/app_config.js",
+                    "config/*.json",
+                    "config/app_config.js"
+                ],
+                tasks: ['replace:dev'],
+                options: {
+                    nospawn: true
+                }
+            }
         },
         connect: {
             options: {
@@ -121,7 +134,8 @@ module.exports = function (grunt) {
         },
         clean: {
             dist: ['.tmp', '<%%= yeoman.dist %>/*'],
-            server: '.tmp'
+            server: ['.tmp','app/scripts/app_config.js'],
+            buildcomplete: 'app/scripts/app_config.js'
         },
         jshint: {
             options: {
@@ -287,7 +301,8 @@ module.exports = function (grunt) {
                     src: [
                         '*.{ico,txt}',
                         '.htaccess',
-                        'images/{,*/}*.{webp,gif}'
+                        'images/{,*/}*.{webp,gif}',
+                        'fonts/*'
                     ]
                 }]
             }
@@ -341,11 +356,51 @@ module.exports = function (grunt) {
                     ]
                 }
             }
+        },
+        replace: {
+            options: {
+                variables: {}
+            },
+            dist: {
+                files: [
+                    { expand: true, flatten: true, src: ['config/app_config.js'], dest: 'app/scripts' }
+                ]
+            },
+            dev: {
+                files: [
+                    { expand: true, flatten: true, src: ['config/app_config.js'], dest: '.tmp/scripts' }
+                ]
+            }
+        },
+        strip : {
+            all : {
+                src : 'dist/scripts/*.js',
+                options : {
+                    nodes : ['console.log', 'debug'],
+                    inline: true
+                }
+            }
         }
     });
 
     grunt.registerTask('createDefaultTemplate', function () {
         grunt.file.write('.tmp/scripts/templates.js', 'this.JST = this.JST || {};');
+    });
+
+    grunt.registerTask('envconfig', function(target) {
+        var target = typeof target == "undefined" ? "dev" : target;
+
+        console.log("TARGET ENV: "+target);
+
+        var envconfig = grunt.file.readJSON('config/'+target+'.json');
+
+        // Get 'version' from package.json
+        envconfig.version = grunt.config('pkg').version;
+
+        grunt.config.set('envconfig', envconfig);
+
+        grunt.config.set('replace.options.variables', envconfig)
+        grunt.task.run(['replace:'+target]);
     });
 
     grunt.registerTask('server', function (target) {
@@ -366,6 +421,7 @@ module.exports = function (grunt) {
 
         grunt.task.run([
             'clean:server',
+            'envconfig:dev',
             'coffee:dist',
             'createDefaultTemplate',<% if (templateFramework === 'mustache') { %>
             'mustache',<% } else if (templateFramework === 'handlebars') { %>
@@ -380,6 +436,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('test', [
         'clean:server',
+        'envconfig:dev',
         'coffee',
         'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
         'mustache',<% } else if (templateFramework === 'handlebars') { %>
@@ -394,6 +451,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'clean:dist',
+        'envconfig:dist',
         'coffee',
         'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
         'mustache',<% } else if (templateFramework === 'handlebars') { %>
@@ -409,7 +467,8 @@ module.exports = function (grunt) {
         'uglify',
         'copy',
         'rev',
-        'usemin'
+        'usemin',
+        'clean:buildcomplete'
     ]);
 
     grunt.registerTask('default', [

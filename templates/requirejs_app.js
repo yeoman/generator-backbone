@@ -32,8 +32,9 @@ require.config({
 
 require([
     'backbone',
-    'router'
-], function (Backbone, ApplicationRouter) {
+    'router',
+    'app_config'
+], function (Backbone, ApplicationRouter, AppConfig) {
     var router = new ApplicationRouter;
 
     Backbone.history.start();
