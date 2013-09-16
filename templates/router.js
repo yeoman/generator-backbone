@@ -5,8 +5,13 @@
 (function () {
     'use strict';
 
-    <%= _.camelize(appname) %>.Routers.<%= _.classify(name) %>Router = Backbone.Router.extend({
+    <%= _.camelize(appname) %>.Routers.AppRouter = Backbone.Router.extend({
+        routes: {
+            "*actions": "defaultRoute"
+        },
+        defaultRoute: function() {
 
+        }
     });
 
 })();

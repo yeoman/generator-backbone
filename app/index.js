@@ -35,55 +35,63 @@ Generator.prototype.askFor = function askFor() {
 
   // welcome message
   console.log(this.yeoman);
-  console.log('Out of the box I include HTML5 Boilerplate, jQuery, Backbone.js and Modernizr.');
+  console.log('Out of the box I include HTML5 Boilerplate, Require.js, jQuery, Backbone.js and Modernizr.');
 
-  var prompts = [{
-    type: 'checkbox',
-    name: 'features',
-    message: 'What more would you like?',
-    choices: [{
-      name: 'Twitter Bootstrap for Sass',
-      value: 'compassBootstrap',
-      checked: true
-    }]
-  }];
+//  var prompts = [{
+//    type: 'checkbox',
+//    name: 'features',
+//    message: 'What more would you like?',
+//    choices: [{
+//      name: 'Twitter Bootstrap for Sass',
+//      value: 'compassBootstrap',
+//      checked: true
+//    }]
+//  }];
 
-  if (!this.options.coffee) {
-    prompts[0].choices.push({
-      name: 'Use CoffeeScript',
-      value: 'coffee',
-      checked: true
-    });
-  }
+  this.compassBootstrap = true;
+  this.includeRequireJS = true;
 
-  this.prompt(prompts, function (answers) {
-    var features = answers.features;
+  cb();
 
-    function hasFeature(feat) { return features.indexOf(feat) !== -1; }
+//  if (!this.options.coffee) {
+//    prompts[0].choices.push({
+//      name: 'Use CoffeeScript',
+//      value: 'coffee',
+//      checked: true
+//    });
+//  }
 
-    // manually deal with the response, get back and store the results.
-    // we change a bit this way of doing to automatically do this in the self.prompt() method.
-    this.compassBootstrap = hasFeature('compassBootstrap');
-
-    if (!this.options.coffee) {
-      this.options.coffee   = hasFeature('coffee');
-    }
-
-    if (!this.options.coffee) {
-      this.prompt([{
-        type: 'confirm',
-        name: 'includeRequireJS',
-        message: 'Add RequireJS ?'
-      }], function (answers) {
-        this.includeRequireJS = answers.includeRequireJS;
-
-        cb();
-      }.bind(this));
-    } else {
-      this.includeRequireJS = false;
-      cb();
-    }
-  }.bind(this));
+//  this.prompt(prompts, function (answers) {
+//    var features = answers.features;
+//
+//    function hasFeature(feat) { return features.indexOf(feat) !== -1; }
+//
+//    // manually deal with the response, get back and store the results.
+//    // we change a bit this way of doing to automatically do this in the self.prompt() method.
+//    // this.compassBootstrap = hasFeature('compassBootstrap');
+//
+//    if (!this.options.coffee) {
+//      this.options.coffee   = hasFeature('coffee');
+//    }
+//
+//    if (!this.options.coffee) {
+//       this.includeRequireJS = true;
+//       cb();
+//
+////      this.prompt([{
+////        type: 'confirm',
+////        name: 'includeRequireJS',
+////        message: 'Add RequireJS ?'
+////      }], function (answers) {
+////        this.includeRequireJS = answers.includeRequireJS;
+////
+////        cb();
+////      }.bind(this));
+//    } else {
+//      this.includeRequireJS = false;
+//      cb();
+//    }
+//  }.bind(this));
 };
 
 Generator.prototype.git = function git() {
@@ -133,7 +141,7 @@ Generator.prototype.mainStylesheet = function mainStylesheet() {
     ];
     ext = '.scss';
   }
-  this.write('app/styles/main' + ext, contentText.join('\n'));
+  this.write('app/css/main' + ext, contentText.join('\n'));
 };
 
 Generator.prototype.writeIndex = function writeIndex() {
@@ -264,10 +272,20 @@ Generator.prototype.writeIndexWithRequirejs = function writeIndexWithRequirejs()
 };
 
 Generator.prototype.setupEnv = function setupEnv() {
+  this.mkdir('config');
+  this.write('config/dev.json', '{}');
+  this.write('config/qa.json', '{}');
+  this.write('config/dist.json', '{}');
+  this.copy('../../templates/app_config.js','config/app_config.js');
+
   this.mkdir('app');
   this.mkdir('app/scripts');
+  this.mkdir('app/scripts/collections');
+  this.mkdir('app/scripts/models');
+  this.mkdir('app/scripts/views');
+  this.mkdir('app/scripts/templates');
   this.mkdir('app/scripts/vendor/');
-  this.mkdir('app/styles');
+  this.mkdir('app/css');
   this.mkdir('app/images');
   this.template('app/404.html');
   this.template('app/favicon.ico');
@@ -299,3 +317,39 @@ Generator.prototype.createAppFile = function createAppFile() {
   var ext = this.options.coffee ? 'coffee' : 'js';
   this.template('app.' + ext, 'app/scripts/main.' + ext);
 };
+
+Generator.prototype.createRouter = function createRouter() {
+    var ext = this.options.coffee ? '.coffee' : '.js';
+    var destFile = path.join('app/scripts/router'+ext);
+    this.isRequireJsApp = this.includeRequireJS;
+
+    if (!this.isRequireJsApp) {
+        this.template('router' + ext, destFile);
+        this.addScriptToIndex('router'+ext);
+        return;
+    }
+
+    var template = [
+        '/*global define*/',
+        '',
+        'define([',
+        '    \'jquery\',',
+        '    \'backbone\'',
+        '], function ($, Backbone) {',
+        '    \'use strict\';',
+        '',
+        '    var AppRouter = Backbone.Router.extend({',
+        '        routes: {',
+        '           "*actions": "defaultRoute"',
+        '        },',
+        '        defaultRoute: function() {',
+        '        }',
+        '',
+        '    });',
+        '',
+        '    return AppRouter;',
+        '});'
+    ].join('\n');
+
+    this.write(destFile, template);
+}

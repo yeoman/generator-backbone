@@ -1,7 +1,7 @@
 {
-  "name": "generator-backbone",
-  "version": "0.1.9",
-  "description": "Yeoman generator for Backbone.js",
+  "name": "generator-backbone-4over",
+  "version": "0.2.0",
+  "description": "Yeoman generator for Backbone.js w/ 4over changes",
   "keywords": [
     "yeoman-generator",
     "scaffold",
@@ -9,13 +9,13 @@
     "mvc",
     "backbone"
   ],
-  "homepage": "https://github.com/yeoman/generator-backbone",
-  "bugs": "https://github.com/yeoman/generator-backbone/issues",
-  "author": "Chrome Developer Relations",
+  "homepage": "http://git.4over.com/robv/generator-backbone-4over",
+  "bugs": "http://git.4over.com/robv/generator-backbone-4over/issues",
+  "author": "Rob Vella",
   "main": "app/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/yeoman/generator-backbone.git"
+    "url": "git://git@git.4over.com/robv/generator-backbone-4over.git"
   },
   "scripts": {
     "test": "mocha --reporter spec"

@@ -9,7 +9,8 @@
     "requirejs": "~2.1.5",
     "requirejs-text": "~2.0.5",<% } %>
     "modernizr": "~2.6.2"<% if (templateFramework === 'handlebars') { %>,
-    "handlebars": "~1.0.0"<% } %>
+    "handlebars": "~1.0.0"<% } %>,
+    "javascript-debug": "master"
   },
   "devDependencies": {}
 }
