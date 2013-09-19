@@ -3,9 +3,7 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 
 
-module.exports = Generator;
-
-function Generator(args, options, config) {
+var Generator = module.exports = function Generator(args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
 
   this.testFramework = this.options['test-framework'] || 'mocha';
@@ -26,7 +24,7 @@ function Generator(args, options, config) {
       this.installDependencies({ skipInstall: this.options['skip-install'] });
     }
   });
-}
+};
 
 util.inherits(Generator, yeoman.generators.Base);
 
@@ -66,14 +64,14 @@ Generator.prototype.askFor = function askFor() {
     this.compassBootstrap = hasFeature('compassBootstrap');
 
     if (!this.options.coffee) {
-      this.options.coffee   = hasFeature('coffee');
+      this.options.coffee = hasFeature('coffee');
     }
 
     if (!this.options.coffee) {
       this.prompt([{
         type: 'confirm',
         name: 'includeRequireJS',
-        message: 'Add RequireJS ?'
+        message: 'Add RequireJS?'
       }], function (answers) {
         this.includeRequireJS = answers.includeRequireJS;
 
