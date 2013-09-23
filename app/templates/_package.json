@@ -23,7 +23,7 @@
     "grunt-mocha": "~0.4.1",<% } %>
     "grunt-bower-requirejs": "~0.7.0",
     "grunt-usemin": "~0.1.10",<% if(includeRequireJS){ %>
-    "grunt-requirejs": "~0.3.5",<% } %>
+    "grunt-requirejs": "~0.4.0",<% } %>
     "grunt-rev": "~0.1.0",
     "grunt-open": "~0.2.0",
     "load-grunt-tasks": "~0.1.0",
