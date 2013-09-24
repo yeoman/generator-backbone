@@ -110,13 +110,6 @@ Generator.prototype.packageJSON = function packageJSON() {
   this.template('_package.json', 'package.json');
 };
 
-Generator.prototype.bootstrapImg = function bootstrapImg() {
-  if (this.compassBootstrap) {
-    this.copy('glyphicons-halflings.png', 'app/images/glyphicons-halflings.png');
-    this.copy('glyphicons-halflings-white.png', 'app/images/glyphicons-halflings-white.png');
-  }
-};
-
 Generator.prototype.mainStylesheet = function mainStylesheet() {
   var contentText = [
     'body {\n    background: #fafafa;\n}',
@@ -124,12 +117,7 @@ Generator.prototype.mainStylesheet = function mainStylesheet() {
   ];
   var ext = '.css';
   if (this.compassBootstrap) {
-    contentText = [
-      '$iconSpritePath: \'/images/glyphicons-halflings.png\';',
-      '@import \'sass-bootstrap/lib/bootstrap\';',
-      '\n.hero-unit {\n    margin: 50px auto 0 auto;\n    width: 300px;\n}'
-    ];
-    ext = '.scss';
+    this.template('main.scss', 'app/styles/main.scss');
   }
   this.write('app/styles/main' + ext, contentText.join('\n'));
 };
@@ -139,15 +127,8 @@ Generator.prototype.writeIndex = function writeIndex() {
     return;
   }
 
-  // prepare default content text
-  var defaults = ['HTML5 Boilerplate', 'jQuery', 'Backbone.js', 'Underscore.js'];
-  var contentText = [
-    '        <div class="container">',
-    '            <div class="hero-unit">',
-    '                <h1>\'Allo, \'Allo!</h1>',
-    '                <p>You now have</p>',
-    '                <ul>'
-  ];
+  this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
+  this.indexFile = this.engine(this.indexFile, this);
 
   var vendorJS = [
     'bower_components/jquery/jquery.js',
@@ -164,22 +145,19 @@ Generator.prototype.writeIndex = function writeIndex() {
   if (this.compassBootstrap) {
     // wire Twitter Bootstrap plugins
     this.indexFile = this.appendScripts(this.indexFile, 'scripts/plugins.js', [
-      'bower_components/sass-bootstrap/js/bootstrap-affix.js',
-      'bower_components/sass-bootstrap/js/bootstrap-alert.js',
-      'bower_components/sass-bootstrap/js/bootstrap-dropdown.js',
-      'bower_components/sass-bootstrap/js/bootstrap-tooltip.js',
-      'bower_components/sass-bootstrap/js/bootstrap-modal.js',
-      'bower_components/sass-bootstrap/js/bootstrap-transition.js',
-      'bower_components/sass-bootstrap/js/bootstrap-button.js',
-      'bower_components/sass-bootstrap/js/bootstrap-popover.js',
-      'bower_components/sass-bootstrap/js/bootstrap-typeahead.js',
-      'bower_components/sass-bootstrap/js/bootstrap-carousel.js',
-      'bower_components/sass-bootstrap/js/bootstrap-scrollspy.js',
-      'bower_components/sass-bootstrap/js/bootstrap-collapse.js',
-      'bower_components/sass-bootstrap/js/bootstrap-tab.js'
+      'bower_components/sass-bootstrap/js/affix.js',
+      'bower_components/sass-bootstrap/js/alert.js',
+      'bower_components/sass-bootstrap/js/dropdown.js',
+      'bower_components/sass-bootstrap/js/tooltip.js',
+      'bower_components/sass-bootstrap/js/modal.js',
+      'bower_components/sass-bootstrap/js/transition.js',
+      'bower_components/sass-bootstrap/js/button.js',
+      'bower_components/sass-bootstrap/js/popover.js',
+      'bower_components/sass-bootstrap/js/carousel.js',
+      'bower_components/sass-bootstrap/js/scrollspy.js',
+      'bower_components/sass-bootstrap/js/collapse.js',
+      'bower_components/sass-bootstrap/js/tab.js'
     ]);
-
-    contentText.push('                    <li>Twitter Bootstrap</li>');
   }
 
   this.indexFile = this.appendFiles({
@@ -192,25 +170,6 @@ Generator.prototype.writeIndex = function writeIndex() {
       'scripts/templates.js'
     ]
   });
-
-
-
-  // iterate over defaults and create content string
-  defaults.forEach(function (el) {
-    contentText.push('                    <li>' + el  + '</li>');
-  });
-
-  contentText = contentText.concat([
-    '                </ul>',
-    '                <p>installed.</p>',
-    '                <h3>Enjoy coding! - Yeoman</h3>',
-    '            </div>',
-    '        </div>',
-    ''
-  ]);
-
-  // append the default content
-  this.indexFile = this.indexFile.replace('<body>', '<body>\n' + contentText.join('\n'));
 };
 
 Generator.prototype.bootstrapJs = function bootstrapJs() {
@@ -224,41 +183,12 @@ Generator.prototype.writeIndexWithRequirejs = function writeIndexWithRequirejs()
   if (!this.includeRequireJS) {
     return;
   }
-
-  // prepare default content text
-  var defaults = ['HTML5 Boilerplate', 'jQuery', 'Backbone.js', 'Underscore.js', 'RequireJS'];
-  var contentText = [
-    '        <div class="container">',
-    '            <div class="hero-unit">',
-    '                <h1>\'Allo, \'Allo!</h1>',
-    '                <p>You now have</p>',
-    '                <ul>'
-  ];
-
-  if (this.compassBootstrap) {
-    defaults.push('Twitter Bootstrap');
-  }
+  this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
+  this.indexFile = this.engine(this.indexFile, this);
 
   this.indexFile = this.appendScripts(this.indexFile, 'scripts/main.js', [
     'bower_components/requirejs/require.js'
   ], {'data-main': 'scripts/main'});
-
-    // iterate over defaults and create content string
-  defaults.forEach(function (el) {
-    contentText.push('                    <li>' + el  + '</li>');
-  });
-
-  contentText = contentText.concat([
-    '                </ul>',
-    '                <p>installed.</p>',
-    '                <h3>Enjoy coding! - Yeoman</h3>',
-    '            </div>',
-    '        </div>',
-    ''
-  ]);
-
-  // append the default content
-  this.indexFile = this.indexFile.replace('<body>', '<body>\n' + contentText.join('\n'));
 };
 
 Generator.prototype.setupEnv = function setupEnv() {
