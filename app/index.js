@@ -50,7 +50,7 @@ Generator.prototype.askFor = function askFor() {
     prompts[0].choices.push({
       name: 'Use CoffeeScript',
       value: 'coffee',
-      checked: true
+      checked: false
     });
   }
 
