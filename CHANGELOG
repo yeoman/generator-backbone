@@ -1,3 +1,11 @@
+v0.2.0:
+  date: 2013-10-09
+  changes:
+    - Upgraded to Bootstrap 3.0
+    - livereload on template files
+    - grunt server:test now runs on port 9001
+    - other minor fixes
+
 v0.1.9:
   date: 2013-09-02
   changes:
