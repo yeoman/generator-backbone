@@ -12,7 +12,7 @@
     "grunt-contrib-jst": "~0.5.0",<% } %>
     "grunt-contrib-uglify": "~0.2.0",
     "grunt-contrib-compass": "~0.5.0",
-    "grunt-contrib-jshint": "~0.6.3",
+    "grunt-contrib-jshint": "~0.6.4",
     "grunt-contrib-cssmin": "~0.6.0",
     "grunt-contrib-connect": "~0.3.0",
     "grunt-contrib-clean": "~0.5.0",
