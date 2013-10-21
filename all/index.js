@@ -7,6 +7,19 @@ module.exports = Generator;
 function Generator(args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
 
+  if (typeof this.env.options.appPath === 'undefined') {
+
+      if (typeof this.options.appPath !== 'undefined'){
+          this.env.options.appPath = this.options.appPath;
+      }else{
+         try {
+            this.env.options.appPath = require(path.join(process.cwd(), 'bower.json')).appPath;
+         } catch (err) {}
+      }
+
+    this.env.options.appPath = this.env.options.appPath || 'app';
+  }
+
   var dirPath = this.options.coffee ? '../templates/coffeescript/' : '../templates';
   this.sourceRoot(path.join(__dirname, dirPath));
 
@@ -55,7 +68,7 @@ util.inherits(Generator, yeoman.generators.Base);
 
 Generator.prototype.createDirLayout = function createDirLayout() {
   this.dirs.forEach(function (dir) {
-    this.log.create('app/scripts/' + dir);
-    this.mkdir(path.join('app/scripts', dir));
+    this.log.create(this.env.options.appPath + '/scripts/' + dir);
+    this.mkdir(path.join(this.env.options.appPath + '/scripts', dir));
   }.bind(this));
 };

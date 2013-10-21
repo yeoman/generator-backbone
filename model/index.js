@@ -33,7 +33,7 @@ util.inherits(Generator, scriptBase);
 
 Generator.prototype.createModelFiles = function createModelFiles() {
   var ext = this.options.coffee ? '.coffee' : '.js';
-  var destFile = path.join('app/scripts/models', this.name + ext);
+  var destFile = path.join(this.env.options.appPath + '/scripts/models', this.name + ext);
   this.isRequireJsApp = this.isUsingRequireJS();
 
   if (!this.isRequireJsApp) {

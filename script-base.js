@@ -8,9 +8,15 @@ var Generator = module.exports = function Generator() {
   yeoman.generators.NamedBase.apply(this, arguments);
 
   if (typeof this.env.options.appPath === 'undefined') {
-    try {
-      this.env.options.appPath = require(path.join(process.cwd(), 'bower.json')).appPath;
-    } catch (err) {}
+
+    if (typeof this.options.appPath !== 'undefined'){
+        this.env.options.appPath = this.options.appPath;
+    }else{
+        try {
+            this.env.options.appPath = require(path.join(process.cwd(), 'bower.json')).appPath;
+        } catch (err) {}
+    }
+
     this.env.options.appPath = this.env.options.appPath || 'app';
   }
 
@@ -55,7 +61,7 @@ Generator.prototype.addScriptToIndex = function (script) {
  */
 Generator.prototype.isUsingRequireJS = function isUsingRequireJS() {
   var ext = this.env.options.coffee ? '.coffee' : '.js';
-  var filepath = path.join(process.cwd(), 'app/scripts/main' + ext);
+  var filepath = path.join(process.cwd(), this.env.options.appPath + '/scripts/main' + ext);
 
   try {
     return (/require\.config/).test(this.read(filepath));
