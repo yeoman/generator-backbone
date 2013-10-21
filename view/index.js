@@ -11,6 +11,19 @@ function Generator() {
   var dirPath = this.options.coffee ? '../templates/coffeescript/' : '../templates';
   this.sourceRoot(path.join(__dirname, dirPath));
 
+  var testOptions = {
+    as: 'view',
+    args: [this.name],
+    options: {
+      coffee: this.config.get('coffee'),
+      ui: this.config.get('ui')
+    }
+  };
+
+  if (this.geneateTests()) {
+    this.hookFor('backbone-mocha', testOptions);
+  }
+
 }
 
 util.inherits(Generator, scriptBase);
