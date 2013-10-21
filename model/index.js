@@ -8,8 +8,6 @@ module.exports = Generator;
 
 function Generator() {
   scriptBase.apply(this, arguments);
-  var dirPath = this.options.coffee ? '../templates/coffeescript/' : '../templates';
-  this.sourceRoot(path.join(__dirname, dirPath));
 
   // XXX default and banner to be implemented
   this.argument('attributes', {

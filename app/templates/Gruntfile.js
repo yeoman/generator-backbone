@@ -28,7 +28,8 @@ module.exports = function (grunt) {
         yeoman: yeomanConfig,
         watch: {
             options: {
-                nospawn: true
+                nospawn: true,
+                livereload: true
             },
             coffee: {
                 files: ['<%%= yeoman.app %>/scripts/{,*/}*.coffee'],
@@ -353,7 +354,9 @@ module.exports = function (grunt) {
     grunt.registerTask('server', function (target) {
         if (target === 'dist') {
             return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
-        } else if (target === 'test') {
+        }
+
+        if (target === 'test') {
             return grunt.task.run([
                 'clean:server',
                 'coffee',
