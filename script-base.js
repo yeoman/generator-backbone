@@ -14,6 +14,10 @@ var Generator = module.exports = function Generator() {
     this.env.options.appPath = this.env.options.appPath || 'app';
   }
 
+  if (this.env.options.minsafe) {
+    sourceRoot += '-min';
+  }
+
   if (typeof this.env.options.coffee === 'undefined') {
     this.option('coffee');
 
@@ -26,6 +30,16 @@ var Generator = module.exports = function Generator() {
 
     this.env.options.coffee = this.options.coffee;
   }
+
+  var sourceRoot = '/templates/';
+  this.scriptSuffix = '.js';
+
+  if (this.env.options.coffee) {
+    sourceRoot = '/templates/coffeescript';
+    this.scriptSuffix = '.coffee';
+  }
+
+  this.sourceRoot(path.join(__dirname, sourceRoot));
 };
 
 util.inherits(Generator, yeoman.generators.NamedBase);
