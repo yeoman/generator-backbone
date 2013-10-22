@@ -74,11 +74,11 @@ module.exports = function (grunt) {
                     '<%%= yeoman.app %>/scripts/templates/*.ejs'
                 ],
                 tasks: ['jst']
-            }<% } %><% if (testFramework === 'jasmine') { %>,
+            }<% } %>,
             test: {
                 files: ['<%%= yeoman.app %>/scripts/{,*/}*.js', 'test/spec/**/*.js'],
                 tasks: ['test']
-            }<% } %>
+            }
         },
         connect: {
             options: {
@@ -398,9 +398,9 @@ module.exports = function (grunt) {
         'jst',<% } %>
         'compass',<% if(testFramework === 'mocha') { %>
         'connect:test',
-        'mocha'<% } else { %>
-        'jasmine',
-        'watch:test'<% } %>
+        'mocha',<% } else { %>
+        'jasmine',<% } %>
+        'watch:test'
     ]);
 
     grunt.registerTask('build', [
