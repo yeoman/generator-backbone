@@ -1,10 +1,18 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
+var scriptBase = require('../script-base');
 
 
 var Generator = module.exports = function Generator(args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
+
+  if (typeof this.env.options.appPath === 'undefined') {
+    try {
+      this.env.options.appPath = require(path.join(process.cwd(), 'bower.json')).appPath;
+    } catch (e) {}
+    this.env.options.appPath = this.env.options.appPath || 'app';
+  }
 
   this.testFramework = this.options['test-framework'] || 'mocha';
   this.templateFramework = this.options['template-framework'] || 'lodash';
@@ -26,7 +34,7 @@ var Generator = module.exports = function Generator(args, options, config) {
   });
 };
 
-util.inherits(Generator, yeoman.generators.Base);
+util.inherits(Generator, scriptBase);
 
 Generator.prototype.askFor = function askFor() {
   var cb = this.async();
@@ -221,6 +229,7 @@ Generator.prototype.createAppFile = function createAppFile() {
   if (this.includeRequireJS) {
     return;
   }
+
   var dirPath = this.options.coffee ? '../templates/coffeescript/' : '../templates';
   this.sourceRoot(path.join(__dirname, dirPath));
 
