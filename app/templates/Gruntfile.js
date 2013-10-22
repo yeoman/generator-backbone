@@ -53,7 +53,8 @@ module.exports = function (grunt) {
                     '{.tmp,<%%= yeoman.app %>}/styles/{,*/}*.css',
                     '{.tmp,<%%= yeoman.app %>}/scripts/{,*/}*.js',
                     '<%%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
-                    '<%%= yeoman.app %>/scripts/templates/*.{ejs,mustache,hbs}'
+                    '<%%= yeoman.app %>/scripts/templates/*.{ejs,mustache,hbs}',
+                    'test/spec/**/*.js'
                 ]
             }<% if (templateFramework === 'mustache') { %>,
             mustache: {
@@ -101,6 +102,7 @@ module.exports = function (grunt) {
                     port: 9001,
                     middleware: function (connect) {
                         return [
+                            lrSnippet,
                             mountFolder(connect, '.tmp'),
                             mountFolder(connect, 'test'),
                             mountFolder(connect, yeomanConfig.app)
@@ -148,14 +150,15 @@ module.exports = function (grunt) {
         }<% } else { %>,
         jasmine: {
             all:{
-                src : '.tmp/scripts/combined-scripts.js',
+                src : ,'<%= yeoman.app %>/scripts/{,*/}*.js',
                 options: {
                     keepRunner: true,
                     specs : 'test/spec/**/*.js',
                     vendor : [
                         '<%%= yeoman.app %>/bower_components/jquery/jquery.js',
                         '<%%= yeoman.app %>/bower_components/underscore/underscore.js',
-                        '<%%= yeoman.app %>/bower_components/backbone/backbone.js'
+                        '<%%= yeoman.app %>/bower_components/backbone/backbone.js',
+                        '.tmp/scripts/templates.js'
                     ]
                 }
             }
@@ -367,7 +370,8 @@ module.exports = function (grunt) {
                 'handlebars',<% } else { %>
                 'jst',<% } %>
                 'compass:server',
-                'connect:test:keepalive'
+                'connect:test',
+                'watch:livereload'
             ]);
         }
 
