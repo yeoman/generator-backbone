@@ -32,7 +32,7 @@ Generator.prototype.createViewFiles = function createViewFiles() {
 
   this.writeTemplate('view', path.join('app/scripts/views', this.name));
 
-  if (!this.options.rjs) {
+  if (!this.options.requirejs) {
     this.addScriptToIndex('views/' + this.name);
   }
 };

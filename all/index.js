@@ -17,10 +17,10 @@ function Generator(args, options, config) {
     args.push('--coffee');
   }
 
-  this.option('rjs');
+  this.option('requirejs');
 
-  if (this.options.rjs) {
-    args.push('--rjs');
+  if (this.options.requirejs) {
+    args.push('--requirejs');
   }
 
   if (this.options['template-framework']) {

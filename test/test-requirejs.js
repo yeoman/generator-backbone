@@ -18,10 +18,10 @@ describe('Backbone generator with RequireJS', function () {
         ]
       ]);
       this.backbone.app.options['skip-install'] = true;
+	  this.backbone.app.options.requirejs = true;
 
       helpers.mockPrompt(this.backbone.app, {
-        features: ['compassBootstrap'],
-        includeRequireJS: true
+        features: ['compassBootstrap', 'requirejs']
       });
 
       done();
@@ -86,9 +86,9 @@ describe('Backbone generator with RequireJS', function () {
 
   describe('Backbone Model', function () {
     it('creates backbone model', function (done) {
-      var model = helpers.createGenerator('backbone:model', ['../../model'], ['foo']);
-
       this.backbone.app.run({}, function () {
+        var model = helpers.createGenerator('backbone:model', ['../../model'], ['foo']);
+
         model.run([], function () {
           helpers.assertFiles([
             ['app/scripts/models/foo.js', /var FooModel = Backbone.Model.extend\(\{/]
@@ -102,9 +102,9 @@ describe('Backbone generator with RequireJS', function () {
 
   describe('Backbone Collection with RequireJS', function () {
     it('creates backbone collection', function (done) {
-      var collection = helpers.createGenerator('backbone:collection', ['../../collection'], ['foo']);
-
       this.backbone.app.run({}, function () {
+      	var collection = helpers.createGenerator('backbone:collection', ['../../collection'], ['foo']);
+
         collection.run([], function () {
           helpers.assertFiles([
             ['app/scripts/collections/foo.js', /var FooCollection = Backbone.Collection.extend\(\{/]
@@ -118,9 +118,9 @@ describe('Backbone generator with RequireJS', function () {
 
   describe('Backbone Router with RequireJS', function () {
     it('creates backbone router', function (done) {
-      var router = helpers.createGenerator('backbone:router', ['../../router'], ['foo']);
-
       this.backbone.app.run({}, function () {
+        var router = helpers.createGenerator('backbone:router', ['../../router'], ['foo']);
+
         router.run([], function () {
           helpers.assertFiles([
             ['app/scripts/routes/foo.js', /var FooRouter = Backbone.Router.extend\(\{/]
@@ -134,9 +134,9 @@ describe('Backbone generator with RequireJS', function () {
 
   describe('Backbone View', function () {
     it('creates backbone view', function (done) {
-      var view = helpers.createGenerator('backbone:view', ['../../view'], ['foo']);
-
       this.backbone.app.run({}, function () {
+        var view = helpers.createGenerator('backbone:view', ['../../view'], ['foo']);
+
         view.run([], function () {
           helpers.assertFiles([
             ['app/scripts/views/foo.js', /var FooView = Backbone.View.extend\(\{(.|\n)*app\/scripts\/templates\/foo.ejs/],

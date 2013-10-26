@@ -32,7 +32,7 @@ util.inherits(Generator, scriptBase);
 Generator.prototype.createModelFiles = function createModelFiles() {
   this.writeTemplate('model', path.join('app/scripts/models', this.name));
 
-  if (!this.options.rjs) {
+  if (!this.options.requirejs) {
     this.addScriptToIndex('models/' + this.name);
   }
 };

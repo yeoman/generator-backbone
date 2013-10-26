@@ -19,7 +19,7 @@ util.inherits(Generator, scriptBase);
 Generator.prototype.createControllerFiles = function createControllerFiles() {
   this.writeTemplate('collection', path.join('app/scripts/collections', this.name));
 
-  if (!this.options.rjs) {
+  if (!this.options.requirejs) {
     this.addScriptToIndex('collections/' + this.name);
   }
 };

@@ -48,9 +48,12 @@ Also checkout this [NetTuts write-up](http://net.tutsplus.com/tutorials/javascri
 ## Options
 
 * `--coffee`
-  
-  Generate scaffolds in CoffeeScript.
-  RequireJS is not supported with `--coffee` option for now.
+
+  Generate scaffolds in CoffeeScript. By default check if project uses CoffeeScript.
+
+* `--requirejs`
+
+  Generate scaffolds using RequireJS (AMD) Loader. By default check if project uses RequireJS.
 
 * `--skip-install`
 
@@ -66,7 +69,7 @@ Also checkout this [NetTuts write-up](http://net.tutsplus.com/tutorials/javascri
 
   Defaults to `lodash` templating with grunt-contrib-jst.
   `handlebars` and `mustache` are also supported.
-  
+
 ## A note regarding JST templates and strict mode
 
 If you use strict mode in your app and JST templates the default grunt-jst implementation will cause your app to error out as the templates will be precompiled using a 'with' statement.

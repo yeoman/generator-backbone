@@ -31,13 +31,13 @@ var Generator = module.exports = function Generator() {
     this.env.options.coffee = this.options.coffee;
   }
 
-  // check if --rjs option provided or if require is setup
-  if (typeof this.env.options.rjs === 'undefined') {
-    this.option('rjs');
+  // check if --requirejs option provided or if require is setup
+  if (typeof this.env.options.requirejs === 'undefined') {
+    this.option('requirejs');
 
-    this.option.rjs = this.checkIfUsingRequireJS();
+    this.options.requirejs = this.checkIfUsingRequireJS();
 
-    this.env.options.rjs = this.option.rjs;
+    this.env.options.requirejs = this.options.requirejs;
   }
 
   this.setupSourceRootAndSuffix();
@@ -69,16 +69,16 @@ Generator.prototype.addScriptToIndex = function (script) {
  * @return boolean
  */
 Generator.prototype.checkIfUsingRequireJS = function checkIfUsingRequireJS() {
-  if (typeof this.env.options.rjs !== 'undefined') {
-    return this.env.options.rjs;
+  if (typeof this.env.options.requirejs !== 'undefined') {
+    return this.env.options.requirejs;
   }
 
   var ext = this.env.options.coffee ? '.coffee' : '.js';
   var filepath = path.join(process.cwd(), 'app/scripts/main' + ext);
 
   try {
-    this.env.options.rjs = (/require\.config/).test(this.read(filepath));
-    return this.env.options.rjs;
+    this.env.options.requirejs = (/require\.config/).test(this.read(filepath));
+    return this.env.options.requirejs;
   } catch (e) {
     return false;
   }
@@ -106,7 +106,7 @@ Generator.prototype.setupSourceRootAndSuffix = function setupSourceRootAndSuffix
     this.scriptSuffix = '.coffee';
   }
 
-  if (this.env.options.rjs || this.options.rjs) {
+  if (this.env.options.requirejs || this.options.requirejs) {
     sourceRoot += '/requirejs';
   }
 
