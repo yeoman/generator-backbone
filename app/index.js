@@ -88,12 +88,12 @@ Generator.prototype.askFor = function askFor() {
         name: 'includeRequireJS',
         message: 'Add RequireJS?'
       }], function (answers) {
-        this.includeRequireJS = answers.includeRequireJS;
+        this.options.rjs = this.includeRequireJS = answers.includeRequireJS;
 
         cb();
       }.bind(this));
     } else {
-      this.includeRequireJS = false;
+      this.options.rjs = this.includeRequireJS = false;
       cb();
     }
   }.bind(this));
@@ -224,12 +224,7 @@ Generator.prototype.mainJs = function mainJs() {
     return;
   }
 
-  var dirPath = this.options.coffee ? '../templates/coffeescript/' : '../templates';
-  this.sourceRoot(path.join(__dirname, dirPath));
-
-  var mainJsFile = this.engine(this.read('requirejs_app.js'), this);
-
-  this.write('app/scripts/main.js', mainJsFile);
+  this.writeTemplate('main', 'app/scripts/main');
 };
 
 Generator.prototype.createAppFile = function createAppFile() {
@@ -237,9 +232,5 @@ Generator.prototype.createAppFile = function createAppFile() {
     return;
   }
 
-  var dirPath = this.options.coffee ? '../templates/coffeescript/' : '../templates';
-  this.sourceRoot(path.join(__dirname, dirPath));
-
-  var ext = this.options.coffee ? 'coffee' : 'js';
-  this.template('app.' + ext, 'app/scripts/main.' + ext);
+  this.writeTemplate('app', 'app/scripts/main');
 };

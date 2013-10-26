@@ -7,9 +7,6 @@ module.exports = Generator;
 function Generator(args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
 
-  var dirPath = this.options.coffee ? '../templates/coffeescript/' : '../templates';
-  this.sourceRoot(path.join(__dirname, dirPath));
-
   this.dirs = 'models collections views routes helpers templates'.split(' ');
 
   this.option('coffee');
@@ -18,6 +15,12 @@ function Generator(args, options, config) {
 
   if (this.options.coffee) {
     args.push('--coffee');
+  }
+
+  this.option('rjs');
+
+  if (this.options.rjs) {
+    args.push('--rjs');
   }
 
   if (this.options['template-framework']) {
