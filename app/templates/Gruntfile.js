@@ -39,11 +39,11 @@ module.exports = function (grunt) {
             coffeeTest: {
                 files: ['test/spec/{,*/}*.coffee'],
                 tasks: ['coffee:test']
-            },
+            },<% if (compassBootstrap) { %>
             compass: {
                 files: ['<%%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
                 tasks: ['compass']
-            },
+            },<% } %>
             livereload: {
                 options: {
                     livereload: LIVERELOAD_PORT
@@ -185,7 +185,7 @@ module.exports = function (grunt) {
                     ext: '.js'
                 }]
             }
-        },
+        },<% if (compassBootstrap) { %>
         compass: {
             options: {
                 sassDir: '<%%= yeoman.app %>/styles',
@@ -202,7 +202,7 @@ module.exports = function (grunt) {
                     debugInfo: true
                 }
             }
-        },<% if (includeRequireJS) { %>
+        },<% } %><% if (includeRequireJS) { %>
         requirejs: {
             dist: {
                 // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
@@ -296,8 +296,8 @@ module.exports = function (grunt) {
                         '*.{ico,txt}',
                         '.htaccess',
                         'images/{,*/}*.{webp,gif}',
-                        'styles/fonts/{,*/}*.*',
-                        'bower_components/sass-bootstrap/fonts/*.*'
+                        'styles/fonts/{,*/}*.*',<% if (compassBootstrap) { %>
+                        'bower_components/sass-bootstrap/fonts/*.*'<% } %>
                     ]
                 }]
             }
@@ -347,7 +347,8 @@ module.exports = function (grunt) {
                         '<%%= yeoman.dist %>/scripts/{,*/}*.js',
                         '<%%= yeoman.dist %>/styles/{,*/}*.css',
                         '<%%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
-                        '<%= yeoman.dist %>/styles/fonts/{,*/}*.*'
+                        '<%= yeoman.dist %>/styles/fonts/{,*/}*.*',<% if (compassBootstrap) { %>
+                        'bower_components/sass-bootstrap/fonts/*.*'<% } %>
                     ]
                 }
             }
@@ -370,8 +371,8 @@ module.exports = function (grunt) {
                 'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
                 'mustache',<% } else if (templateFramework === 'handlebars') { %>
                 'handlebars',<% } else { %>
-                'jst',<% } %>
-                'compass:server',
+                'jst',<% } %><% if (compassBootstrap) { %>
+                'compass:server',<% } %>
                 'connect:test',
                 'watch:livereload'
             ]);
@@ -383,8 +384,8 @@ module.exports = function (grunt) {
             'createDefaultTemplate',<% if (templateFramework === 'mustache') { %>
             'mustache',<% } else if (templateFramework === 'handlebars') { %>
             'handlebars',<% } else { %>
-            'jst',<% } %>
-            'compass:server',
+            'jst',<% } %><% if (compassBootstrap) { %>
+            'compass:server',<% } %>
             'connect:livereload',
             'open',
             'watch'
@@ -397,8 +398,8 @@ module.exports = function (grunt) {
         'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
         'mustache',<% } else if (templateFramework === 'handlebars') { %>
         'handlebars',<% } else { %>
-        'jst',<% } %>
-        'compass',<% if(testFramework === 'mocha') { %>
+        'jst',<% } %><% if (compassBootstrap) { %>
+        'compass',<% } %><% if(testFramework === 'mocha') { %>
         'connect:test',
         'mocha',<% } else { %>
         'jasmine',<% } %>
@@ -411,8 +412,8 @@ module.exports = function (grunt) {
         'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
         'mustache',<% } else if (templateFramework === 'handlebars') { %>
         'handlebars',<% } else { %>
-        'jst',<% } %>
-        'compass:dist',
+        'jst',<% } %><% if (compassBootstrap) { %>
+        'compass:dist',<% } %>
         'useminPrepare',<% if (includeRequireJS) { %>
         'requirejs',<% } %>
         'imagemin',
