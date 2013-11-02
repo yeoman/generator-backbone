@@ -1,3 +1,12 @@
+v0.2.1:
+  date: 2013-11-03
+  changes:
+    - Adding tests for --coffee option
+    - Livereload fixes for jasmine and mocha
+    - Added jshint-stylish
+    - Skip compass task in Gruntfile when user opt-out bootstrap
+    - other minor fixes
+
 v0.2.0:
   date: 2013-10-09
   changes:
