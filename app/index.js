@@ -17,19 +17,25 @@ var Generator = module.exports = function Generator(args, options, config) {
 
   this.testFramework = this.options['test-framework'] || 'mocha';
   this.templateFramework = this.options['template-framework'] || 'lodash';
-  this.hookFor(this.testFramework, {
-    as: 'app',
-    options: {
+
+  if (['app', 'backbone'].indexOf(this.generatorName) >= 0) {
+    this.hookFor(this.testFramework, {
+      as: 'app',
       options: {
-        'skip-install': this.options['skip-install']
+        options: {
+          'skip-install': this.options['skip-install']
+        }
       }
-    }
-  });
+    });
+  }
 
   this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
 
   this.on('end', function () {
     if (['app', 'backbone'].indexOf(this.generatorName) >= 0) {
+      if (/^.*test$/.test(process.cwd())) {
+        process.chdir('..');
+      }
       this.installDependencies({ skipInstall: this.options['skip-install'] });
     }
   });
