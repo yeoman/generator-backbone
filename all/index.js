@@ -24,9 +24,7 @@ function Generator(args, options, config) {
     this.env.options['template-framework'] = this.options['template-framework'];
   }
 
-  if (this.options['test-framework']) {
-    this.env.options['test-framework'] = this.options['test-framework'];
-  }
+  this.testFramework = this.options['test-framework'] || 'mocha';
 
   // the api to hookFor and pass arguments may vary a bit.
   this.hookFor('backbone:app', {
@@ -45,7 +43,19 @@ function Generator(args, options, config) {
     args: args
   });
 
+  this.hookFor(this.testFramework, {
+    as: 'app',
+    options: {
+      options: {
+        'skip-install': this.options['skip-install']
+      }
+    }
+  });
+
   this.on('end', function () {
+    if (/^.*test$/.test(process.cwd())) {
+      process.chdir('..');
+    }
     this.installDependencies({ skipInstall: this.options['skip-install'] });
   });
 }
