@@ -31,15 +31,16 @@ var Generator = module.exports = function Generator() {
     this.env.options.coffee = this.options.coffee;
   }
 
-  var sourceRoot = '/templates/';
-  this.scriptSuffix = '.js';
+  // check if --requirejs option provided or if require is setup
+  if (typeof this.env.options.requirejs === 'undefined') {
+    this.option('requirejs');
 
-  if (this.env.options.coffee) {
-    sourceRoot = '/templates/coffeescript';
-    this.scriptSuffix = '.coffee';
+    this.options.requirejs = this.checkIfUsingRequireJS();
+
+    this.env.options.requirejs = this.options.requirejs;
   }
 
-  this.sourceRoot(path.join(__dirname, sourceRoot));
+  this.setupSourceRootAndSuffix();
 };
 
 util.inherits(Generator, yeoman.generators.NamedBase);
@@ -67,12 +68,17 @@ Generator.prototype.addScriptToIndex = function (script) {
  *
  * @return boolean
  */
-Generator.prototype.isUsingRequireJS = function isUsingRequireJS() {
+Generator.prototype.checkIfUsingRequireJS = function checkIfUsingRequireJS() {
+  if (typeof this.env.options.requirejs !== 'undefined') {
+    return this.env.options.requirejs;
+  }
+
   var ext = this.env.options.coffee ? '.coffee' : '.js';
   var filepath = path.join(process.cwd(), 'app/scripts/main' + ext);
 
   try {
-    return (/require\.config/).test(this.read(filepath));
+    this.env.options.requirejs = (/require\.config/).test(this.read(filepath));
+    return this.env.options.requirejs;
   } catch (e) {
     return false;
   }
@@ -90,3 +96,26 @@ Generator.prototype.getTemplateFramework = function getTemplateFramework() {
     return 'lodash';
   }
 };
+
+Generator.prototype.setupSourceRootAndSuffix = function setupSourceRootAndSuffix() {
+  var sourceRoot = '/templates';
+  this.scriptSuffix = '.js';
+
+  if (this.env.options.coffee || this.options.coffee) {
+    sourceRoot = '/templates/coffeescript';
+    this.scriptSuffix = '.coffee';
+  }
+
+  if (this.env.options.requirejs || this.options.requirejs) {
+    sourceRoot += '/requirejs';
+  }
+
+  this.sourceRoot(path.join(__dirname, sourceRoot));
+};
+
+Generator.prototype.writeTemplate = function writeTemplate(source, destination, data) {
+  this.setupSourceRootAndSuffix();
+  var ext = this.scriptSuffix;
+  this.template(source + ext, destination + ext, data);
+};
+

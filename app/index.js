@@ -58,16 +58,16 @@ Generator.prototype.askFor = function askFor() {
       name: 'Twitter Bootstrap for Sass',
       value: 'compassBootstrap',
       checked: true
-    }]
-  }];
-
-  if (!this.options.coffee) {
-    prompts[0].choices.push({
+    }, {
       name: 'Use CoffeeScript',
       value: 'coffee',
-      checked: false
-    });
-  }
+      checked: this.options.coffee || false
+    }, {
+      name: 'Use RequireJs',
+      value: 'requirejs',
+      checked: this.options.requirejs || false
+    }]
+  }];
 
   this.prompt(prompts, function (answers) {
     var features = answers.features;
@@ -77,25 +77,16 @@ Generator.prototype.askFor = function askFor() {
     // manually deal with the response, get back and store the results.
     // we change a bit this way of doing to automatically do this in the self.prompt() method.
     this.compassBootstrap = hasFeature('compassBootstrap');
+    this.includeRequireJS = hasFeature('requirejs');
 
     if (!this.options.coffee) {
       this.options.coffee = hasFeature('coffee');
     }
 
-    if (!this.options.coffee) {
-      this.prompt([{
-        type: 'confirm',
-        name: 'includeRequireJS',
-        message: 'Add RequireJS?'
-      }], function (answers) {
-        this.includeRequireJS = answers.includeRequireJS;
-
-        cb();
-      }.bind(this));
-    } else {
-      this.includeRequireJS = false;
-      cb();
+    if (!this.options.requirejs) {
+      this.options.requirejs = this.includeRequireJS;
     }
+    cb();
   }.bind(this));
 };
 
@@ -223,23 +214,12 @@ Generator.prototype.mainJs = function mainJs() {
   if (!this.includeRequireJS) {
     return;
   }
-
-  var dirPath = this.options.coffee ? '../templates/coffeescript/' : '../templates';
-  this.sourceRoot(path.join(__dirname, dirPath));
-
-  var mainJsFile = this.engine(this.read('requirejs_app.js'), this);
-
-  this.write('app/scripts/main.js', mainJsFile);
+  this.writeTemplate('main', 'app/scripts/main');
 };
 
 Generator.prototype.createAppFile = function createAppFile() {
   if (this.includeRequireJS) {
     return;
   }
-
-  var dirPath = this.options.coffee ? '../templates/coffeescript/' : '../templates';
-  this.sourceRoot(path.join(__dirname, dirPath));
-
-  var ext = this.options.coffee ? 'coffee' : 'js';
-  this.template('app.' + ext, 'app/scripts/main.' + ext);
+  this.writeTemplate('app', 'app/scripts/main');
 };

@@ -17,35 +17,9 @@ function Generator() {
 util.inherits(Generator, scriptBase);
 
 Generator.prototype.createControllerFiles = function createControllerFiles() {
-  var ext = this.options.coffee ? '.coffee' : '.js';
-  var destFile = path.join('app/scripts/routes', this.name + ext);
-  this.isRequireJsApp = this.isUsingRequireJS();
+  this.writeTemplate('router', path.join('app/scripts/routes', this.name));
 
-  if (!this.isRequireJsApp) {
-    this.template('router' + ext, destFile);
+  if (!this.options.requirejs) {
     this.addScriptToIndex('routes/' + this.name);
-    return;
   }
-
-  var template = [
-    '/*global define*/',
-    '',
-    'define([',
-    '    \'jquery\',',
-    '    \'backbone\'',
-    '], function ($, Backbone) {',
-    '    \'use strict\';',
-    '',
-    '    var ' + this._.classify(this.name) + 'Router = Backbone.Router.extend({',
-    '        routes: {',
-    '        }',
-    '',
-    '    });',
-    '',
-    '    return ' + this._.classify(this.name) + 'Router;',
-    '});'
-  ].join('\n');
-
-  this.write(destFile, template);
-
 };
