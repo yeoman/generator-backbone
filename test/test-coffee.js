@@ -19,10 +19,8 @@ describe('Backbone generator test with --coffee option', function () {
       ]);
       this.backbone.app.options['skip-install'] = true;
 
-      this.backbone.app.options.coffee = true;
-
       helpers.mockPrompt(this.backbone.app, {
-        features: ['compassBootstrap','coffee']
+        features: ['compassBootstrap', 'coffee']
       });
 
       done();

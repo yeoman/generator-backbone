@@ -16,7 +16,7 @@ describe('Backbone generator with handlebars', function () {
           helpers.createDummyGenerator(),
           'mocha:app'
         ]
-      ],['temp'], {'template-framework': 'mustache'});
+      ], ['temp'], {'template-framework': 'mustache'});
       this.backbone.app.options['skip-install'] = true;
 
       helpers.mockPrompt(this.backbone.app, {
