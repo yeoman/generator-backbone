@@ -25,7 +25,7 @@ require.config({
         jquery: '../bower_components/jquery/jquery',
         backbone: '../bower_components/backbone/backbone',
         underscore: '../bower_components/underscore/underscore'<% if (compassBootstrap) { %>,
-        bootstrap: 'vendor/bootstrap'<% } %><% if (templateFramework === 'handlebars') { %>,
+        bootstrap: '../bower_components/sass-bootstrap/dist/js/bootstrap'<% } %><% if (templateFramework === 'handlebars') { %>,
         handlebars: '../bower_components/handlebars/handlebars'<% } %>
     }
 });

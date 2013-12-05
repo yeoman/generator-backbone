@@ -178,13 +178,6 @@ Generator.prototype.writeIndex = function writeIndex() {
   });
 };
 
-Generator.prototype.bootstrapJs = function bootstrapJs() {
-  // TODO: create a Bower component for this
-  if (this.includeRequireJS && this.compassBootstrap) {
-    this.copy('bootstrap.js', 'app/scripts/vendor/bootstrap.js');
-  }
-};
-
 Generator.prototype.writeIndexWithRequirejs = function writeIndexWithRequirejs() {
   if (!this.includeRequireJS) {
     return;
