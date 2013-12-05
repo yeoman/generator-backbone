@@ -18,7 +18,7 @@
     "url": "git://github.com/yeoman/generator-backbone.git"
   },
   "scripts": {
-    "test": "istanbul cover _mocha --report lcovonly -- test/*.js --reporter list --timeout 100000 && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "test": "mocha --reporter spec"
   },
   "dependencies": {
     "yeoman-generator": "~0.14.0"
@@ -28,10 +28,7 @@
     "yo": ">=1.0.0-rc.1.1"
   },
   "devDependencies": {
-    "mocha": "~1.12.0",
-    "coveralls": "~2.3.0",
-    "mocha-lcov-reporter": "0.0.1",
-    "istanbul": "~0.1.44"
+    "mocha": "~1.12.0"
   },
   "engines": {
     "node": ">=0.8.0",
