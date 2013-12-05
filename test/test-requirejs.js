@@ -46,7 +46,6 @@ describe('Backbone generator with RequireJS', function () {
         '.editorconfig',
         'Gruntfile.js',
         'package.json',
-        'app/scripts/vendor/bootstrap.js',
         ['app/scripts/main.js', /bootstrap/]
       ];
 
