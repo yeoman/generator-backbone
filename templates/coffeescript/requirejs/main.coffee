@@ -9,27 +9,19 @@ require.config
       deps: [
         'underscore'
         'jquery'
-       ]
-      exports: 'Backbone'
-    <% if (compassBootstrap) { %>
+      ]
+      exports: 'Backbone'<% if (compassBootstrap) { %>
     bootstrap:
       deps: ['jquery'],
-      exports: 'jquery'
-    <% } %>
-    <% if (templateFramework === 'handlebars') { %>
+      exports: 'jquery'<% } %><% if (templateFramework === 'handlebars') { %>
     handlebars:
-      exports: 'Handlebars'
-    <% } %>
+      exports: 'Handlebars'<% } %>
   paths:
     jquery: '../bower_components/jquery/jquery'
     backbone: '../bower_components/backbone/backbone'
-    underscore: '../bower_components/underscore/underscore'
-    <% if (compassBootstrap) { %>
-    bootstrap: '../bower_components/sass-bootstrap/dist/js/bootstrap'
-    <% } %>
-    <% if (templateFramework === 'handlebars') { %>
-    handlebars: '../bower_components/handlebars/handlebars'
-    <% } %>
+    underscore: '../bower_components/underscore/underscore'<% if (compassBootstrap) { %>
+    bootstrap: '../bower_components/sass-bootstrap/dist/js/bootstrap'<% } %><% if (templateFramework === 'handlebars') { %>
+    handlebars: '../bower_components/handlebars/handlebars'<% } %>
 
 require [
   'backbone'
