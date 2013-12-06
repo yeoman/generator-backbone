@@ -305,12 +305,12 @@ module.exports = function (grunt) {
                     ]
                 }]
             }
-        },
+        },<% if (includeRequireJS) { %>
         bower: {
             all: {
                 rjsConfig: '<%%= yeoman.app %>/scripts/main.js'
             }
-        },<% if (templateFramework === 'mustache') { %>
+        },<% } %><% if (templateFramework === 'mustache') { %>
         mustache: {
             files: {
                 src: '<%%= yeoman.app %>/scripts/templates/',
