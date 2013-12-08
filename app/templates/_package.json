@@ -21,8 +21,8 @@
     "grunt-contrib-watch": "~0.5.2",<% if (testFramework === 'jasmine') { %>
     "grunt-contrib-jasmine": "~0.5.1",<% }else{ %>
     "grunt-mocha": "~0.4.1",<% } %>
-    "grunt-bower-requirejs": "~0.7.0",
     "grunt-usemin": "~0.1.10",<% if(includeRequireJS){ %>
+    "grunt-bower-requirejs": "~0.7.0",
     "grunt-requirejs": "~0.4.0",<% } %>
     "grunt-rev": "~0.1.0",
     "grunt-open": "~0.2.0",
