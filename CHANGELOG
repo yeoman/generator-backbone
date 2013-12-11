@@ -1,3 +1,14 @@
+v0.2.2:
+  date: 2013-12-12
+  changes:
+    - Added CoffeeScript support for RequireJS
+    - Added `--appPath` option to scaffold application into
+      custom directory
+    - Added tests for handlebars and mustache
+    - moved inline requirejs templates to /templates/requirejs
+    - Updated to yeoman-generator to 0.14.0
+    - other minor fixes
+
 v0.2.1:
   date: 2013-11-03
   changes:
