@@ -47,6 +47,10 @@ Also checkout this [NetTuts write-up](http://net.tutsplus.com/tutorials/javascri
 
 ## Options
 
+* `--appPath`
+
+  Generate scaffold into a custom directory.
+
 * `--coffee`
 
   Generate scaffolds in CoffeeScript. By default check if project uses CoffeeScript.

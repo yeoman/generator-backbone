@@ -8,12 +8,8 @@ var scriptBase = require('../script-base');
 var Generator = module.exports = function Generator(args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
 
-  if (typeof this.env.options.appPath === 'undefined') {
-    try {
-      this.env.options.appPath = require(path.join(process.cwd(), 'bower.json')).appPath;
-    } catch (e) {}
-    this.env.options.appPath = this.env.options.appPath || 'app';
-  }
+  this.env.options.appPath = this.options.appPath || 'app';
+  this.config.set('appPath', this.env.options.appPath);
 
   this.testFramework = this.options['test-framework'] || 'mocha';
   this.templateFramework = this.options['template-framework'] || 'lodash';
@@ -91,12 +87,12 @@ Generator.prototype.askFor = function askFor() {
 };
 
 Generator.prototype.git = function git() {
-  this.copy('gitignore', '.gitignore');
+  this.template('gitignore', '.gitignore');
   this.copy('gitattributes', '.gitattributes');
 };
 
 Generator.prototype.bower = function bower() {
-  this.copy('bowerrc', '.bowerrc');
+  this.template('bowerrc', '.bowerrc');
   this.copy('_bower.json', 'bower.json');
 };
 
@@ -123,9 +119,9 @@ Generator.prototype.mainStylesheet = function mainStylesheet() {
   ];
   var ext = '.css';
   if (this.compassBootstrap) {
-    this.template('main.scss', 'app/styles/main.scss');
+    this.template('main.scss', this.env.options.appPath + '/styles/main.scss');
   }
-  this.write('app/styles/main' + ext, contentText.join('\n'));
+  this.write(this.env.options.appPath + '/styles/main' + ext, contentText.join('\n'));
 };
 
 Generator.prototype.writeIndex = function writeIndex() {
@@ -169,7 +165,7 @@ Generator.prototype.writeIndex = function writeIndex() {
   this.indexFile = this.appendFiles({
     html: this.indexFile,
     fileType: 'js',
-    searchPath: ['.tmp', 'app'],
+    searchPath: ['.tmp', this.env.options.appPath],
     optimizedPath: 'scripts/main.js',
     sourceFileList: [
       'scripts/main.js',
@@ -191,28 +187,28 @@ Generator.prototype.writeIndexWithRequirejs = function writeIndexWithRequirejs()
 };
 
 Generator.prototype.setupEnv = function setupEnv() {
-  this.mkdir('app');
-  this.mkdir('app/scripts');
-  this.mkdir('app/scripts/vendor/');
-  this.mkdir('app/styles');
-  this.mkdir('app/images');
-  this.template('app/404.html');
-  this.template('app/favicon.ico');
-  this.template('app/robots.txt');
-  this.copy('app/htaccess', 'app/.htaccess');
-  this.write('app/index.html', this.indexFile);
+  this.mkdir(this.env.options.appPath);
+  this.mkdir(this.env.options.appPath + '/scripts');
+  this.mkdir(this.env.options.appPath + '/scripts/vendor/');
+  this.mkdir(this.env.options.appPath + '/styles');
+  this.mkdir(this.env.options.appPath + '/images');
+  this.copy('app/404.html', this.env.options.appPath + '/404.html');
+  this.copy('app/favicon.ico', this.env.options.appPath + '/favicon.ico');
+  this.copy('app/robots.txt', this.env.options.appPath + '/robots.txt');
+  this.copy('app/htaccess', this.env.options.appPath + '/.htaccess');
+  this.write(this.env.options.appPath + '/index.html', this.indexFile);
 };
 
 Generator.prototype.mainJs = function mainJs() {
   if (!this.includeRequireJS) {
     return;
   }
-  this.writeTemplate('main', 'app/scripts/main');
+  this.writeTemplate('main', this.env.options.appPath + '/scripts/main');
 };
 
 Generator.prototype.createAppFile = function createAppFile() {
   if (this.includeRequireJS) {
     return;
   }
-  this.writeTemplate('app', 'app/scripts/main');
+  this.writeTemplate('app', this.env.options.appPath + '/scripts/main');
 };

@@ -17,7 +17,7 @@ function Generator() {
 util.inherits(Generator, scriptBase);
 
 Generator.prototype.createControllerFiles = function createControllerFiles() {
-  this.writeTemplate('router', path.join('app/scripts/routes', this.name));
+  this.writeTemplate('router', path.join(this.env.options.appPath + '/scripts/routes', this.name));
 
   if (!this.options.requirejs) {
     this.addScriptToIndex('routes/' + this.name);
