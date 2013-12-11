@@ -3,7 +3,7 @@
 var path    = require('path');
 var helpers = require('yeoman-generator').test;
 var assert  = require('assert');
-
+var fs      = require('fs');
 
 // XXX With current API, (prior v2), that's a complete mess to setup generators
 // if they differ from the standard lib/generators layout.
@@ -47,6 +47,15 @@ describe('Backbone generator test', function () {
       helpers.mockPrompt(this.backbone.app, {
         features: ['compassBootstrap']
       });
+
+      var out = [
+        '{',
+        '  "generator-backbone": {',
+        '    "appPath": "app"',
+        '  }',
+        '}'
+      ];
+      fs.writeFileSync('.yo-rc.json', out.join('\n'));
 
       done();
     }.bind(this));

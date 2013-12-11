@@ -3,6 +3,7 @@
 var path    = require('path');
 var helpers = require('yeoman-generator').test;
 var assert  = require('assert');
+var fs      = require('fs');
 
 describe('Backbone generator test with --coffee and --requirejs option', function () {
   beforeEach(function (done) {
@@ -25,6 +26,15 @@ describe('Backbone generator test with --coffee and --requirejs option', functio
       helpers.mockPrompt(this.backbone.app, {
         features: ['compassBootstrap', 'coffee', 'requirejs']
       });
+
+      var out = [
+        '{',
+        '  "generator-backbone": {',
+        '    "appPath": "app"',
+        '  }',
+        '}'
+      ];
+      fs.writeFileSync('.yo-rc.json', out.join('\n'));
 
       done();
     }.bind(this));

@@ -23,14 +23,14 @@ Generator.prototype.createViewFiles = function createViewFiles() {
   } else if (templateFramework === 'handlebars') {
     templateExt = '.hbs';
   }
-  this.jst_path = 'app/scripts/templates/' + this.name + templateExt;
+  this.jst_path = this.env.options.appPath + '/scripts/templates/' + this.name + templateExt;
 
   this.template('view.ejs', this.jst_path);
   if (templateFramework === 'mustache') {
     this.jst_path = this.name + '-template';
   }
 
-  this.writeTemplate('view', path.join('app/scripts/views', this.name));
+  this.writeTemplate('view', path.join(this.env.options.appPath + '/scripts/views', this.name));
 
   if (!this.options.requirejs) {
     this.addScriptToIndex('views/' + this.name);
