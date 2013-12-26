@@ -18,12 +18,20 @@ var Generator = module.exports = function Generator(args, options, config) {
     this.hookFor(this.testFramework, {
       as: 'app',
       options: {
-        options: {
-          'skip-install': this.options['skip-install']
-        }
+        'skip-install': this.options['skip-install'],
+        'ui': this.options.ui
       }
     });
   }
+
+  this.config.defaults({
+    ui: this.options.ui,
+    coffee: this.options.coffee,
+    testFramework: this.testFramework,
+    templateFramework: this.templateFramework,
+    compassBootstrap: this.compassBootstrap,
+    includeRequireJS: this.includeRequireJS
+  });
 
   this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
 
@@ -74,13 +82,17 @@ Generator.prototype.askFor = function askFor() {
     // we change a bit this way of doing to automatically do this in the self.prompt() method.
     this.compassBootstrap = hasFeature('compassBootstrap');
     this.includeRequireJS = hasFeature('requirejs');
+    this.config.set('compassBootstrap', this.compassBootstrap);
+
 
     if (!this.options.coffee) {
       this.options.coffee = hasFeature('coffee');
+      this.config.set('coffee', this.options.coffee);
     }
 
     if (!this.options.requirejs) {
       this.options.requirejs = this.includeRequireJS;
+      this.config.set('includeRequireJS', this.includeRequireJS);
     }
     cb();
   }.bind(this));

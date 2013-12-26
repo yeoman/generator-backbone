@@ -5,3 +5,4 @@ contributing.md
 .npmignore
 test
 .travis.yml
+coverage/

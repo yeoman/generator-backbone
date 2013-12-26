@@ -67,7 +67,12 @@ describe('Backbone generator test with --coffee option', function () {
     it('creates backbone model', function (done) {
 
       this.backbone.app.run([], function () {
-        var model = helpers.createGenerator('backbone:model', ['../../model'], ['foo']);
+        var model = helpers.createGenerator('backbone:model', [
+          '../../model', [
+            helpers.createDummyGenerator(),
+            'backbone-mocha:model'
+          ]
+        ], ['foo']);
         model.run([], function () {
           helpers.assertFiles([
             ['app/scripts/models/foo.coffee', /class temp.Models.FooModel extends Backbone.Model/]
@@ -82,7 +87,12 @@ describe('Backbone generator test with --coffee option', function () {
     it('creates backbone collection', function (done) {
 
       this.backbone.app.run({}, function () {
-        var collection = helpers.createGenerator('backbone:collection', ['../../collection'], ['foo']);
+        var collection = helpers.createGenerator('backbone:collection', [
+          '../../collection', [
+            helpers.createDummyGenerator(),
+            'backbone-mocha:collection'
+          ]
+        ], ['foo']);
 
         collection.run([], function () {
           helpers.assertFiles([
@@ -98,7 +108,12 @@ describe('Backbone generator test with --coffee option', function () {
     it('creates backbone router', function (done) {
 
       this.backbone.app.run({}, function () {
-        var router = helpers.createGenerator('backbone:router', ['../../router'], ['foo']);
+        var router = helpers.createGenerator('backbone:router', [
+          '../../router', [
+            helpers.createDummyGenerator(),
+            'backbone-mocha:router'
+          ]
+        ], ['foo']);
 
         router.run([], function () {
           helpers.assertFiles([
@@ -114,7 +129,12 @@ describe('Backbone generator test with --coffee option', function () {
     it('creates backbone view', function (done) {
 
       this.backbone.app.run({}, function () {
-        var view = helpers.createGenerator('backbone:view', ['../../view'], ['foo']);
+        var view = helpers.createGenerator('backbone:view', [
+          '../../view', [
+            helpers.createDummyGenerator(),
+            'backbone-mocha:view'
+          ]
+        ], ['foo']);
 
         view.run([], function () {
           helpers.assertFiles([

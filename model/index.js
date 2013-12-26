@@ -25,6 +25,19 @@ function Generator() {
     };
   });
 
+  var testOptions = {
+    as: 'model',
+    args: [this.name],
+    options: {
+      coffee: this.config.get('coffee'),
+      ui: this.config.get('ui')
+    }
+  };
+
+  if (this.geneateTests()) {
+    this.hookFor('backbone-mocha', testOptions);
+  }
+
 }
 
 util.inherits(Generator, scriptBase);
