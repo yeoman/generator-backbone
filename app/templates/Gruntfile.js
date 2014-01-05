@@ -415,7 +415,7 @@ module.exports = function (grunt) {
         if(!isConnected) {
             return grunt.task.run(testTasks);
         } else {
-            // already connected, remove the connect:test task
+            // already connected so not going to connect again, remove the connect:test task
             testTasks.splice(testTasks.indexOf('connect:test'), 1);
             return grunt.task.run(testTasks);
         }
