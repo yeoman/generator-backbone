@@ -8,6 +8,10 @@ var scriptBase = require('../script-base');
 var Generator = module.exports = function Generator(args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
 
+  this.argument('appname', { type: String, required: false });
+  this.appname = this.appname || path.basename(process.cwd());
+  this.appname = this._.camelize(this._.slugify(this._.humanize(this.appname)));
+
   this.env.options.appPath = this.options.appPath || 'app';
   this.config.set('appPath', this.env.options.appPath);
 
