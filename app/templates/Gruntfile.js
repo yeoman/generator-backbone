@@ -77,7 +77,7 @@ module.exports = function (grunt) {
             }<% } %>,
             test: {
                 files: ['<%%= yeoman.app %>/scripts/{,*/}*.js', 'test/spec/**/*.js'],
-                tasks: ['test']
+                tasks: ['test:true']
             }
         },
         connect: {
@@ -396,19 +396,30 @@ module.exports = function (grunt) {
         ]);
     });
 
-    grunt.registerTask('test', [
-        'clean:server',
-        'coffee',
-        'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
-        'mustache',<% } else if (templateFramework === 'handlebars') { %>
-        'handlebars',<% } else { %>
-        'jst',<% } %><% if (compassBootstrap) { %>
-        'compass',<% } %><% if(testFramework === 'mocha') { %>
-        'connect:test',
-        'mocha',<% } else { %>
-        'jasmine',<% } %>
-        'watch:test'
-    ]);
+    grunt.registerTask('test', function (isConnected) {
+        isConnected = Boolean(isConnected);
+        var testTasks = [
+                'clean:server',
+                'coffee',
+                'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
+                'mustache',<% } else if (templateFramework === 'handlebars') { %>
+                'handlebars',<% } else { %>
+                'jst',<% } %><% if (compassBootstrap) { %>
+                'compass',<% } %><% if(testFramework === 'mocha') { %>
+                'connect:test',
+                'mocha',<% } else { %>
+                'jasmine',<% } %>
+                'watch:test'
+            ];
+            
+        if(!isConnected) {
+            return grunt.task.run(testTasks);
+        } else {
+            // already connected, remove the connect:test task
+            testTasks.splice(testTasks.indexOf('connect:test'), 1);
+            return grunt.task.run(testTasks);
+        }
+    });
 
     grunt.registerTask('build', [
         'clean:dist',
