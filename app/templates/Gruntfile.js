@@ -125,7 +125,7 @@ module.exports = function (grunt) {
                 path: 'http://localhost:<%%= connect.options.port %>'
             },
             test: {
-                path: 'http://localhost:<%= connect.test.options.port %>'
+                path: 'http://localhost:<%%= connect.test.options.port %>'
             }
         },
         clean: {
