@@ -123,6 +123,9 @@ module.exports = function (grunt) {
         open: {
             server: {
                 path: 'http://localhost:<%%= connect.options.port %>'
+            },
+            test: {
+                path: 'http://localhost:<%= connect.test.options.port %>'
             }
         },
         clean: {
@@ -370,7 +373,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('serve', function (target) {
         if (target === 'dist') {
-            return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
+            return grunt.task.run(['build', 'open:server', 'connect:dist:keepalive']);
         }
 
         if (target === 'test') {
@@ -383,6 +386,7 @@ module.exports = function (grunt) {
                 'jst',<% } %><% if (compassBootstrap) { %>
                 'compass:server',<% } %>
                 'connect:test',
+                'open:test',
                 'watch:livereload'
             ]);
         }
@@ -396,7 +400,7 @@ module.exports = function (grunt) {
             'jst',<% } %><% if (compassBootstrap) { %>
             'compass:server',<% } %>
             'connect:livereload',
-            'open',
+            'open:server',
             'watch'
         ]);
     });
