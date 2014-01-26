@@ -27,6 +27,12 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         yeoman: yeomanConfig,
+        focus: {
+            server: {
+              exclude: ['test']
+            },
+            test: {}
+        },
         watch: {
             options: {
                 nospawn: true,
@@ -401,7 +407,7 @@ module.exports = function (grunt) {
             'compass:server',<% } %>
             'connect:livereload',
             'open:server',
-            'watch'
+            'focus:server'
         ]);
     });
 
@@ -418,7 +424,7 @@ module.exports = function (grunt) {
                 'connect:test',
                 'mocha',<% } else { %>
                 'jasmine',<% } %>
-                'watch:test'
+                'focus:test'
             ];
             
         if(!isConnected) {
