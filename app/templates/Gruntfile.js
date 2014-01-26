@@ -31,7 +31,7 @@ module.exports = function (grunt) {
             options: {
                 nospawn: true,
                 livereload: true
-            },
+            },<% if (options.coffee) { %>
             coffee: {
                 files: ['<%%= yeoman.app %>/scripts/{,*/}*.coffee'],
                 tasks: ['coffee:dist']
@@ -39,7 +39,7 @@ module.exports = function (grunt) {
             coffeeTest: {
                 files: ['test/spec/{,*/}*.coffee'],
                 tasks: ['coffee:test']
-            },<% if (compassBootstrap) { %>
+            },<% } %><% if (compassBootstrap) { %>
             compass: {
                 files: ['<%%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
                 tasks: ['compass']
@@ -166,7 +166,7 @@ module.exports = function (grunt) {
                     ]
                 }
             }
-        }<% } %>,
+        }<% } %>,<% if (options.coffee) { %>
         coffee: {
             dist: {
                 files: [{
@@ -188,7 +188,7 @@ module.exports = function (grunt) {
                     ext: '.js'
                 }]
             }
-        },<% if (compassBootstrap) { %>
+        },<% } %><% if (compassBootstrap) { %>
         compass: {
             options: {
                 sassDir: '<%%= yeoman.app %>/styles',
@@ -366,9 +366,9 @@ module.exports = function (grunt) {
         grunt.file.write('.tmp/scripts/templates.js', 'this.JST = this.JST || {};');
     });
 
-    grunt.registerTask('server', function () {
+    grunt.registerTask('server', function (target) {
         grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-        grunt.task.run(['serve:' + target]);
+        grunt.task.run(['serve' + (target ? ':' + target : '')]);
     });
 
     grunt.registerTask('serve', function (target) {
@@ -378,8 +378,8 @@ module.exports = function (grunt) {
 
         if (target === 'test') {
             return grunt.task.run([
-                'clean:server',
-                'coffee',
+                'clean:server',<% if (options.coffee) { %>
+                'coffee',<% } %>
                 'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
                 'mustache',<% } else if (templateFramework === 'handlebars') { %>
                 'handlebars',<% } else { %>
@@ -392,8 +392,8 @@ module.exports = function (grunt) {
         }
 
         grunt.task.run([
-            'clean:server',
-            'coffee:dist',
+            'clean:server',<% if (options.coffee) { %>
+            'coffee:dist',<% } %>
             'createDefaultTemplate',<% if (templateFramework === 'mustache') { %>
             'mustache',<% } else if (templateFramework === 'handlebars') { %>
             'handlebars',<% } else { %>
@@ -408,8 +408,8 @@ module.exports = function (grunt) {
     grunt.registerTask('test', function (isConnected) {
         isConnected = Boolean(isConnected);
         var testTasks = [
-                'clean:server',
-                'coffee',
+                'clean:server',<% if (options.coffee) { %>
+                'coffee',<% } %>
                 'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
                 'mustache',<% } else if (templateFramework === 'handlebars') { %>
                 'handlebars',<% } else { %>
@@ -431,8 +431,8 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('build', [
-        'clean:dist',
-        'coffee',
+        'clean:dist',<% if (options.coffee) { %>
+        'coffee',<% } %>
         'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
         'mustache',<% } else if (templateFramework === 'handlebars') { %>
         'handlebars',<% } else { %>
