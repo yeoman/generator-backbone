@@ -114,6 +114,6 @@ Generator.prototype.writeTemplate = function writeTemplate(source, destination, 
   this.template(source + ext, destination + ext, data);
 };
 
-Generator.prototype.geneateTests = function geneateTests(){
-  return this.config.get('testFramework') == 'mocha' && !this.config.get('includeRequireJS')
-}
+Generator.prototype.generateTests = function generateTests() {
+  return this.config.get('testFramework') === 'mocha' && !this.config.get('includeRequireJS');
+};

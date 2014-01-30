@@ -20,7 +20,7 @@ function Generator() {
     }
   };
 
-  if (this.geneateTests()) {
+  if (this.generateTests()) {
     this.hookFor('backbone-mocha', testOptions);
   }
 
