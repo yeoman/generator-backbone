@@ -148,7 +148,7 @@ module.exports = function (grunt) {
             all: {
                 options: {
                     run: true,
-                    urls: ['http://localhost:<%%= connect.test.options.port %>/index.html']
+                    src: ['http://localhost:<%%= connect.test.options.port %>/index.html']
                 }
             }
         }<% } else { %>,
@@ -420,7 +420,7 @@ module.exports = function (grunt) {
                 'jasmine',<% } %>
                 'watch:test'
             ];
-            
+
         if(!isConnected) {
             return grunt.task.run(testTasks);
         } else {
