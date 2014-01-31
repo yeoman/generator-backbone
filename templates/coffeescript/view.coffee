@@ -2,18 +2,18 @@
 
 class <%= _.camelize(appname) %>.Views.<%= _.classify(name) %>View extends Backbone.View
 
-    template: JST['<%= jst_path %>']
+  template: JST['<%= jst_path %>']
 
-    tagName: 'div'
+  tagName: 'div'
 
-    id: ''
+  id: ''
 
-    className: ''
+  className: ''
 
-    events: {}
+  events: {}
 
-    initialize: () ->
-        @listenTo @model, 'change', @render
+  initialize: () ->
+    @listenTo @model, 'change', @render
 
-    render: () ->
-        @$el.html @template(@model.toJSON())
+  render: () ->
+    @$el.html @template(@model.toJSON())

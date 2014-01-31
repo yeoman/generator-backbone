@@ -5,13 +5,13 @@ define [
   'use strict';
 
   class <%= _.classify(name) %>Model extends Backbone.Model
-      url: '',
+    url: '',
 
-      initialize: () ->
+    initialize: () ->
 
-      defaults: {}
+    defaults: {}
 
-      validate: (attrs, options) ->
+    validate: (attrs, options) ->
 
-      parse: (response, options) ->
-          response
+    parse: (response, options) ->
+      response

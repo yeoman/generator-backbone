@@ -1,13 +1,13 @@
 'use strict';
 
 class <%= _.camelize(appname) %>.Models.<%= _.classify(name) %>Model extends Backbone.Model
-    url: '',
+  url: '',
 
-    initialize: () ->
+  initialize: () ->
 
-    defaults: {}
+  defaults: {}
 
-    validate: (attrs, options) ->
+  validate: (attrs, options) ->
 
-    parse: (response, options) ->
-        response
+  parse: (response, options) ->
+    response
