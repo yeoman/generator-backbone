@@ -38,6 +38,8 @@ var Generator = module.exports = function Generator() {
   }
 
   this.setupSourceRootAndSuffix();
+
+  this._.mixin({ 'classify': backboneUtils.classify });
 };
 
 util.inherits(Generator, yeoman.generators.NamedBase);

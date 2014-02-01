@@ -5,7 +5,8 @@ var fs = require('fs');
 
 module.exports = {
     rewrite: rewrite,
-    rewriteFile: rewriteFile
+    rewriteFile: rewriteFile,
+    classify: classify
 };
 
 function rewriteFile(args) {
@@ -58,4 +59,11 @@ function rewrite(args) {
         .join('\n'));
 
     return lines.join('\n');
+}
+
+// _.classify uses _.titleize which lowercase the string,
+// so if the user chooses a proper ClassName it will not rename properly
+function classify(string) {
+    string = string.replace(/[\W_](\w)/g, function (match) { return ' ' + match[1].toUpperCase(); }).replace(/\s/g, '');
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
