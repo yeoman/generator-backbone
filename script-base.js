@@ -7,6 +7,8 @@ var backboneUtils = require('./util.js');
 var Generator = module.exports = function Generator() {
   yeoman.generators.NamedBase.apply(this, arguments);
 
+  this.appname = this.config.get('appName') || path.basename(process.cwd());
+
   this.env.options.appPath = this.config.get('appPath') || 'app';
 
   if (this.env.options.minsafe) {
