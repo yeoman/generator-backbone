@@ -3,12 +3,14 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var scriptBase = require('../script-base');
+var backboneUtils = require('../util.js');
 
 var Generator = module.exports = function Generator(args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
 
   this.argument('appname', { type: String, required: false });
   this.appname = this.appname || path.basename(process.cwd());
+  this.appname = backboneUtils.classify(this.appname);
 
   this.env.options.appPath = this.options.appPath || 'app';
   this.config.set('appPath', this.env.options.appPath);
