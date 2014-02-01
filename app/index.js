@@ -4,7 +4,6 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var scriptBase = require('../script-base');
 
-
 var Generator = module.exports = function Generator(args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
 
@@ -28,6 +27,7 @@ var Generator = module.exports = function Generator(args, options, config) {
   }
 
   this.config.defaults({
+    appName: this.appname,
     ui: this.options.ui,
     coffee: this.options.coffee,
     testFramework: this.testFramework,
