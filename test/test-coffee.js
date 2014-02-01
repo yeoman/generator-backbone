@@ -27,7 +27,8 @@ describe('Backbone generator test with --coffee option', function () {
       var out = [
         '{',
         '  "generator-backbone": {',
-        '    "appPath": "app"',
+        '    "appPath": "app",',
+        '    "appName": "Temp"',
         '  }',
         '}'
       ];
@@ -52,8 +53,8 @@ describe('Backbone generator test with --coffee option', function () {
       '.bowerrc',
       '.jshintrc',
       '.editorconfig',
-      'package.json',
-      'app/scripts/main.coffee',
+      '.yo-rc.json',
+      'app/scripts/main.coffee'
     ];
 
     this.backbone.app.run([], function () {
@@ -65,6 +66,7 @@ describe('Backbone generator test with --coffee option', function () {
 
   describe('Backbone Model in coffeescript', function () {
     it('creates backbone model', function (done) {
+      var model = helpers.createGenerator('backbone:model', ['../../model'], ['foo']);
 
       this.backbone.app.run([], function () {
         var model = helpers.createGenerator('backbone:model', [
@@ -73,9 +75,10 @@ describe('Backbone generator test with --coffee option', function () {
             'backbone-mocha:model'
           ]
         ], ['foo']);
+
         model.run([], function () {
           helpers.assertFiles([
-            ['app/scripts/models/foo.coffee', /class temp.Models.FooModel extends Backbone.Model/]
+            ['app/scripts/models/foo.coffee', /class Temp.Models.Foo extends Backbone.Model/]
           ]);
         });
         done();
@@ -96,7 +99,7 @@ describe('Backbone generator test with --coffee option', function () {
 
         collection.run([], function () {
           helpers.assertFiles([
-            ['app/scripts/collections/foo.coffee', /class temp.Collections.FooCollection extends Backbone.Collection/]
+            ['app/scripts/collections/foo.coffee', /class Temp.Collections.Foo extends Backbone.Collection/]
           ]);
         });
         done();
@@ -117,7 +120,7 @@ describe('Backbone generator test with --coffee option', function () {
 
         router.run([], function () {
           helpers.assertFiles([
-            ['app/scripts/routes/foo.coffee', /class temp.Routers.FooRouter extends Backbone.Router/]
+            ['app/scripts/routes/foo.coffee', /class Temp.Routers.Foo extends Backbone.Router/]
           ]);
         });
         done();
@@ -138,7 +141,7 @@ describe('Backbone generator test with --coffee option', function () {
 
         view.run([], function () {
           helpers.assertFiles([
-            ['app/scripts/views/foo.coffee', /class temp.Views.FooView extends Backbone.View/],
+            ['app/scripts/views/foo.coffee', /class Temp.Views.Foo extends Backbone.View/],
             'app/scripts/templates/foo.ejs'
           ]);
         });
@@ -146,4 +149,5 @@ describe('Backbone generator test with --coffee option', function () {
       });
     });
   });
+
 });

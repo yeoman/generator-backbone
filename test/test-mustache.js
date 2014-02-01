@@ -5,7 +5,7 @@ var helpers = require('yeoman-generator').test;
 var assert  = require('assert');
 var fs      = require('fs');
 
-describe('Backbone generator with handlebars', function () {
+describe('Backbone generator with mustache', function () {
   beforeEach(function (done) {
     helpers.testDirectory(path.join(__dirname, './temp'), function (err) {
       if (err) {
@@ -28,7 +28,8 @@ describe('Backbone generator with handlebars', function () {
       var out = [
         '{',
         '  "generator-backbone": {',
-        '    "appPath": "app"',
+        '    "appPath": "app",',
+        '    "appName": "Temp"',
         '  }',
         '}'
       ];
@@ -46,7 +47,7 @@ describe('Backbone generator with handlebars', function () {
       this.backbone.app.run({}, function () {
         view.run([], function () {
           helpers.assertFiles([
-            ['app/scripts/views/foo.js', /Views.FooView = Backbone.View.extend\(\{(.|\n)*foo-template/],
+            ['app/scripts/views/foo.js', /Views.Foo = Backbone.View.extend\(\{(.|\n)*foo-template/],
             'app/scripts/templates/foo-template.mustache'
           ]);
         });

@@ -28,7 +28,8 @@ describe('Backbone generator with handlebars', function () {
       var out = [
         '{',
         '  "generator-backbone": {',
-        '    "appPath": "app"',
+        '    "appPath": "app",',
+        '    "appName": "Temp"',
         '  }',
         '}'
       ];
@@ -46,7 +47,7 @@ describe('Backbone generator with handlebars', function () {
       this.backbone.app.run({}, function () {
         view.run([], function () {
           helpers.assertFiles([
-            ['app/scripts/views/foo.js', /Views.FooView = Backbone.View.extend\(\{(.|\n)*app\/scripts\/templates\/foo.hbs/],
+            ['app/scripts/views/foo.js', /Views.Foo = Backbone.View.extend\(\{(.|\n)*app\/scripts\/templates\/foo.hbs/],
             'app/scripts/templates/foo.hbs'
           ]);
         });

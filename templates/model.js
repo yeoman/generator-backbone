@@ -5,7 +5,7 @@
 (function () {
     'use strict';
 
-    <%= _.camelize(appname) %>.Models.<%= _.classify(name) %>Model = Backbone.Model.extend({
+    <%= _.camelize(appname) %>.Models.<%= _.classify(name) %> = Backbone.Model.extend({
 
         url: '',
 
