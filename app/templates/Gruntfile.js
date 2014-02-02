@@ -74,11 +74,7 @@ module.exports = function (grunt) {
                     '<%%= yeoman.app %>/scripts/templates/*.ejs'
                 ],
                 tasks: ['jst']
-            }<% } %>,
-            test: {
-                files: ['<%%= yeoman.app %>/scripts/{,*/}*.js', 'test/spec/**/*.js'],
-                tasks: ['test:true']
-            }
+            }<% } %>
         },
         connect: {
             options: {
@@ -401,8 +397,24 @@ module.exports = function (grunt) {
             'compass:server',<% } %>
             'connect:livereload',
             'open:server',
-            'focus:server'
+            'watch'
         ]);
+    });
+
+    grunt.registerTask('watch:test', function() {
+        // Configuration for watch:test tasks.
+        var config = {
+            options: {
+                interrupt: true
+            },
+            test: {
+                files: ['<%= yeoman.app %>/scripts/{,*/}*.js', 'test/spec/**/*.js'],
+                tasks: ['test:true']
+            }
+        };
+
+        grunt.config('watch', config);
+        grunt.task.run('watch');
     });
 
     grunt.registerTask('test', function (isConnected) {
