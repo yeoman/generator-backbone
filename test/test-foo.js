@@ -51,7 +51,8 @@ describe('Backbone generator test', function () {
       var out = [
         '{',
         '  "generator-backbone": {',
-        '    "appPath": "app"',
+        '    "appPath": "app",',
+        '    "appName": "Temp"',
         '  }',
         '}'
       ];
@@ -59,7 +60,6 @@ describe('Backbone generator test', function () {
 
       done();
     }.bind(this));
-
   });
 
   it('every generator can be required without throwing', function () {
@@ -72,32 +72,32 @@ describe('Backbone generator test', function () {
     this.view = require('../view');
   });
 
-  it('creates expected files', function (done) {
-    var expected = [
-      ['bower.json', /"name": "temp"/],
-      ['package.json', /"name": "temp"/],
-      'Gruntfile.js',
-      'app/404.html',
-      'app/favicon.ico',
-      'app/robots.txt',
-      'app/index.html',
-      'app/.htaccess',
-      '.gitignore',
-      '.gitattributes',
-      '.bowerrc',
-      '.jshintrc',
-      '.editorconfig',
-      'Gruntfile.js',
-      'package.json',
-      'app/scripts/main.js',
-      'app/styles/main.scss'
-    ];
+  describe('create expected files', function () {
+	it('in path /app', function (done) {
+	  var expected = [
+		['bower.json', /"name": "temp"/],
+		['package.json', /"name": "temp"/],
+		'Gruntfile.js',
+		'app/404.html',
+		'app/favicon.ico',
+		'app/robots.txt',
+		'app/index.html',
+		'app/.htaccess',
+		'.gitignore',
+		'.gitattributes',
+		'.bowerrc',
+		'.jshintrc',
+		'.editorconfig',
+		'.yo-rc.json',
+		'app/scripts/main.js',
+		'app/styles/main.scss'
+	  ];
 
-    this.backbone.app.run({}, function () {
-      helpers.assertFiles(expected);
-      done();
-    });
-
+	  this.backbone.app.run({}, function () {
+		helpers.assertFiles(expected);
+		done();
+	  });
+	});
   });
 
   describe('Backbone Model', function () {
@@ -107,8 +107,7 @@ describe('Backbone generator test', function () {
       this.backbone.app.run({}, function () {
         model.run([], function () {
           helpers.assertFiles([
-            ['app/scripts/models/foo.js',
-              /Models.FooModel = Backbone.Model.extend\(\{/]
+            ['app/scripts/models/foo.js', /Models.Foo = Backbone.Model.extend\(\{/]
           ]);
         });
         done();
@@ -123,7 +122,7 @@ describe('Backbone generator test', function () {
       this.backbone.app.run({}, function () {
         collection.run([], function () {
           helpers.assertFiles([
-            ['app/scripts/collections/foo.js', /Collections.FooCollection = Backbone.Collection.extend\(\{/]
+            ['app/scripts/collections/foo.js', /Collections.Foo = Backbone.Collection.extend\(\{/]
           ]);
         });
         done();
@@ -138,7 +137,7 @@ describe('Backbone generator test', function () {
       this.backbone.app.run({}, function () {
         router.run([], function () {
           helpers.assertFiles([
-            ['app/scripts/routes/foo.js', /Routers.FooRouter = Backbone.Router.extend\(\{/]
+            ['app/scripts/routes/foo.js', /Routers.Foo = Backbone.Router.extend\(\{/]
           ]);
         });
         done();
@@ -153,7 +152,7 @@ describe('Backbone generator test', function () {
       this.backbone.app.run({}, function () {
         view.run([], function () {
           helpers.assertFiles([
-            ['app/scripts/views/foo.js', /Views.FooView = Backbone.View.extend\(\{(.|\n)*app\/scripts\/templates\/foo.ejs/],
+            ['app/scripts/views/foo.js', /Views.Foo = Backbone.View.extend\(\{(.|\n)*app\/scripts\/templates\/foo.ejs/],
             'app/scripts/templates/foo.ejs'
           ]);
         });
@@ -161,4 +160,5 @@ describe('Backbone generator test', function () {
       });
     });
   });
+
 });

@@ -18,5 +18,18 @@
     "strict": true,
     "trailing": true,
     "smarttabs": true,
-    "jquery": true
+    "jquery": true,
+    "globals": {
+        "<%= appname %>": true,
+        "<%= _.slugify(appname) %>": true,
+        "_": false,
+        "Backbone": false,
+        "JST": false,
+        "beforeEach": false,
+        "describe": false,
+        "it": false,
+        "assert": true,
+        "expect": true,
+        "should": true
+    }
 }

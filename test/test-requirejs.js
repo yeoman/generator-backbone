@@ -27,7 +27,8 @@ describe('Backbone generator with RequireJS', function () {
       var out = [
         '{',
         '  "generator-backbone": {',
-        '    "appPath": "app"',
+        '    "appPath": "app",',
+        '    "appName": "Temp"',
         '  }',
         '}'
       ];
@@ -38,7 +39,7 @@ describe('Backbone generator with RequireJS', function () {
 
   });
 
-  describe('creates expected files', function (done) {
+  describe('creates expected files', function () {
     it('with compassBootstrap', function (done) {
       var expected = [
         ['bower.json', /("name": "temp")(|.|\n)*(requirejs)/],
@@ -54,8 +55,7 @@ describe('Backbone generator with RequireJS', function () {
         '.bowerrc',
         '.jshintrc',
         '.editorconfig',
-        'Gruntfile.js',
-        'package.json',
+        '.yo-rc.json',
         ['app/scripts/main.js', /bootstrap/]
       ];
 
@@ -81,6 +81,7 @@ describe('Backbone generator with RequireJS', function () {
         '.bowerrc',
         '.jshintrc',
         '.editorconfig',
+        '.yo-rc.json',
         'Gruntfile.js',
         'package.json'
       ];
@@ -111,7 +112,7 @@ describe('Backbone generator with RequireJS', function () {
   describe('Backbone Collection with RequireJS', function () {
     it('creates backbone collection', function (done) {
       this.backbone.app.run({}, function () {
-      	var collection = helpers.createGenerator('backbone:collection', ['../../collection'], ['foo']);
+        var collection = helpers.createGenerator('backbone:collection', ['../../collection'], ['foo']);
 
         collection.run([], function () {
           helpers.assertFiles([
@@ -140,7 +141,7 @@ describe('Backbone generator with RequireJS', function () {
     });
   });
 
-  describe('Backbone View', function () {
+  describe('Backbone View with RequireJS', function () {
     it('creates backbone view', function (done) {
       this.backbone.app.run({}, function () {
         var view = helpers.createGenerator('backbone:view', ['../../view'], ['foo']);

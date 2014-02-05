@@ -27,7 +27,8 @@ describe('Backbone generator test with --coffee and --requirejs option', functio
       var out = [
         '{',
         '  "generator-backbone": {',
-        '    "appPath": "app"',
+        '    "appPath": "app",',
+        '    "appName": "Temp"',
         '  }',
         '}'
       ];
@@ -52,7 +53,7 @@ describe('Backbone generator test with --coffee and --requirejs option', functio
       '.bowerrc',
       '.jshintrc',
       '.editorconfig',
-      'package.json',
+      '.yo-rc.json',
       'app/scripts/main.coffee'
     ];
 
@@ -126,4 +127,5 @@ describe('Backbone generator test with --coffee and --requirejs option', functio
       });
     });
   });
+
 });

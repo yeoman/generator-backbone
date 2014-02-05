@@ -5,9 +5,9 @@
 (function () {
     'use strict';
 
-    <%= _.camelize(appname) %>.Collections.<%= _.classify(name) %>Collection = Backbone.Collection.extend({
+    <%= _.camelize(appname) %>.Collections.<%= _.classify(name) %> = Backbone.Collection.extend({
 
-        model: <%= _.camelize(appname) %>.Models.<%= _.classify(name) %>Model
+        model: <%= _.camelize(appname) %>.Models.<%= _.classify(name) %>
 
     });
 
