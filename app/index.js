@@ -62,7 +62,7 @@ Generator.prototype.askFor = function askFor() {
     name: 'features',
     message: 'What more would you like?',
     choices: [{
-      name: 'Twitter Bootstrap for Sass',
+      name: 'Bootstrap for Sass',
       value: 'compassBootstrap',
       checked: true
     }, {
@@ -160,7 +160,7 @@ Generator.prototype.writeIndex = function writeIndex() {
   this.indexFile = this.appendScripts(this.indexFile, 'scripts/vendor.js', vendorJS);
 
   if (this.compassBootstrap) {
-    // wire Twitter Bootstrap plugins
+    // wire Bootstrap plugins
     this.indexFile = this.appendScripts(this.indexFile, 'scripts/plugins.js', [
       'bower_components/sass-bootstrap/js/affix.js',
       'bower_components/sass-bootstrap/js/alert.js',
