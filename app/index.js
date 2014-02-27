@@ -150,7 +150,7 @@ Generator.prototype.writeIndex = function writeIndex() {
   this.indexFile = this.engine(this.indexFile, this);
 
   var vendorJS = [
-    'bower_components/jquery/jquery.js',
+    'bower_components/jquery/dist/jquery.js',
     'bower_components/underscore/underscore.js',
     'bower_components/backbone/backbone.js'
   ];
