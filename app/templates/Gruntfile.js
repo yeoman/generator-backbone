@@ -144,7 +144,7 @@ module.exports = function (grunt) {
             all: {
                 options: {
                     run: true,
-                    src: ['http://localhost:<%%= connect.test.options.port %>/index.html']
+                    urls: ['http://localhost:<%%= connect.test.options.port %>/index.html']
                 }
             }
         }<% } else { %>,
