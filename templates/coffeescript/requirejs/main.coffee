@@ -17,7 +17,7 @@ require.config
     handlebars:
       exports: 'Handlebars'<% } %>
   paths:
-    jquery: '../bower_components/jquery/jquery'
+    jquery: '../bower_components/jquery/dist/jquery'
     backbone: '../bower_components/backbone/backbone'
     underscore: '../bower_components/underscore/underscore'<% if (compassBootstrap) { %>
     bootstrap: '../bower_components/sass-bootstrap/dist/js/bootstrap'<% } %><% if (templateFramework === 'handlebars') { %>
