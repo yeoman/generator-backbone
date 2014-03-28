@@ -159,7 +159,7 @@ module.exports = function (grunt) {
                     keepRunner: true,
                     specs : 'test/spec/**/*.js',
                     vendor : [
-                        '<%%= yeoman.app %>/bower_components/jquery/jquery.js',
+                        '<%%= yeoman.app %>/bower_components/jquery/dist/jquery.js',
                         '<%%= yeoman.app %>/bower_components/underscore/underscore.js',
                         '<%%= yeoman.app %>/bower_components/backbone/backbone.js',
                         '.tmp/scripts/templates.js'
@@ -216,7 +216,7 @@ module.exports = function (grunt) {
                     optimize: 'none',
                     paths: {
                         'templates': '../../.tmp/scripts/templates',
-                        'jquery': '../../<%%= yeoman.app %>/bower_components/jquery/jquery',
+                        'jquery': '../../<%%= yeoman.app %>/bower_components/jquery/dist/jquery',
                         'underscore': '../../<%%= yeoman.app %>/bower_components/underscore/underscore',
                         'backbone': '../../<%%= yeoman.app %>/bower_components/backbone/backbone'
                     },
