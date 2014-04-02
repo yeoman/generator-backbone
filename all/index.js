@@ -1,74 +1,28 @@
-var path = require('path');
+/*jshint latedef:false */
 var util = require('util');
 var yeoman = require('yeoman-generator');
 
 module.exports = Generator;
 
-function Generator(args, options, config) {
+function Generator() {
   yeoman.generators.Base.apply(this, arguments);
 
-  this.dirs = 'models collections views routes helpers templates'.split(' ');
-
-  this.option('coffee');
-
-  args = ['application'];
-
-  if (this.options.coffee) {
-    args.push('--coffee');
-  }
-
-  this.option('requirejs');
-
-  if (this.options.requirejs) {
-    args.push('--requirejs');
-  }
-
-  if (this.options['template-framework']) {
-    this.env.options['template-framework'] = this.options['template-framework'];
-  }
-
-  this.testFramework = this.options['test-framework'] || 'mocha';
-
   // the api to hookFor and pass arguments may vary a bit.
-  this.hookFor('backbone:app', {
-    args: args
-  });
   this.hookFor('backbone:router', {
-    args: args
-  });
-  this.hookFor('backbone:view', {
-    args: args
+    args: arguments[0][1] ? arguments[0][1] : arguments[0][0] + 's'
   });
   this.hookFor('backbone:model', {
-    args: args
+    args: arguments[0][0]
   });
   this.hookFor('backbone:collection', {
-    args: args
+    args: arguments[0][1] ? arguments[0][1] : arguments[0][0] + 's'
   });
-
-  this.hookFor(this.testFramework, {
-    as: 'app',
-    options: {
-      options: {
-        'skip-install': this.options['skip-install']
-      }
-    }
+  this.hookFor('backbone:view', {
+    args: arguments[0][0]
   });
-
-  this.on('end', function () {
-    if (/^.*test$/.test(process.cwd())) {
-      process.chdir('..');
-    }
-    this.installDependencies({ skipInstall: this.options['skip-install'] });
+  this.hookFor('backbone:view', {
+    args: arguments[0][1] ? arguments[0][1] : arguments[0][0] + 's'
   });
 }
 
 util.inherits(Generator, yeoman.generators.Base);
-
-
-Generator.prototype.createDirLayout = function createDirLayout() {
-  this.dirs.forEach(function (dir) {
-    this.log.create('app/scripts/' + dir);
-    this.mkdir(path.join('app/scripts', dir));
-  }.bind(this));
-};
