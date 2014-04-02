@@ -10,6 +10,8 @@ function Generator(args, options, config) {
   this.dirs = 'models collections views routes helpers templates'.split(' ');
 
   this.option('coffee');
+  this.env.options.appPath = this.options.appPath || 'app';
+  this.config.set('appPath', this.env.options.appPath);
 
   args = ['application'];
 
