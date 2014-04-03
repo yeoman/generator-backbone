@@ -2,17 +2,7 @@
 'use strict';
 
 require.config({
-    shim: {
-        underscore: {
-            exports: '_'
-        },
-        backbone: {
-            deps: [
-                'underscore',
-                'jquery'
-            ],
-            exports: 'Backbone'
-        }<% if (compassBootstrap) { %>,
+    shim: {<% if (compassBootstrap) { %>
         bootstrap: {
             deps: ['jquery'],
             exports: 'jquery'
