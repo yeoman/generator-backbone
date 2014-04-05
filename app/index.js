@@ -72,7 +72,7 @@ Generator.prototype.askFor = function askFor() {
       value: 'coffee',
       checked: this.options.coffee || false
     }, {
-      name: 'Use RequireJs',
+      name: 'Use RequireJS',
       value: 'requirejs',
       checked: this.options.requirejs || false
     }]
@@ -89,7 +89,6 @@ Generator.prototype.askFor = function askFor() {
     this.includeRequireJS = hasFeature('requirejs');
     this.config.set('compassBootstrap', this.compassBootstrap);
 
-
     if (!this.options.coffee) {
       this.options.coffee = hasFeature('coffee');
       this.config.set('coffee', this.options.coffee);
@@ -99,6 +98,7 @@ Generator.prototype.askFor = function askFor() {
       this.options.requirejs = this.includeRequireJS;
       this.config.set('includeRequireJS', this.includeRequireJS);
     }
+
     cb();
   }.bind(this));
 };
@@ -151,7 +151,7 @@ Generator.prototype.writeIndex = function writeIndex() {
 
   var vendorJS = [
     'bower_components/jquery/dist/jquery.js',
-    'bower_components/underscore/underscore.js',
+    'bower_components/lodash/dist/lodash.js',
     'bower_components/backbone/backbone.js'
   ];
 
