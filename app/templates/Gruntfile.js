@@ -46,7 +46,7 @@ module.exports = function (grunt) {
             },<% } %>
             livereload: {
                 options: {
-                    livereload: LIVERELOAD_PORT
+                    livereload: grunt.option('livereloadport') || LIVERELOAD_PORT
                 },
                 files: [
                     '<%%= yeoman.app %>/*.html',
@@ -82,7 +82,7 @@ module.exports = function (grunt) {
         },
         connect: {
             options: {
-                port: SERVER_PORT,
+                port: grunt.option('port') SERVER_PORT,
                 // change this to '0.0.0.0' to access the server from outside
                 hostname: 'localhost'
             },
