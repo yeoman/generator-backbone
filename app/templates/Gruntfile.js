@@ -417,8 +417,7 @@ module.exports = function (grunt) {
                 'compass',<% } %><% if(testFramework === 'mocha') { %>
                 'connect:test',
                 'mocha',<% } else { %>
-                'jasmine',<% } %>
-                'watch:test'
+                'jasmine'<% } %>
             ];
 
         if(!isConnected) {
