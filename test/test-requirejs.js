@@ -1,9 +1,11 @@
 /*global describe:true, beforeEach:true, it:true */
 'use strict';
 var path    = require('path');
-var helpers = require('yeoman-generator').test;
-var assert  = require('assert');
+var yeoman  = require('yeoman-generator');
+var helpers = yeoman.test;
+var assert  = yeoman.assert;
 var fs      = require('fs');
+var test    = require('./helper.js');
 
 describe('Backbone generator with RequireJS', function () {
   beforeEach(function (done) {
@@ -12,13 +14,7 @@ describe('Backbone generator with RequireJS', function () {
         return done(err);
       }
       this.backbone = {};
-      this.backbone.app = helpers.createGenerator('backbone:app', [
-        '../../app', [
-          helpers.createDummyGenerator(),
-          'mocha:app'
-        ]
-      ]);
-      this.backbone.app.options['skip-install'] = true;
+      this.backbone.app = test.createAppGenerator();
 
       helpers.mockPrompt(this.backbone.app, {
         features: ['compassBootstrap', 'requirejs']
@@ -41,40 +37,44 @@ describe('Backbone generator with RequireJS', function () {
 
   describe('creates expected files', function () {
     it('with compassBootstrap', function (done) {
-      var expected = [
+      var expectedContent = [
         ['bower.json', /("name": "temp")(|.|\n)*(requirejs)/],
         ['package.json', /"name": "temp"/],
+        ['app/index.html', /(Bootstrap)(|.|\n)*(RequireJS)/i],
+        ['app/scripts/main.js', /bootstrap/]
+      ];
+      var expected = [
         'Gruntfile.js',
         'app/404.html',
         'app/favicon.ico',
         'app/robots.txt',
-        ['app/index.html', /(Bootstrap)(|.|\n)*(RequireJS)/i],
         'app/.htaccess',
         '.gitignore',
         '.gitattributes',
         '.bowerrc',
         '.jshintrc',
-        '.editorconfig',
-        '.yo-rc.json',
-        ['app/scripts/main.js', /bootstrap/]
+        '.editorconfig'
       ];
 
       this.backbone.app.run({}, function () {
-        helpers.assertFiles(expected);
+        assert.file(expected);
+        assert.fileContent(expectedContent);
         done();
       });
 
     });
 
     it('without compassBootstrap', function (done) {
-      var expected = [
+      var expectedContent = [
         ['bower.json', /("name": "temp")(|.|\n)*(requirejs)/],
         ['package.json', /"name": "temp"/],
         ['Gruntfile.js', /requirejs/],
+        ['app/index.html', /(RequireJS)/i]
+      ];
+      var expected = [
         'app/404.html',
         'app/favicon.ico',
         'app/robots.txt',
-        ['app/index.html', /(RequireJS)/i],
         'app/.htaccess',
         '.gitignore',
         '.gitattributes',
@@ -87,74 +87,63 @@ describe('Backbone generator with RequireJS', function () {
       ];
 
       this.backbone.app.run({}, function () {
-        helpers.assertFiles(expected);
+        assert.file(expected);
+        assert.fileContent(expectedContent);
         done();
       });
     });
   });
 
-  describe('Backbone Model', function () {
-    it('creates backbone model', function (done) {
+  describe('creates model', function () {
+    it('without failure', function (done) {
       this.backbone.app.run({}, function () {
-        var model = helpers.createGenerator('backbone:model', ['../../model'], ['foo']);
-
-        model.run([], function () {
-          helpers.assertFiles([
-            ['app/scripts/models/foo.js', /var FooModel = Backbone.Model.extend\(\{/]
-          ]);
+        test.createSubGenerator('model', function () {
+          assert.fileContent(
+            'app/scripts/models/foo.js', /var FooModel = Backbone.Model.extend\(\{/
+          );
+          done();
         });
-
-        done();
       });
     });
   });
 
-  describe('Backbone Collection with RequireJS', function () {
-    it('creates backbone collection', function (done) {
+  describe('creates collection', function () {
+    it('without failure', function (done) {
       this.backbone.app.run({}, function () {
-        var collection = helpers.createGenerator('backbone:collection', ['../../collection'], ['foo']);
-
-        collection.run([], function () {
-          helpers.assertFiles([
-            ['app/scripts/collections/foo.js', /var FooCollection = Backbone.Collection.extend\(\{/]
-          ]);
+        test.createSubGenerator('collection', function () {
+          assert.fileContent(
+            'app/scripts/collections/foo.js', /var FooCollection = Backbone.Collection.extend\(\{/
+          );
+          done();
         });
-
-        done();
       });
     });
   });
 
-  describe('Backbone Router with RequireJS', function () {
-    it('creates backbone router', function (done) {
+  describe('creates router', function () {
+    it('without failure', function (done) {
       this.backbone.app.run({}, function () {
-        var router = helpers.createGenerator('backbone:router', ['../../router'], ['foo']);
-
-        router.run([], function () {
-          helpers.assertFiles([
-            ['app/scripts/routes/foo.js', /var FooRouter = Backbone.Router.extend\(\{/]
-          ]);
+        test.createSubGenerator('router', function () {
+          assert.fileContent(
+            'app/scripts/routes/foo.js', /var FooRouter = Backbone.Router.extend\(\{/
+          );
+          done();
         });
-
-        done();
       });
     });
   });
 
-  describe('Backbone View with RequireJS', function () {
-    it('creates backbone view', function (done) {
+  describe('creates backbone view', function () {
+    it('without failure', function (done) {
       this.backbone.app.run({}, function () {
-        var view = helpers.createGenerator('backbone:view', ['../../view'], ['foo']);
-
-        view.run([], function () {
-          helpers.assertFiles([
-            ['app/scripts/views/foo.js', /var FooView = Backbone.View.extend\(\{(.|\n)*app\/scripts\/templates\/foo.ejs/],
-            'app/scripts/templates/foo.ejs'
-          ]);
+        test.createSubGenerator('view', function () {
+          assert.fileContent(
+            'app/scripts/views/foo.js', /var FooView = Backbone.View.extend\(\{(.|\n)*app\/scripts\/templates\/foo.ejs/
+          );
+          assert.file('app/scripts/templates/foo.ejs');
+          done();
         });
-        done();
       });
     });
   });
-
 });

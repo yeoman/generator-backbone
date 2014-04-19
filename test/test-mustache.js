@@ -1,9 +1,11 @@
 /*global describe:true, beforeEach:true, it:true */
 'use strict';
 var path    = require('path');
-var helpers = require('yeoman-generator').test;
-var assert  = require('assert');
+var yeoman  = require('yeoman-generator');
+var helpers = yeoman.test;
+var assert  = yeoman.assert;
 var fs      = require('fs');
+var test    = require('./helper.js');
 
 describe('Backbone generator with mustache', function () {
   beforeEach(function (done) {
@@ -12,13 +14,7 @@ describe('Backbone generator with mustache', function () {
         return done(err);
       }
       this.backbone = {};
-      this.backbone.app = helpers.createGenerator('backbone:app', [
-        '../../app', [
-          helpers.createDummyGenerator(),
-          'mocha:app'
-        ]
-      ], ['temp'], {'template-framework': 'mustache'});
-      this.backbone.app.options['skip-install'] = true;
+      this.backbone.app = test.createAppGenerator(['temp'], {'template-framework': 'mustache'});
 
       helpers.mockPrompt(this.backbone.app, {
         features: ['compassBootstrap'],
@@ -29,7 +25,8 @@ describe('Backbone generator with mustache', function () {
         '{',
         '  "generator-backbone": {',
         '    "appPath": "app",',
-        '    "appName": "Temp"',
+        '    "appName": "Temp",',
+        '    "templateFramework": "mustache"',
         '  }',
         '}'
       ];
@@ -40,17 +37,14 @@ describe('Backbone generator with mustache', function () {
 
   });
 
-  describe('Backbone View', function () {
-    it('creates backbone view', function (done) {
-      var view = helpers.createGenerator('backbone:view', ['../../view'], ['foo']);
+  it('creates backbone view', function (done) {
 
-      this.backbone.app.run({}, function () {
-        view.run([], function () {
-          helpers.assertFiles([
-            ['app/scripts/views/foo.js', /Views.Foo = Backbone.View.extend\(\{(.|\n)*foo-template/],
-            'app/scripts/templates/foo-template.mustache'
-          ]);
-        });
+    this.backbone.app.run({}, function () {
+      test.createSubGenerator('view', function () {
+        assert.fileContent(
+          'app/scripts/views/foo.js', /Views.Foo = Backbone.View.extend\(\{(.|\n)*foo-template/
+        );
+        assert.file('app/scripts/templates/foo-template.mustache');
         done();
       });
     });
