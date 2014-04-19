@@ -387,7 +387,7 @@ module.exports = function (grunt) {
                 'compass:server',<% } %>
                 'connect:test',
                 'open:test',
-                'watch:livereload'
+                'watch'
             ]);
         }
 
@@ -401,7 +401,7 @@ module.exports = function (grunt) {
             'compass:server',<% } %>
             'connect:livereload',
             'open:server',
-            'watch:livereload'
+            'watch'
         ]);
     });
 
