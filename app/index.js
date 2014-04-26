@@ -12,7 +12,13 @@ var Generator = module.exports = function Generator(args, options, config) {
   this.appname = this.appname || path.basename(process.cwd());
   this.appname = backboneUtils.classify(this.appname);
 
-  this.env.options.appPath = this.options.appPath || 'app';
+  if (typeof this.env.options.appPath === 'undefined') {
+    try {
+      this.env.options.appPath = require(path.join(process.cwd(), 'bower.json')).appPath;
+    } catch (e) {
+      this.env.options.appPath = this.options.appPath || 'app';
+    }
+  }
   this.config.set('appPath', this.env.options.appPath);
 
   this.testFramework = this.options['test-framework'] || 'mocha';

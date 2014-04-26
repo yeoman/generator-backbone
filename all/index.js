@@ -10,7 +10,14 @@ function Generator(args, options, config) {
   this.dirs = 'models collections views routes helpers templates'.split(' ');
 
   this.option('coffee');
-  this.env.options.appPath = this.options.appPath || 'app';
+  
+  if (typeof this.env.options.appPath === 'undefined') {
+    try {
+      this.env.options.appPath = require(path.join(process.cwd(), 'bower.json')).appPath;
+    } catch (e) {
+      this.env.options.appPath = this.options.appPath || 'app';
+    }
+  }
   this.config.set('appPath', this.env.options.appPath);
 
   args = ['application'];
