@@ -14,7 +14,8 @@ function Generator(args, options, config) {
   if (typeof this.env.options.appPath === 'undefined') {
     try {
       this.env.options.appPath = require(path.join(process.cwd(), 'bower.json')).appPath;
-    } catch (e) {
+    } catch (e) {}
+    if(!this.env.options.appPath) {
       this.env.options.appPath = this.options.appPath || 'app';
     }
   }
