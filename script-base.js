@@ -33,7 +33,7 @@ var Generator = module.exports = function Generator() {
     this.option('requirejs');
 
     // Respect 'includeRequireJS'-Option 
-    this.env.options.requirejs  = this.config.get('includeRequireJS') || 'false';
+    this.env.options.requirejs  = this.config.get('includeRequireJS') || this.config.get('requirejs');
     this.options.requirejs = this.env.options.requirejs;
   }
 
