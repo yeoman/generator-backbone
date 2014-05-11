@@ -160,7 +160,7 @@ module.exports = function (grunt) {
                     specs : 'test/spec/**/*.js',
                     vendor : [
                         '<%%= yeoman.app %>/bower_components/jquery/dist/jquery.js',
-                        '<%%= yeoman.app %>/bower_components/underscore/underscore.js',
+                        '<%%= yeoman.app %>/bower_components/lodash/dist/lodash.js',
                         '<%%= yeoman.app %>/bower_components/backbone/backbone.js',
                         '.tmp/scripts/templates.js'
                     ]
@@ -217,7 +217,7 @@ module.exports = function (grunt) {
                     paths: {
                         'templates': '../../.tmp/scripts/templates',
                         'jquery': '../../<%%= yeoman.app %>/bower_components/jquery/dist/jquery',
-                        'underscore': '../../<%%= yeoman.app %>/bower_components/underscore/underscore',
+                        'underscore': '../../<%%= yeoman.app %>/bower_components/lodash/dist/lodash',
                         'backbone': '../../<%%= yeoman.app %>/bower_components/backbone/backbone'
                     },
                     // TODO: Figure out how to make sourcemaps work with grunt-usemin
