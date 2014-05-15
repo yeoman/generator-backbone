@@ -1,9 +1,11 @@
 /*global describe:true, beforeEach:true, it:true */
 'use strict';
 var path    = require('path');
-var helpers = require('yeoman-generator').test;
-var assert  = require('assert');
+var yeoman  = require('yeoman-generator');
+var helpers = yeoman.test;
+var assert  = yeoman.assert;
 var fs      = require('fs');
+var test    = require('./helper.js');
 
 describe('Backbone generator test with --coffee option', function () {
   beforeEach(function (done) {
@@ -12,13 +14,7 @@ describe('Backbone generator test with --coffee option', function () {
         return done(err);
       }
       this.backbone = {};
-      this.backbone.app = helpers.createGenerator('backbone:app', [
-        '../../app', [
-          helpers.createDummyGenerator(),
-          'mocha:app'
-        ]
-      ]);
-      this.backbone.app.options['skip-install'] = true;
+      this.backbone.app = test.createAppGenerator();
 
       helpers.mockPrompt(this.backbone.app, {
         features: ['compassBootstrap', 'coffee']
@@ -39,9 +35,11 @@ describe('Backbone generator test with --coffee option', function () {
   });
 
   it('creates expected files', function (done) {
-    var expected = [
+    var expectedContent = [
       ['bower.json', /"name": "temp"/],
-      ['package.json', /"name": "temp"/],
+      ['package.json', /"name": "temp"/]
+    ];
+    var expected = [
       'Gruntfile.js',
       'app/404.html',
       'app/favicon.ico',
@@ -58,96 +56,67 @@ describe('Backbone generator test with --coffee option', function () {
     ];
 
     this.backbone.app.run([], function () {
-      helpers.assertFiles(expected);
+      assert.file(expected);
+      assert.fileContent(expectedContent);
       done();
     });
 
   });
 
-  describe('Backbone Model in coffeescript', function () {
-    it('creates backbone model', function (done) {
-      var model = helpers.createGenerator('backbone:model', ['../../model'], ['foo']);
+  describe('creates model in coffeescript', function () {
+    it('without failure', function (done) {
 
       this.backbone.app.run([], function () {
-        var model = helpers.createGenerator('backbone:model', [
-          '../../model', [
-            helpers.createDummyGenerator(),
-            'backbone-mocha:model'
-          ]
-        ], ['foo']);
-
-        model.run([], function () {
-          helpers.assertFiles([
-            ['app/scripts/models/foo.coffee', /class Temp.Models.Foo extends Backbone.Model/]
-          ]);
+        test.createSubGenerator('model', function () {
+          assert.fileContent(
+            'app/scripts/models/foo.coffee', /class Temp.Models.Foo extends Backbone.Model/
+          );
+          done();
         });
-        done();
       });
     });
   });
 
-  describe('Backbone Collection in coffeescript', function () {
-    it('creates backbone collection', function (done) {
+  describe('creates collection in coffeescript', function () {
+    it('without failure', function (done) {
 
       this.backbone.app.run({}, function () {
-        var collection = helpers.createGenerator('backbone:collection', [
-          '../../collection', [
-            helpers.createDummyGenerator(),
-            'backbone-mocha:collection'
-          ]
-        ], ['foo']);
-
-        collection.run([], function () {
-          helpers.assertFiles([
-            ['app/scripts/collections/foo.coffee', /class Temp.Collections.Foo extends Backbone.Collection/]
-          ]);
+        test.createSubGenerator('collection', function () {
+          assert.fileContent(
+            'app/scripts/collections/foo.coffee', /class Temp.Collections.Foo extends Backbone.Collection/
+          );
+          done();
         });
-        done();
       });
     });
   });
 
-  describe('Backbone Router  in coffeescript', function () {
-    it('creates backbone router', function (done) {
+  describe('creates router in coffeescript', function () {
+    it('without failure', function (done) {
 
       this.backbone.app.run({}, function () {
-        var router = helpers.createGenerator('backbone:router', [
-          '../../router', [
-            helpers.createDummyGenerator(),
-            'backbone-mocha:router'
-          ]
-        ], ['foo']);
-
-        router.run([], function () {
-          helpers.assertFiles([
-            ['app/scripts/routes/foo.coffee', /class Temp.Routers.Foo extends Backbone.Router/]
-          ]);
+        test.createSubGenerator('router', function () {
+          assert.fileContent(
+            'app/scripts/routes/foo.coffee', /class Temp.Routers.Foo extends Backbone.Router/
+          );
+          done();
         });
-        done();
       });
     });
   });
 
-  describe('Backbone View  in coffeescript', function () {
-    it('creates backbone view', function (done) {
+  describe('creates view in coffeescript', function () {
+    it('without failure', function (done) {
 
       this.backbone.app.run({}, function () {
-        var view = helpers.createGenerator('backbone:view', [
-          '../../view', [
-            helpers.createDummyGenerator(),
-            'backbone-mocha:view'
-          ]
-        ], ['foo']);
-
-        view.run([], function () {
-          helpers.assertFiles([
-            ['app/scripts/views/foo.coffee', /class Temp.Views.Foo extends Backbone.View/],
-            'app/scripts/templates/foo.ejs'
-          ]);
+        test.createSubGenerator('view', function () {
+          assert.fileContent(
+            'app/scripts/views/foo.coffee', /class Temp.Views.Foo extends Backbone.View/
+          );
+          assert.file('app/scripts/templates/foo.ejs');
+          done();
         });
-        done();
       });
     });
   });
-
 });

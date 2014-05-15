@@ -1,9 +1,11 @@
 /*global describe:true, beforeEach:true, it:true */
 'use strict';
 var path    = require('path');
-var helpers = require('yeoman-generator').test;
-var assert  = require('assert');
+var yeoman  = require('yeoman-generator');
+var helpers = yeoman.test;
+var assert  = yeoman.assert;
 var fs      = require('fs');
+var test    = require('./helper.js');
 
 describe('Backbone generator test with --coffee and --requirejs option', function () {
   beforeEach(function (done) {
@@ -12,13 +14,7 @@ describe('Backbone generator test with --coffee and --requirejs option', functio
         return done(err);
       }
       this.backbone = {};
-      this.backbone.app = helpers.createGenerator('backbone:app', [
-        '../../app', [
-          helpers.createDummyGenerator(),
-          'mocha:app'
-        ]
-      ]);
-      this.backbone.app.options['skip-install'] = true;
+      this.backbone.app = test.createAppGenerator();
 
       helpers.mockPrompt(this.backbone.app, {
         features: ['compassBootstrap', 'coffee', 'requirejs']
@@ -39,14 +35,16 @@ describe('Backbone generator test with --coffee and --requirejs option', functio
   });
 
   it('creates expected files', function (done) {
-    var expected = [
+    var expectedContent = [
       ['bower.json', /("name": "temp")(|.|\n)*(requirejs)/],
       ['package.json', /"name": "temp"/],
+      ['app/index.html', /(Bootstrap)(|.|\n)*(RequireJS)/i]
+    ];
+    var expected = [
       'Gruntfile.js',
       'app/404.html',
       'app/favicon.ico',
       'app/robots.txt',
-      ['app/index.html', /(Bootstrap)(|.|\n)*(RequireJS)/i],
       'app/.htaccess',
       '.gitignore',
       '.gitattributes',
@@ -58,72 +56,68 @@ describe('Backbone generator test with --coffee and --requirejs option', functio
     ];
 
     this.backbone.app.run([], function () {
-      helpers.assertFiles(expected);
+      assert.file(expected);
+      assert.fileContent(expectedContent);
       done();
     });
 
   });
 
-  describe('Backbone Model in coffeescript with RequireJS support', function () {
-    it('creates backbone model', function (done) {
+  describe('creates model in coffeescript with rjs', function () {
+    it('without failure', function (done) {
 
       this.backbone.app.run([], function () {
-        var model = helpers.createGenerator('backbone:model', ['../../model'], ['foo']);
-        model.run([], function () {
-          helpers.assertFiles([
-            ['app/scripts/models/foo.coffee', /class FooModel extends Backbone.Model/]
-          ]);
+        test.createSubGenerator('model', function () {
+          assert.fileContent(
+            'app/scripts/models/foo.coffee', /class FooModel extends Backbone.Model/
+          );
+          done();
         });
-        done();
       });
     });
   });
 
-  describe('Backbone Collection in coffeescript with RequireJS support', function () {
-    it('creates backbone collection', function (done) {
+  describe('creates collection in coffeescript with rjs', function () {
+    it('without failure', function (done) {
 
       this.backbone.app.run({}, function () {
-        var collection = helpers.createGenerator('backbone:collection', ['../../collection'], ['foo']);
-
-        collection.run([], function () {
-          helpers.assertFiles([
-            ['app/scripts/collections/foo.coffee', /class FooCollection extends Backbone.Collection/]
-          ]);
+        test.createSubGenerator('collection', function () {
+          assert.fileContent(
+            'app/scripts/collections/foo.coffee', /class FooCollection extends Backbone.Collection/
+          );
+          done();
         });
-        done();
       });
     });
   });
 
-  describe('Backbone Router  in coffeescript with RequireJS support', function () {
-    it('creates backbone router', function (done) {
+  describe('creates router in coffeescript with rjs', function () {
+    it('without failure', function (done) {
 
       this.backbone.app.run({}, function () {
-        var router = helpers.createGenerator('backbone:router', ['../../router'], ['foo']);
-
-        router.run([], function () {
-          helpers.assertFiles([
-            ['app/scripts/routes/foo.coffee', /class FooRouter extends Backbone.Router/]
-          ]);
+        test.createSubGenerator('router', function () {
+          assert.fileContent(
+            'app/scripts/routes/foo.coffee', /class FooRouter extends Backbone.Router/
+          );
+          done();
         });
-        done();
+
       });
     });
   });
 
-  describe('Backbone View  in coffeescript with RequireJS support', function () {
-    it('creates backbone view', function (done) {
+  describe('creates view in coffeescript with rjs', function () {
+    it('without failure', function (done) {
 
       this.backbone.app.run({}, function () {
-        var view = helpers.createGenerator('backbone:view', ['../../view'], ['foo']);
-
-        view.run([], function () {
-          helpers.assertFiles([
-            ['app/scripts/views/foo.coffee', /class FooView extends Backbone.View(.|\n)*app\/scripts\/templates\/foo.ejs/],
-            'app/scripts/templates/foo.ejs'
-          ]);
+        test.createSubGenerator('view', function () {
+          assert.fileContent(
+            'app/scripts/views/foo.coffee', /class FooView extends Backbone.View(.|\n)*app\/scripts\/templates\/foo.ejs/
+          );
+          assert.file('app/scripts/templates/foo.ejs');
+          done();
         });
-        done();
+
       });
     });
   });
