@@ -19,7 +19,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
     this.testFramework = this.options['test-framework'] || 'mocha';
     this.templateFramework = this.options['template-framework'] || 'lodash';
 
-    if (this.options.namespace === 'backbone:app') {
+    if (['backbone:app', 'backbone'].indexOf(this.options.namespace) >= 0) {
       this.hookFor(this.testFramework, {
         as: 'app',
         options: {
@@ -42,7 +42,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
     this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
 
     this.on('end', function () {
-      if (this.options.namespace === 'backbone:app') {
+      if (['backbone:app', 'backbone'].indexOf(this.options.namespace) >= 0) {
         if (/^.*test$/.test(process.cwd())) {
           process.chdir('..');
         }
