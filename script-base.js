@@ -32,9 +32,9 @@ var Generator = module.exports = function Generator() {
   if (typeof this.env.options.requirejs === 'undefined') {
     this.option('requirejs');
 
-    this.options.requirejs = this.checkIfUsingRequireJS();
-
-    this.env.options.requirejs = this.options.requirejs;
+    // Respect 'includeRequireJS'-Option 
+    this.env.options.requirejs  = this.config.get('includeRequireJS') || this.config.get('requirejs');
+    this.options.requirejs = this.env.options.requirejs;
   }
 
   this.setupSourceRootAndSuffix();
@@ -59,27 +59,6 @@ Generator.prototype.addScriptToIndex = function (script) {
     });
   } catch (e) {
     console.log('\nUnable to find '.yellow + fullPath + '. Reference to '.yellow + script + '.js ' + 'not added.\n'.yellow);
-  }
-};
-
-/*
- * Check whether the App is a RequireJS app or not
- *
- * @return boolean
- */
-Generator.prototype.checkIfUsingRequireJS = function checkIfUsingRequireJS() {
-  if (typeof this.env.options.requirejs !== 'undefined') {
-    return this.env.options.requirejs;
-  }
-
-  var ext = this.env.options.coffee ? '.coffee' : '.js';
-  var filepath = path.join(process.cwd(), 'app/scripts/main' + ext);
-
-  try {
-    this.env.options.requirejs = (/require\.config/).test(this.read(filepath));
-    return this.env.options.requirejs;
-  } catch (e) {
-    return false;
   }
 };
 
