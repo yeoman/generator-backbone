@@ -219,14 +219,14 @@ var BackboneGenerator = yeoman.generators.Base.extend({
     if (!this.includeRequireJS) {
       return;
     }
-    this.writeTemplate('requirejs_app', this.env.options.appPath + '/scripts/main');
+    this._writeTemplate('requirejs_app', this.env.options.appPath + '/scripts/main');
   },
 
   createAppFile: function () {
     if (this.includeRequireJS) {
       return;
     }
-    this.writeTemplate('app', this.env.options.appPath + '/scripts/main');
+    this._writeTemplate('app', this.env.options.appPath + '/scripts/main');
   },
 
   setSuffix: function () {
@@ -237,7 +237,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
     }
   },
 
-  writeTemplate: function (source, destination, data) {
+  _writeTemplate: function (source, destination, data) {
     if (typeof source === 'undefined' || typeof destination === 'undefined') {
       return;
     }
