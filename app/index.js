@@ -9,6 +9,33 @@ var BackboneGenerator = yeoman.generators.Base.extend({
   constructor: function () {
     yeoman.generators.Base.apply(this, arguments);
 
+    this.option('appPath', {
+      desc: 'Name of application directory',
+      type: 'String',
+      defaults: 'app',
+      banner: 'some banner'
+    });
+
+    this.option('requirejs', {
+      desc: 'Support requirejs',
+      defaults: false
+    });
+
+    this.option('template-framework', {
+      desc: 'Choose template framework. lodash/handlebars/mustashe',
+      type: 'String',
+      defaults: 'lodash'
+    });
+
+    this.option('test-framework', {
+      desc: 'Choose test framework. mocha/jasmine',
+      type: 'String',
+      defaults: 'mocha'
+    });
+
+    this.testFramework = this.options['test-framework'];
+    this.templateFramework = this.options['template-framework'];
+
     this.argument('app_name', { type: String, required: false });
     this.appname = this.app_name || this.appname;
     this.appname = this._.classify(this.appname);
