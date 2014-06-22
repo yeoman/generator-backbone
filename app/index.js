@@ -67,18 +67,9 @@ var BackboneGenerator = yeoman.generators.Base.extend({
     });
 
     this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
-
-    this.on('end', function () {
-      if (['backbone:app', 'backbone'].indexOf(this.options.namespace) >= 0) {
-        if (/^.*test$/.test(process.cwd())) {
-          process.chdir('..');
-        }
-        this.installDependencies({ skipInstall: this.options['skip-install'] });
-      }
-    });
   },
 
-  askFor: function () {
+  prompting: function () {
     var cb = this.async();
 
     // welcome message
@@ -129,131 +120,134 @@ var BackboneGenerator = yeoman.generators.Base.extend({
     }.bind(this));
   },
 
-  git: function () {
-    this.template('gitignore', '.gitignore');
-    this.copy('gitattributes', '.gitattributes');
-  },
+  writing: {
 
-  bower: function () {
-    this.template('bowerrc', '.bowerrc');
-    this.copy('_bower.json', 'bower.json');
-  },
+    git: function () {
+      this.template('gitignore', '.gitignore');
+      this.copy('gitattributes', '.gitattributes');
+    },
 
-  jshint: function () {
-    this.copy('jshintrc', '.jshintrc');
-  },
+    bower: function () {
+      this.template('bowerrc', '.bowerrc');
+      this.copy('_bower.json', 'bower.json');
+    },
 
-  editorConfig: function () {
-    this.copy('editorconfig', '.editorconfig');
-  },
+    jshint: function () {
+      this.copy('jshintrc', '.jshintrc');
+    },
 
-  gruntfile: function () {
-    this.template('Gruntfile.js');
-  },
+    editorConfig: function () {
+      this.copy('editorconfig', '.editorconfig');
+    },
 
-  packageJSON: function () {
-    this.template('_package.json', 'package.json');
-  },
+    gruntfile: function () {
+      this.template('Gruntfile.js');
+    },
 
-  mainStylesheet: function () {
-    var contentText = [
-      'body {\n    background: #fafafa;\n}',
-      '\n.hero-unit {\n    margin: 50px auto 0 auto;\n    width: 300px;\n}'
-    ];
-    var ext = '.css';
-    if (this.compassBootstrap) {
-      this.template('main.scss', this.env.options.appPath + '/styles/main.scss');
+    packageJSON: function () {
+      this.template('_package.json', 'package.json');
+    },
+
+    mainStylesheet: function () {
+      var contentText = [
+        'body {\n    background: #fafafa;\n}',
+        '\n.hero-unit {\n    margin: 50px auto 0 auto;\n    width: 300px;\n}'
+      ];
+      var ext = '.css';
+      if (this.compassBootstrap) {
+        this.template('main.scss', this.env.options.appPath + '/styles/main.scss');
+      }
+      this.write(this.env.options.appPath + '/styles/main' + ext, contentText.join('\n'));
+    },
+
+    writeIndex: function () {
+      if (this.includeRequireJS) {
+        return;
+      }
+
+      this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
+      this.indexFile = this.engine(this.indexFile, this);
+
+      var vendorJS = [
+        'bower_components/jquery/dist/jquery.js',
+        'bower_components/underscore/underscore.js',
+        'bower_components/backbone/backbone.js'
+      ];
+
+      if (this.templateFramework === 'handlebars') {
+        vendorJS.push('bower_components/handlebars/handlebars.js');
+      }
+
+      this.indexFile = this.appendScripts(this.indexFile, 'scripts/vendor.js', vendorJS);
+
+      if (this.compassBootstrap) {
+        // wire Twitter Bootstrap plugins
+        this.indexFile = this.appendScripts(this.indexFile, 'scripts/plugins.js', [
+          'bower_components/sass-bootstrap/js/affix.js',
+          'bower_components/sass-bootstrap/js/alert.js',
+          'bower_components/sass-bootstrap/js/dropdown.js',
+          'bower_components/sass-bootstrap/js/tooltip.js',
+          'bower_components/sass-bootstrap/js/modal.js',
+          'bower_components/sass-bootstrap/js/transition.js',
+          'bower_components/sass-bootstrap/js/button.js',
+          'bower_components/sass-bootstrap/js/popover.js',
+          'bower_components/sass-bootstrap/js/carousel.js',
+          'bower_components/sass-bootstrap/js/scrollspy.js',
+          'bower_components/sass-bootstrap/js/collapse.js',
+          'bower_components/sass-bootstrap/js/tab.js'
+        ]);
+      }
+
+      this.indexFile = this.appendFiles({
+        html: this.indexFile,
+        fileType: 'js',
+        searchPath: ['.tmp', this.env.options.appPath],
+        optimizedPath: 'scripts/main.js',
+        sourceFileList: [
+          'scripts/main.js',
+          'scripts/templates.js'
+        ]
+      });
+    },
+
+    writeIndexWithRequirejs: function () {
+      if (!this.includeRequireJS) {
+        return;
+      }
+      this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
+      this.indexFile = this.engine(this.indexFile, this);
+
+      this.indexFile = this.appendScripts(this.indexFile, 'scripts/main.js', [
+        'bower_components/requirejs/require.js'
+      ], {'data-main': 'scripts/main'});
+    },
+
+    setupEnv: function () {
+      this.mkdir(this.env.options.appPath);
+      this.mkdir(this.env.options.appPath + '/scripts');
+      this.mkdir(this.env.options.appPath + '/scripts/vendor/');
+      this.mkdir(this.env.options.appPath + '/styles');
+      this.mkdir(this.env.options.appPath + '/images');
+      this.copy('app/404.html', this.env.options.appPath + '/404.html');
+      this.copy('app/favicon.ico', this.env.options.appPath + '/favicon.ico');
+      this.copy('app/robots.txt', this.env.options.appPath + '/robots.txt');
+      this.copy('app/htaccess', this.env.options.appPath + '/.htaccess');
+      this.write(this.env.options.appPath + '/index.html', this.indexFile);
+    },
+
+    createRequireJsAppFile: function () {
+      if (!this.includeRequireJS) {
+        return;
+      }
+      this._writeTemplate('requirejs_app', this.env.options.appPath + '/scripts/main');
+    },
+
+    createAppFile: function () {
+      if (this.includeRequireJS) {
+        return;
+      }
+      this._writeTemplate('app', this.env.options.appPath + '/scripts/main');
     }
-    this.write(this.env.options.appPath + '/styles/main' + ext, contentText.join('\n'));
-  },
-
-  writeIndex: function () {
-    if (this.includeRequireJS) {
-      return;
-    }
-
-    this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
-    this.indexFile = this.engine(this.indexFile, this);
-
-    var vendorJS = [
-      'bower_components/jquery/dist/jquery.js',
-      'bower_components/underscore/underscore.js',
-      'bower_components/backbone/backbone.js'
-    ];
-
-    if (this.templateFramework === 'handlebars') {
-      vendorJS.push('bower_components/handlebars/handlebars.js');
-    }
-
-    this.indexFile = this.appendScripts(this.indexFile, 'scripts/vendor.js', vendorJS);
-
-    if (this.compassBootstrap) {
-      // wire Twitter Bootstrap plugins
-      this.indexFile = this.appendScripts(this.indexFile, 'scripts/plugins.js', [
-        'bower_components/sass-bootstrap/js/affix.js',
-        'bower_components/sass-bootstrap/js/alert.js',
-        'bower_components/sass-bootstrap/js/dropdown.js',
-        'bower_components/sass-bootstrap/js/tooltip.js',
-        'bower_components/sass-bootstrap/js/modal.js',
-        'bower_components/sass-bootstrap/js/transition.js',
-        'bower_components/sass-bootstrap/js/button.js',
-        'bower_components/sass-bootstrap/js/popover.js',
-        'bower_components/sass-bootstrap/js/carousel.js',
-        'bower_components/sass-bootstrap/js/scrollspy.js',
-        'bower_components/sass-bootstrap/js/collapse.js',
-        'bower_components/sass-bootstrap/js/tab.js'
-      ]);
-    }
-
-    this.indexFile = this.appendFiles({
-      html: this.indexFile,
-      fileType: 'js',
-      searchPath: ['.tmp', this.env.options.appPath],
-      optimizedPath: 'scripts/main.js',
-      sourceFileList: [
-        'scripts/main.js',
-        'scripts/templates.js'
-      ]
-    });
-  },
-
-  writeIndexWithRequirejs: function () {
-    if (!this.includeRequireJS) {
-      return;
-    }
-    this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
-    this.indexFile = this.engine(this.indexFile, this);
-
-    this.indexFile = this.appendScripts(this.indexFile, 'scripts/main.js', [
-      'bower_components/requirejs/require.js'
-    ], {'data-main': 'scripts/main'});
-  },
-
-  setupEnv: function () {
-    this.mkdir(this.env.options.appPath);
-    this.mkdir(this.env.options.appPath + '/scripts');
-    this.mkdir(this.env.options.appPath + '/scripts/vendor/');
-    this.mkdir(this.env.options.appPath + '/styles');
-    this.mkdir(this.env.options.appPath + '/images');
-    this.copy('app/404.html', this.env.options.appPath + '/404.html');
-    this.copy('app/favicon.ico', this.env.options.appPath + '/favicon.ico');
-    this.copy('app/robots.txt', this.env.options.appPath + '/robots.txt');
-    this.copy('app/htaccess', this.env.options.appPath + '/.htaccess');
-    this.write(this.env.options.appPath + '/index.html', this.indexFile);
-  },
-
-  createRequireJsAppFile: function () {
-    if (!this.includeRequireJS) {
-      return;
-    }
-    this._writeTemplate('requirejs_app', this.env.options.appPath + '/scripts/main');
-  },
-
-  createAppFile: function () {
-    if (this.includeRequireJS) {
-      return;
-    }
-    this._writeTemplate('app', this.env.options.appPath + '/scripts/main');
   },
 
   setSuffix: function () {
@@ -276,6 +270,12 @@ var BackboneGenerator = yeoman.generators.Base.extend({
     var ext = this.scriptSuffix;
     this.template(source + ext, destination + ext, data);
   },
+
+  install: function() {
+    if (['backbone:app', 'backbone'].indexOf(this.options.namespace) >= 0) {
+      this.installDependencies({ skipInstall: this.options['skip-install'] });
+    }
+  }
 });
 
 module.exports = BackboneGenerator;
