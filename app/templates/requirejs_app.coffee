@@ -2,7 +2,7 @@
 'use strict'
 
 require.config
-  shim: <% if (compassBootstrap) { %>
+  <% if (compassBootstrap) { %>shim:
     bootstrap:
       deps: ['jquery'],
       exports: 'jquery'<% } %><% if (templateFramework === 'handlebars') { %>
