@@ -1,8 +1,8 @@
 #/*global require*/
 'use strict'
 
-require.config
-  <% if (compassBootstrap) { %>shim:
+require.config<% if (compassBootstrap) { %>
+  shim:
     bootstrap:
       deps: ['jquery'],
       exports: 'jquery'<% } %><% if (templateFramework === 'handlebars') { %>
