@@ -156,6 +156,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
       var ext = '.css';
       if (this.compassBootstrap) {
         this.template('main.scss', this.env.options.appPath + '/styles/main.scss');
+        return;
       }
       this.write(this.env.options.appPath + '/styles/main' + ext, contentText.join('\n'));
     },
@@ -271,7 +272,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
     this.template(source + ext, destination + ext, data);
   },
 
-  install: function() {
+  install: function () {
     if (['backbone:app', 'backbone'].indexOf(this.options.namespace) >= 0) {
       this.installDependencies({ skipInstall: this.options['skip-install'] });
     }
