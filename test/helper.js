@@ -1,17 +1,15 @@
 var yeoman  = require('yeoman-generator');
 var helpers = yeoman.test;
+var path    = require('path');
 
 exports.createSubGenerator = function (type, asserts) {
-  var subGenerator = helpers.createGenerator('backbone:' + type, [
-    '../../' + type, [
-      helpers.createDummyGenerator(),
-      'backbone-mocha:' + type
-    ]
-  ], ['foo']);
-
-  subGenerator.run([], function () {
-    asserts();
-  });
+  var deps = [
+    [helpers.createDummyGenerator(), 'backbone-mocha:' + type]
+  ];
+  helpers.run(path.join(__dirname, '../' + type))
+    .withArguments(['foo'])
+    .withGenerators(deps)
+    .on('end', asserts);
 };
 
 exports.createAppGenerator = function (args, options) {

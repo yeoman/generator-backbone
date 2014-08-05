@@ -17,22 +17,22 @@ var BackboneGenerator = yeoman.generators.Base.extend({
 
     this.option('coffee');
 
-    var args = [this.appname];
+    this.args = [this.appname];
 
     this.option('coffee');
     this.env.options.appPath = this.options.appPath || 'app';
     this.config.set('appPath', this.env.options.appPath);
 
-    args = ['application'];
+    this.args = ['application'];
 
     if (this.options.coffee) {
-      args.push('--coffee');
+      this.args.push('--coffee');
     }
 
     this.option('requirejs');
 
     if (this.options.requirejs) {
-      args.push('--requirejs');
+      this.args.push('--requirejs');
     }
 
     if (this.options['template-framework']) {
@@ -40,32 +40,6 @@ var BackboneGenerator = yeoman.generators.Base.extend({
     }
 
     this.testFramework = this.options['test-framework'] || 'mocha';
-
-    // the api to hookFor and pass arguments may vary a bit.
-    this.hookFor('backbone:app', {
-      args: args
-    });
-    this.hookFor('backbone:router', {
-      args: args
-    });
-    this.hookFor('backbone:view', {
-      args: args
-    });
-    this.hookFor('backbone:model', {
-      args: args
-    });
-    this.hookFor('backbone:collection', {
-      args: args
-    });
-
-    this.hookFor(this.testFramework, {
-      as: 'app',
-      options: {
-        options: {
-          'skip-install': this.options['skip-install']
-        }
-      }
-    });
 
     this.on('end', function () {
       if (/^.*test$/.test(process.cwd())) {
@@ -75,11 +49,24 @@ var BackboneGenerator = yeoman.generators.Base.extend({
     });
   },
 
-  createDirLayout: function () {
-    this.dirs.forEach(function (dir) {
-      this.log.create('app/scripts/' + dir);
-      this.mkdir(path.join('app/scripts', dir));
-    }.bind(this));
+  writing: {
+    createDirLayout: function () {
+      this.dirs.forEach(function (dir) {
+        this.log.create('app/scripts/' + dir);
+        this.mkdir(path.join('app/scripts', dir));
+      }.bind(this));
+    },
+
+    composeSubGenerators: function () {
+      this.composeWith('backbone:app', {arguments: this.args});
+    }
+  },
+
+  install: function () {
+    this.composeWith('backbone:router', {arguments: this.args});
+    this.composeWith('backbone:view', {arguments: this.args});
+    this.composeWith('backbone:model', {arguments: this.args});
+    this.composeWith('backbone:collection', {arguments: this.args});
   }
 });
 

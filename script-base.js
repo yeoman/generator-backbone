@@ -28,7 +28,8 @@ var ScriptBase = yeoman.generators.NamedBase.extend({
 
     this._.mixin({ 'classify': backboneUtils.classify });
   },
-  addScriptToIndex: function (script) {
+
+  _addScriptToIndex: function (script) {
     try {
       var appPath = this.env.options.appPath;
       var fullPath = path.join(appPath, 'index.html');
@@ -41,11 +42,11 @@ var ScriptBase = yeoman.generators.NamedBase.extend({
         ]
       });
     } catch (e) {
-      this.log('\nUnable to find '.yellow + fullPath + '. Reference to '.yellow + script + '.js ' + 'not added.\n'.yellow);
+      this.log('\n Unable to find ' + fullPath + '. Reference to ' + script + '.js ' + 'not added.\n');
     }
   },
 
-  setupSourceRootAndSuffix: function () {
+  _setupSourceRootAndSuffix: function () {
     var sourceRoot = '/templates';
     this.scriptSuffix = '.js';
 
@@ -61,14 +62,23 @@ var ScriptBase = yeoman.generators.NamedBase.extend({
     this.sourceRoot(path.join(__dirname, sourceRoot));
   },
 
-  writeTemplate: function (source, destination, data) {
-    this.setupSourceRootAndSuffix();
+  _writeTemplate: function (source, destination, data) {
+    this._setupSourceRootAndSuffix();
     var ext = this.scriptSuffix;
     this.template(source + ext, destination + ext, data);
   },
 
-  generateTests: function () {
+  _canGenerateTests: function () {
     return this.config.get('testFramework') === 'mocha' && !this.config.get('includeRequireJS');
+  },
+
+  _generateTest: function (type) {
+    if (this._canGenerateTests()) {
+      this.composeWith('backbone-mocha:' + type, { arguments: [this.name] }, {
+        coffee: this.config.get('coffee'),
+        ui: this.config.get('ui')
+      });
+    }
   }
 });
 
