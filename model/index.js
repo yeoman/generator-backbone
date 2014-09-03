@@ -23,27 +23,19 @@ var ModelGenerator = scriptBase.extend({
         type: parts[1] || 'string'
       };
     });
-
-    var testOptions = {
-      as: 'model',
-      args: [this.name],
-      options: {
-        coffee: this.config.get('coffee'),
-        ui: this.config.get('ui')
-      }
-    };
-
-    if (this.generateTests()) {
-      this.hookFor('backbone-mocha', testOptions);
-    }
-
   },
 
-  createModelFiles: function () {
-    this.writeTemplate('model', path.join(this.env.options.appPath + '/scripts/models', this.name));
+  writing: {
+    createModelFiles: function () {
+      this._writeTemplate('model', path.join(this.env.options.appPath + '/scripts/models', this.name));
 
-    if (!this.options.requirejs) {
-      this.addScriptToIndex('models/' + this.name);
+      if (!this.options.requirejs) {
+        this._addScriptToIndex('models/' + this.name);
+      }
+    },
+
+    composeTest: function () {
+      this._generateTest('model');
     }
   }
 });

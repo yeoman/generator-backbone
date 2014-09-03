@@ -10,28 +10,22 @@ var CollectionGenerator = scriptBase.extend({
 
     var dirPath = this.options.coffee ? '../templates/coffeescript/' : '../templates';
     this.sourceRoot(path.join(__dirname, dirPath));
+  },
 
-    var testOptions = {
-      as: 'collection',
-      args: [this.name],
-      options: {
-        coffee: this.config.get('coffee'),
-        ui: this.config.get('ui')
+  writing: {
+    createControllerFiles: function () {
+      this._writeTemplate('collection', path.join(this.env.options.appPath + '/scripts/collections', this.name));
+
+      if (!this.options.requirejs) {
+        this._addScriptToIndex('collections/' + this.name);
       }
-    };
-
-    if (this.generateTests()) {
-      this.hookFor('backbone-mocha', testOptions);
+    },
+    composeTest: function () {
+      this._generateTest('collection');
     }
   },
 
-  createControllerFiles: function () {
-    this.writeTemplate('collection', path.join(this.env.options.appPath + '/scripts/collections', this.name));
 
-    if (!this.options.requirejs) {
-      this.addScriptToIndex('collections/' + this.name);
-    }
-  }
 });
 
 module.exports = CollectionGenerator;
