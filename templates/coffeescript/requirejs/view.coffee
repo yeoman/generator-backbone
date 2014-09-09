@@ -19,4 +19,8 @@ define [
         @listenTo @model, 'change', @render
 
     render: () ->
-        @$el.html @template(@model.toJSON())
+    <% if(templateFramework === 'mustache'){ %>
+        @$el.html @template.render(@model.toJSON())  
+    <% } else { %>
+        @$el.html @template(@model.toJSON())   
+    <% } %>

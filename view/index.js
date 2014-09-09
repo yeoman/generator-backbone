@@ -14,17 +14,18 @@ var ViewGenerator = scriptBase.extend({
 
   writing: {
     createViewFiles: function () {
-      var templateFramework =  this.config.get('templateFramework') || 'lodash';
       var templateExt = '.ejs';
-      if (templateFramework === 'mustache') {
+      this.templateFramework =  this.config.get('templateFramework') || 'lodash';
+      
+      if (this.templateFramework === 'mustache') {
         templateExt = '-template.mustache';
-      } else if (templateFramework === 'handlebars') {
+      } else if (this.templateFramework === 'handlebars') {
         templateExt = '.hbs';
       }
       this.jst_path = this.env.options.appPath + '/scripts/templates/' + this.name + templateExt;
 
       this.template('view.ejs', this.jst_path);
-      if (templateFramework === 'mustache') {
+      if (this.templateFramework === 'mustache') {
         this.jst_path = this.name + '-template';
       }
 

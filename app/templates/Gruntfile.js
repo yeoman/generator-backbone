@@ -61,7 +61,7 @@ module.exports = function (grunt) {
                 files: [
                     '<%%= yeoman.app %>/scripts/templates/*.mustache'
                 ],
-                tasks: ['mustache']
+                tasks: ['hogan']
             }<% } else if (templateFramework === 'handlebars') { %>,
             handlebars: {
                 files: [
@@ -314,15 +314,21 @@ module.exports = function (grunt) {
                 rjsConfig: '<%%= yeoman.app %>/scripts/main.js'
             }
         },<% } %><% if (templateFramework === 'mustache') { %>
-        mustache: {
-            files: {
-                src: '<%%= yeoman.app %>/scripts/templates/',
-                dest: '.tmp/scripts/templates.js',
-                options: {<% if (includeRequireJS) { %>
-                    prefix: 'define(function() { this.JST = ',
-                    postfix: '; return this.JST;});'<% } else { %>
-                    prefix: 'this.JST = ',
-                    postfix: ';'<% } %>
+        hogan: {
+            compile: {
+                options: {
+                    //prettify: true,
+                    namespace: 'JST',
+                    defaultName: function(file) {
+                        return require('path').basename(file, '.mustache');
+                    } <% if (includeRequireJS) { %>,
+                    amdWrapper: true,
+                    amdRequire: {
+                        hogan: "Hogan",
+                    } <% } %>
+                },
+                files:{
+                    ".tmp/scripts/templates.js": ["<%%= yeoman.app %>/scripts/templates/*.mustache"]
                 }
             }
         }<% } else if (templateFramework === 'handlebars') { %>
@@ -381,7 +387,7 @@ module.exports = function (grunt) {
                 'clean:server',<% if (options.coffee) { %>
                 'coffee',<% } %>
                 'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
-                'mustache',<% } else if (templateFramework === 'handlebars') { %>
+                'hogan',<% } else if (templateFramework === 'handlebars') { %>
                 'handlebars',<% } else { %>
                 'jst',<% } %><% if (compassBootstrap) { %>
                 'compass:server',<% } %>
@@ -395,7 +401,7 @@ module.exports = function (grunt) {
             'clean:server',<% if (options.coffee) { %>
             'coffee:dist',<% } %>
             'createDefaultTemplate',<% if (templateFramework === 'mustache') { %>
-            'mustache',<% } else if (templateFramework === 'handlebars') { %>
+            'hogan',<% } else if (templateFramework === 'handlebars') { %>
             'handlebars',<% } else { %>
             'jst',<% } %><% if (compassBootstrap) { %>
             'compass:server',<% } %>
@@ -411,7 +417,7 @@ module.exports = function (grunt) {
                 'clean:server',<% if (options.coffee) { %>
                 'coffee',<% } %>
                 'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
-                'mustache',<% } else if (templateFramework === 'handlebars') { %>
+                'hogan',<% } else if (templateFramework === 'handlebars') { %>
                 'handlebars',<% } else { %>
                 'jst',<% } %><% if (compassBootstrap) { %>
                 'compass',<% } %><% if(testFramework === 'mocha') { %>
@@ -433,7 +439,7 @@ module.exports = function (grunt) {
         'clean:dist',<% if (options.coffee) { %>
         'coffee',<% } %>
         'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
-        'mustache',<% } else if (templateFramework === 'handlebars') { %>
+        'hogan',<% } else if (templateFramework === 'handlebars') { %>
         'handlebars',<% } else { %>
         'jst',<% } %><% if (compassBootstrap) { %>
         'compass:dist',<% } %>

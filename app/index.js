@@ -169,6 +169,8 @@ var BackboneGenerator = yeoman.generators.Base.extend({
 
       if (this.templateFramework === 'handlebars') {
         vendorJS.push('bower_components/handlebars/handlebars.js');
+      } else if (this.templateFramework === 'mustache') {
+        vendorJS.push('bower_components/hogan/web/builds/2.0.0/hogan-2.0.0.js');
       }
 
       this.indexFile = this.appendScripts(this.indexFile, 'scripts/vendor.js', vendorJS);
