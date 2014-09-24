@@ -301,11 +301,13 @@ module.exports = function (grunt) {
                     dest: '<%%= yeoman.dist %>',
                     src: [
                         '*.{ico,txt}',
-                        '.htaccess',
                         'images/{,*/}*.{webp,gif}',
                         'styles/fonts/{,*/}*.*',<% if (compassBootstrap) { %>
                         'bower_components/sass-bootstrap/fonts/*.*'<% } %>
                     ]
+                }, {
+                    src: 'node_modules/apache-server-configs/dist/.htaccess',
+                    dest: '<%%= yeoman.dist %>/.htaccess'
                 }]
             }
         },<% if (includeRequireJS) { %>

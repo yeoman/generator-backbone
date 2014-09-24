@@ -45,7 +45,6 @@ describe('Backbone generator test with --coffee and --requirejs option', functio
       'app/404.html',
       'app/favicon.ico',
       'app/robots.txt',
-      'app/.htaccess',
       '.gitignore',
       '.gitattributes',
       '.bowerrc',
