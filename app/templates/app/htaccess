@@ -164,27 +164,40 @@ AddType text/vtt                            vtt
   </IfModule>
 
   # HTML, TXT, CSS, JavaScript, JSON, XML, HTC:
-  <IfModule filter_module>
-    FilterDeclare   COMPRESS
-    FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/html
-    FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/css
-    FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/plain
-    FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/xml
-    FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/x-component
-    FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/javascript
-    FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/json
-    FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/xml
-    FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/xhtml+xml
-    FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/rss+xml
-    FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/atom+xml
-    FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/vnd.ms-fontobject
-    FilterProvider  COMPRESS  DEFLATE resp=Content-Type $image/svg+xml
-    FilterProvider  COMPRESS  DEFLATE resp=Content-Type $image/x-icon
-    FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/x-font-ttf
-    FilterProvider  COMPRESS  DEFLATE resp=Content-Type $font/opentype
-    FilterChain     COMPRESS
-    FilterProtocol  COMPRESS  DEFLATE change=yes;byteranges=no
-  </IfModule>
+  <IfVersion >= 2.4.4>
+    <IfModule filter_module>
+      FilterDeclare  COMPRESS
+      FilterProvider COMPRESS DEFLATE "%{CONTENT_TYPE} =~ m#^text/(html|css|plain|xml|x-component)#i"
+      FilterProvider COMPRESS DEFLATE "%{CONTENT_TYPE} =~ m#^application/(javascript|json|xml|xhtml+xml|rss+xml|atom+xml|vnd.ms-fontobject|x-font-ttf)#i"
+      FilterProvider COMPRESS DEFLATE "%{CONTENT_TYPE} =~ m#^image/(svg+xml|x-icon)#i"
+      FilterProvider COMPRESS DEFLATE "%{CONTENT_TYPE} = 'font/opentype'"
+      FilterChain    COMPRESS
+      FilterProtocol COMPRESS DEFLATE change=yes;byteranges=no
+    </IfModule>
+  </IfVersion>
+  <IfVersion <= 2.4.4>
+    <IfModule filter_module>
+      FilterDeclare   COMPRESS
+      FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/html
+      FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/css
+      FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/plain
+      FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/xml
+      FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/x-component
+      FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/javascript
+      FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/json
+      FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/xml
+      FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/xhtml+xml
+      FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/rss+xml
+      FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/atom+xml
+      FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/vnd.ms-fontobject
+      FilterProvider  COMPRESS  DEFLATE resp=Content-Type $image/svg+xml
+      FilterProvider  COMPRESS  DEFLATE resp=Content-Type $image/x-icon
+      FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/x-font-ttf
+      FilterProvider  COMPRESS  DEFLATE resp=Content-Type $font/opentype
+      FilterChain     COMPRESS
+      FilterProtocol  COMPRESS  DEFLATE change=yes;byteranges=no
+    </IfModule>
+  </IfVersion>
 
   <IfModule !mod_filter.c>
     # Legacy versions of Apache
