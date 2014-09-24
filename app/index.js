@@ -224,7 +224,6 @@ var BackboneGenerator = yeoman.generators.Base.extend({
       this.copy('app/404.html', this.env.options.appPath + '/404.html');
       this.copy('app/favicon.ico', this.env.options.appPath + '/favicon.ico');
       this.copy('app/robots.txt', this.env.options.appPath + '/robots.txt');
-      this.copy('app/htaccess', this.env.options.appPath + '/.htaccess');
       this.write(this.env.options.appPath + '/index.html', this.indexFile);
     },
 

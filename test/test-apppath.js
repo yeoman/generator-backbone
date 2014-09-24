@@ -46,7 +46,6 @@ describe('backbone generator with appPath option', function () {
         'public/favicon.ico',
         'public/robots.txt',
         'public/index.html',
-        'public/.htaccess',
         '.gitignore',
         '.gitattributes',
         '.bowerrc',

@@ -45,7 +45,6 @@ describe('Backbone generator test with --coffee option', function () {
       'app/favicon.ico',
       'app/robots.txt',
       'app/index.html',
-      'app/.htaccess',
       '.gitignore',
       '.gitattributes',
       '.bowerrc',

@@ -56,7 +56,6 @@ describe('Backbone generator test', function () {
         'app/favicon.ico',
         'app/robots.txt',
         'app/index.html',
-        'app/.htaccess',
         '.gitignore',
         '.gitattributes',
         '.bowerrc',
