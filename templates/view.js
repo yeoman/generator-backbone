@@ -22,9 +22,12 @@
         },
 
         render: function () {
-            this.$el.html(this.template(this.model.toJSON()));
+        <% if(templateFramework === 'mustache'){ %>
+            this.$el.html(this.template.render(this.model.toJSON()));    
+        <% } else { %>
+            this.$el.html(this.template(this.model.toJSON()));    
+        <% } %>
         }
-
     });
 
 })();
