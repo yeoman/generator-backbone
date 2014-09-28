@@ -176,18 +176,18 @@ var BackboneGenerator = yeoman.generators.Base.extend({
       if (this.compassBootstrap) {
         // wire Twitter Bootstrap plugins
         this.indexFile = this.appendScripts(this.indexFile, 'scripts/plugins.js', [
-          'bower_components/sass-bootstrap/js/affix.js',
-          'bower_components/sass-bootstrap/js/alert.js',
-          'bower_components/sass-bootstrap/js/dropdown.js',
-          'bower_components/sass-bootstrap/js/tooltip.js',
-          'bower_components/sass-bootstrap/js/modal.js',
-          'bower_components/sass-bootstrap/js/transition.js',
-          'bower_components/sass-bootstrap/js/button.js',
-          'bower_components/sass-bootstrap/js/popover.js',
-          'bower_components/sass-bootstrap/js/carousel.js',
-          'bower_components/sass-bootstrap/js/scrollspy.js',
-          'bower_components/sass-bootstrap/js/collapse.js',
-          'bower_components/sass-bootstrap/js/tab.js'
+          'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/affix.js',
+          'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/alert.js',
+          'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/button.js',
+          'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/carousel.js',
+          'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js',
+          'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/dropdown.js',
+          'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/modal.js',
+          'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/popover.js',
+          'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/scrollspy.js',
+          'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tab.js',
+          'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip.js',
+          'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js'
         ]);
       }
 
