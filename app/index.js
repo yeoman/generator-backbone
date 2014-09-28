@@ -163,7 +163,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
 
       var vendorJS = [
         'bower_components/jquery/dist/jquery.js',
-        'bower_components/underscore/underscore.js',
+        'bower_components/lodash/dist/lodash.compat.js',
         'bower_components/backbone/backbone.js'
       ];
 
