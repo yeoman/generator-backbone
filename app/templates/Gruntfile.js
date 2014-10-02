@@ -30,7 +30,7 @@ module.exports = function (grunt) {
         watch: {
             options: {
                 nospawn: true,
-                livereload: true
+                livereload: LIVERELOAD_PORT
             },<% if (options.coffee) { %>
             coffee: {
                 files: ['<%%= yeoman.app %>/scripts/{,*/}*.coffee'],
