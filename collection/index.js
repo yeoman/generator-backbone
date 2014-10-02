@@ -14,10 +14,10 @@ var CollectionGenerator = scriptBase.extend({
 
   writing: {
     createControllerFiles: function () {
-      this._writeTemplate('collection', path.join(this.env.options.appPath + '/scripts/collections', this.name));
+      this._writeTemplate('collection', path.join(this.env.options.appPath + '/scripts/collections', this.filename));
 
       if (!this.options.requirejs) {
-        this._addScriptToIndex('collections/' + this.name);
+        this._addScriptToIndex('collections/' + this.filename);
       }
     },
     composeTest: function () {

@@ -28,10 +28,10 @@ var ViewGenerator = scriptBase.extend({
         this.jst_path = this.name + '-template';
       }
 
-      this._writeTemplate('view', path.join(this.env.options.appPath + '/scripts/views', this.name));
+      this._writeTemplate('view', path.join(this.env.options.appPath + '/scripts/views', this.filename));
 
       if (!this.options.requirejs) {
-        this._addScriptToIndex('views/' + this.name);
+        this._addScriptToIndex('views/' + this.filename);
       }
     },
 
