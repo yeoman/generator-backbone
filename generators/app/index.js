@@ -297,9 +297,13 @@ var BackboneGenerator = yeoman.generators.Base.extend({
         }
       );
 
-      this.indexFile = htmlWiring.appendScripts(this.indexFile, 'scripts/main.js', [
-        'bower_components/requirejs/require.js'
-      ], {'data-main': 'scripts/main'});
+      var attrs = htmlWiring.attributes({
+        'data-main': 'scripts/main',
+        src: 'bower_components/requirejs/require.js'
+      });
+      var scriptTag = '<script ' + attrs + '></script>';
+
+      this.indexFile = htmlWiring.append(this.indexFile, 'body', scriptTag);
     },
 
     setupEnv: function () {
