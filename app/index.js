@@ -183,10 +183,10 @@ var BackboneGenerator = yeoman.generators.Base.extend({
           'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js',
           'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/dropdown.js',
           'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/modal.js',
+          'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip.js',
           'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/popover.js',
           'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/scrollspy.js',
           'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tab.js',
-          'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip.js',
           'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js'
         ]);
       }
