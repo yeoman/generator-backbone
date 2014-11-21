@@ -303,7 +303,7 @@ module.exports = function (grunt) {
                         '*.{ico,txt}',
                         'images/{,*/}*.{webp,gif}',
                         'styles/fonts/{,*/}*.*',<% if (compassBootstrap) { %>
-                        'bower_components/sass-bootstrap/fonts/*.*'<% } %>
+                        'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*.*'<% } %>
                     ]
                 }, {
                     src: 'node_modules/apache-server-configs/dist/.htaccess',
@@ -357,7 +357,7 @@ module.exports = function (grunt) {
                         '<%%= yeoman.dist %>/styles/{,*/}*.css',
                         '<%%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
                         '<%= yeoman.dist %>/styles/fonts/{,*/}*.*',<% if (compassBootstrap) { %>
-                        'bower_components/sass-bootstrap/fonts/*.*'<% } %>
+                        'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*.*'<% } %>
                     ]
                 }
             }
