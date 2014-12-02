@@ -44,6 +44,8 @@ grunt serve
 
 Also checkout this [NetTuts write-up](http://net.tutsplus.com/tutorials/javascript-ajax/building-apps-with-the-yeoman-workflow/) for a guide to building Backbone.js apps using this generator.
 
+When loading modules dynamically via require.js, be sure to set `findNestedDependencies` to true ([default is false](https://github.com/yeoman/generator-backbone/issues/294#issuecomment-64184505)) to make the r.js compiler include the files.
+
 
 ## Options
 
