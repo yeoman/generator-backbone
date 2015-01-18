@@ -17,7 +17,7 @@ describe('Backbone generator test', function () {
       this.backbone.app = test.createAppGenerator();
 
       helpers.mockPrompt(this.backbone.app, {
-        features: ['compassBootstrap']
+        features: ['sassBootstrap']
       });
 
       var out = [

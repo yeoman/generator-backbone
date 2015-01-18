@@ -1,7 +1,7 @@
 {
   "name": "<%= _.slugify(appname) %>",
   "version": "0.0.0",
-  "dependencies": {<% if (compassBootstrap) { %>
+  "dependencies": {<% if (sassBootstrap) { %>
     "bootstrap-sass-official": "~3.3.1",<% } %>
     "jquery": "~2.1.0",
     "lodash": "~2.4.1",

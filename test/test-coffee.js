@@ -17,7 +17,7 @@ describe('Backbone generator test with --coffee option', function () {
       this.backbone.app = test.createAppGenerator();
 
       helpers.mockPrompt(this.backbone.app, {
-        features: ['compassBootstrap', 'coffee']
+        features: ['sassBootstrap', 'coffee']
       });
 
       var out = [

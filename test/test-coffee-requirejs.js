@@ -17,7 +17,7 @@ describe('Backbone generator test with --coffee and --requirejs option', functio
       this.backbone.app = test.createAppGenerator();
 
       helpers.mockPrompt(this.backbone.app, {
-        features: ['compassBootstrap', 'coffee', 'requirejs']
+        features: ['sassBootstrap', 'coffee', 'requirejs']
       });
 
       var out = [

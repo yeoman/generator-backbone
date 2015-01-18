@@ -27,7 +27,7 @@ describe('backbone generator with appPath option', function () {
       })
       .withArguments(['temp'])
       .withOptions({'skip-install': true, appPath: 'public'})
-      .withPrompt({features: ['compassBootstrap']})
+      .withPrompt({features: ['sassBootstrap']})
       .withGenerators(deps);
 
     done();

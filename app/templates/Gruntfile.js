@@ -39,10 +39,10 @@ module.exports = function (grunt) {
             coffeeTest: {
                 files: ['test/spec/{,*/}*.coffee'],
                 tasks: ['coffee:test']
-            },<% } %><% if (compassBootstrap) { %>
-            compass: {
+            },<% } %><% if (sassBootstrap) { %>
+            sass: {
                 files: ['<%%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-                tasks: ['compass']
+                tasks: ['sass:server']
             },<% } %>
             livereload: {
                 options: {
@@ -188,23 +188,30 @@ module.exports = function (grunt) {
                     ext: '.js'
                 }]
             }
-        },<% } %><% if (compassBootstrap) { %>
-        compass: {
-            options: {
-                sassDir: '<%%= yeoman.app %>/styles',
-                cssDir: '.tmp/styles',
-                imagesDir: '<%%= yeoman.app %>/images',
-                javascriptsDir: '<%%= yeoman.app %>/scripts',
-                fontsDir: '<%%= yeoman.app %>/styles/fonts',
-                importPath: '<%%= yeoman.app %>/bower_components',
-                relativeAssets: true
+        },<% } %><% if (sassBootstrap) { %>
+        sass: {
+          options: {
+            sourceMap: true,
+            includePaths: ['app/bower_components']
             },
-            dist: {},
-            server: {
-                options: {
-                    debugInfo: true
-                }
-            }
+          dist: {
+            files: [{
+              expand: true,
+              cwd: '<%= yeoman.app %>/styles',
+              src: ['*.{scss,sass}'],
+              dest: '.tmp/styles',
+              ext: '.css'
+            }]
+          },
+          server: {
+            files: [{
+              expand: true,
+              cwd: '<%= yeoman.app %>/styles',
+              src: ['*.{scss,sass}'],
+              dest: '.tmp/styles',
+              ext: '.css'
+            }]
+          }
         },<% } %><% if (includeRequireJS) { %>
         requirejs: {
             dist: {
@@ -302,7 +309,7 @@ module.exports = function (grunt) {
                     src: [
                         '*.{ico,txt}',
                         'images/{,*/}*.{webp,gif}',
-                        'styles/fonts/{,*/}*.*',<% if (compassBootstrap) { %>
+                        'styles/fonts/{,*/}*.*',<% if (sassBootstrap) { %>
                         'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*.*'<% } %>
                     ]
                 }, {
@@ -356,7 +363,7 @@ module.exports = function (grunt) {
                         '<%%= yeoman.dist %>/scripts/{,*/}*.js',
                         '<%%= yeoman.dist %>/styles/{,*/}*.css',
                         '<%%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
-                        '<%= yeoman.dist %>/styles/fonts/{,*/}*.*',<% if (compassBootstrap) { %>
+                        '<%= yeoman.dist %>/styles/fonts/{,*/}*.*',<% if (sassBootstrap) { %>
                         'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*.*'<% } %>
                     ]
                 }
@@ -385,8 +392,8 @@ module.exports = function (grunt) {
                 'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
                 'mustache',<% } else if (templateFramework === 'handlebars') { %>
                 'handlebars',<% } else { %>
-                'jst',<% } %><% if (compassBootstrap) { %>
-                'compass:server',<% } %>
+                'jst',<% } %><% if (sassBootstrap) { %>
+                'sass:server',<% } %>
                 'connect:test',
                 'open:test',
                 'watch'
@@ -399,8 +406,8 @@ module.exports = function (grunt) {
             'createDefaultTemplate',<% if (templateFramework === 'mustache') { %>
             'mustache',<% } else if (templateFramework === 'handlebars') { %>
             'handlebars',<% } else { %>
-            'jst',<% } %><% if (compassBootstrap) { %>
-            'compass:server',<% } %>
+            'jst',<% } %><% if (sassBootstrap) { %>
+            'sass:server',<% } %>
             'connect:livereload',
             'open:server',
             'watch'
@@ -415,8 +422,8 @@ module.exports = function (grunt) {
                 'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
                 'mustache',<% } else if (templateFramework === 'handlebars') { %>
                 'handlebars',<% } else { %>
-                'jst',<% } %><% if (compassBootstrap) { %>
-                'compass',<% } %><% if(testFramework === 'mocha') { %>
+                'jst',<% } %><% if (sassBootstrap) { %>
+                'sass',<% } %><% if(testFramework === 'mocha') { %>
                 'connect:test',
                 'mocha',<% } else { %>
                 'jasmine'<% } %>
@@ -437,8 +444,8 @@ module.exports = function (grunt) {
         'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
         'mustache',<% } else if (templateFramework === 'handlebars') { %>
         'handlebars',<% } else { %>
-        'jst',<% } %><% if (compassBootstrap) { %>
-        'compass:dist',<% } %>
+        'jst',<% } %><% if (sassBootstrap) { %>
+        'sass:dist',<% } %>
         'useminPrepare',<% if (includeRequireJS) { %>
         'requirejs',<% } %>
         'imagemin',

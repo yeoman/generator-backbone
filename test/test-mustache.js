@@ -17,7 +17,7 @@ describe('Backbone generator with mustache', function () {
       this.backbone.app = test.createAppGenerator(['temp'], {'template-framework': 'mustache'});
 
       helpers.mockPrompt(this.backbone.app, {
-        features: ['compassBootstrap'],
+        features: ['sassBootstrap'],
         includeRequireJS: false
       });
 
