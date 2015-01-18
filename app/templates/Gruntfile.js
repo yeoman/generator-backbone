@@ -102,9 +102,9 @@ module.exports = function (grunt) {
                     port: 9001,
                     middleware: function (connect) {
                         return [
+                            mountFolder(connect, 'test'),
                             lrSnippet,
                             mountFolder(connect, '.tmp'),
-                            mountFolder(connect, 'test'),
                             mountFolder(connect, yeomanConfig.app)
                         ];
                     }
