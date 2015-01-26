@@ -54,7 +54,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
       coffee: this.options.coffee,
       testFramework: this.testFramework,
       templateFramework: this.templateFramework,
-      compassBootstrap: this.compassBootstrap,
+      sassBootstrap: this.sassBootstrap,
       includeRequireJS: this.includeRequireJS
     });
 
@@ -74,7 +74,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
       message: 'What more would you like?',
       choices: [{
         name: 'Twitter Bootstrap for Sass',
-        value: 'compassBootstrap',
+        value: 'sassBootstrap',
         checked: true
       }, {
         name: 'Use CoffeeScript',
@@ -94,9 +94,9 @@ var BackboneGenerator = yeoman.generators.Base.extend({
 
       // manually deal with the response, get back and store the results.
       // we change a bit this way of doing to automatically do this in the self.prompt() method.
-      this.compassBootstrap = hasFeature('compassBootstrap');
+      this.sassBootstrap = hasFeature('sassBootstrap');
       this.includeRequireJS = hasFeature('requirejs');
-      this.config.set('compassBootstrap', this.compassBootstrap);
+      this.config.set('sassBootstrap', this.sassBootstrap);
 
 
       if (!this.options.coffee) {
@@ -146,7 +146,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
         '\n.hero-unit {\n    margin: 50px auto 0 auto;\n    width: 300px;\n}'
       ];
       var ext = '.css';
-      if (this.compassBootstrap) {
+      if (this.sassBootstrap) {
         this.template('main.scss', this.env.options.appPath + '/styles/main.scss');
         return;
       }
@@ -173,7 +173,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
 
       this.indexFile = this.appendScripts(this.indexFile, 'scripts/vendor.js', vendorJS);
 
-      if (this.compassBootstrap) {
+      if (this.sassBootstrap) {
         // wire Twitter Bootstrap plugins
         this.indexFile = this.appendScripts(this.indexFile, 'scripts/plugins.js', [
           'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/affix.js',

@@ -18,7 +18,7 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <% if (compassBootstrap) { %>
+        <% if (sassBootstrap) { %>
         <div class="container">
             <div class="header">
                 <ul class="nav nav-pills pull-right">
@@ -75,7 +75,7 @@
             </div>
 
         </div>
-        <% } else { // compassBootstrap %>
+        <% } else { // sassBootstrap %>
         <div class="hero-unit">
           <h1>'Allo, 'Allo!</h1>
           <p>You now have</p>
@@ -88,7 +88,7 @@
             <% if (includeRequireJS) { %><li>RequireJS</li><% } %>
           </ul>
         </div>
-        <% } // compassBootstrap %>
+        <% } // sassBootstrap %>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>

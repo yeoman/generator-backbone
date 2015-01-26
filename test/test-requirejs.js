@@ -17,7 +17,7 @@ describe('Backbone generator with RequireJS', function () {
       this.backbone.app = test.createAppGenerator();
 
       helpers.mockPrompt(this.backbone.app, {
-        features: ['compassBootstrap', 'requirejs']
+        features: ['sassBootstrap', 'requirejs']
       });
 
       var out = [
@@ -36,7 +36,7 @@ describe('Backbone generator with RequireJS', function () {
   });
 
   describe('creates expected files', function () {
-    it('with compassBootstrap', function (done) {
+    it('with sassBootstrap', function (done) {
       var expectedContent = [
         ['bower.json', /("name": "temp")(|.|\n)*(requirejs)/],
         ['package.json', /"name": "temp"/],
@@ -63,7 +63,7 @@ describe('Backbone generator with RequireJS', function () {
 
     });
 
-    it('without compassBootstrap', function (done) {
+    it('without sassBootstrap', function (done) {
       var expectedContent = [
         ['bower.json', /("name": "temp")(|.|\n)*(requirejs)/],
         ['package.json', /"name": "temp"/],
