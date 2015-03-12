@@ -39,5 +39,16 @@
     {
       "type": "BSD"
     }
+  ],
+  "files": [
+    "all",
+    "app",
+    "collection",
+    "model",
+    "router",
+    "templates",
+    "view",
+    "script-base.js",
+    "util.js"
   ]
 }

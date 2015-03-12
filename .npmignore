@@ -1,8 +1,0 @@
-contributing.md
-.editorconfig
-.gitattributes
-.jshintrc
-.npmignore
-test
-.travis.yml
-coverage/
