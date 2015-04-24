@@ -1,7 +1,5 @@
 # Backbone.js generator [![Build Status](https://secure.travis-ci.org/yeoman/generator-backbone.svg?branch=master)](http://travis-ci.org/yeoman/generator-backbone) [![Coverage Status](https://coveralls.io/repos/yeoman/generator-backbone/badge.png?branch=master)](https://coveralls.io/r/yeoman/generator-backbone?branch=master)
 
-Maintainer: [Revath S Kumar](https://github.com/revathskumar)
-
 A Backbone generator for Yeoman that provides a functional boilerplate Backbone app out of the box. You also get access to a number of sub-generators which can be used to easily create individual models, views, collections and so on.
 
 Optional RequireJS (AMD) support has recently been added as a prompt when using the generator on new projects.
