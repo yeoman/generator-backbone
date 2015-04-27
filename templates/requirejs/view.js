@@ -1,32 +1,32 @@
 /*global define*/
 
 define([
-    'jquery',
-    'underscore',
-    'backbone',
-    'templates'
+  'jquery',
+  'underscore',
+  'backbone',
+  'templates'
 ], function ($, _, Backbone, JST) {
-    'use strict';
+  'use strict';
 
-    var <%= _.classify(name) %>View = Backbone.View.extend({
-        template: JST['<%= jst_path %>'],
+  var <%= _.classify(name) %>View = Backbone.View.extend({
+    template: JST['<%= jst_path %>'],
 
-        tagName: 'div',
+    tagName: 'div',
 
-        id: '',
+    id: '',
 
-        className: '',
+    className: '',
 
-        events: {},
+    events: {},
 
-        initialize: function () {
-            this.listenTo(this.model, 'change', this.render);
-        },
+    initialize: function () {
+      this.listenTo(this.model, 'change', this.render);
+    },
 
-        render: function () {
-            this.$el.html(this.template(this.model.toJSON()));
-        }
-    });
+    render: function () {
+      this.$el.html(this.template(this.model.toJSON()));
+    }
+  });
 
-    return <%= _.classify(name) %>View;
+  return <%= _.classify(name) %>View;
 });
