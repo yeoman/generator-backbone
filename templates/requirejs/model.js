@@ -1,27 +1,27 @@
 /*global define*/
 
 define([
-    'underscore',
-    'backbone'
+  'underscore',
+  'backbone'
 ], function (_, Backbone) {
-    'use strict';
+  'use strict';
 
-    var <%= _.classify(name) %>Model = Backbone.Model.extend({
-        url: '',
+  var <%= _.classify(name) %>Model = Backbone.Model.extend({
+    url: '',
 
-        initialize: function() {
-        },
+    initialize: function() {
+    },
 
-        defaults: {
-        },
+    defaults: {
+    },
 
-        validate: function(attrs, options) {
-        },
+    validate: function(attrs, options) {
+    },
 
-        parse: function(response, options)  {
-            return response;
-        }
-    });
+    parse: function(response, options)  {
+      return response;
+    }
+  });
 
-    return <%= _.classify(name) %>Model;
+  return <%= _.classify(name) %>Model;
 });

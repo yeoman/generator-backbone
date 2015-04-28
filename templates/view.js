@@ -3,28 +3,28 @@
 <%= _.camelize(appname) %>.Views = <%= _.camelize(appname) %>.Views || {};
 
 (function () {
-    'use strict';
+  'use strict';
 
-    <%= _.camelize(appname) %>.Views.<%= _.classify(name) %> = Backbone.View.extend({
+  <%= _.camelize(appname) %>.Views.<%= _.classify(name) %> = Backbone.View.extend({
 
-        template: JST['<%= jst_path %>'],
+    template: JST['<%= jst_path %>'],
 
-        tagName: 'div',
+    tagName: 'div',
 
-        id: '',
+    id: '',
 
-        className: '',
+    className: '',
 
-        events: {},
+    events: {},
 
-        initialize: function () {
-            this.listenTo(this.model, 'change', this.render);
-        },
+    initialize: function () {
+      this.listenTo(this.model, 'change', this.render);
+    },
 
-        render: function () {
-            this.$el.html(this.template(this.model.toJSON()));
-        }
+    render: function () {
+      this.$el.html(this.template(this.model.toJSON()));
+    }
 
-    });
+  });
 
 })();

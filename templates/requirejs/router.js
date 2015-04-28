@@ -1,16 +1,16 @@
 /*global define*/
 
 define([
-    'jquery',
-    'backbone'
+  'jquery',
+  'backbone'
 ], function ($, Backbone) {
-    'use strict';
+  'use strict';
 
-    var <%= _.classify(name) %>Router = Backbone.Router.extend({
-        routes: {
-        }
+  var <%= _.classify(name) %>Router = Backbone.Router.extend({
+    routes: {
+    }
 
-    });
+  });
 
-    return <%= _.classify(name) %>Router;
+  return <%= _.classify(name) %>Router;
 });
