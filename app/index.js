@@ -66,7 +66,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
 
     // welcome message
     this.log(this.yeoman);
-    this.log('Out of the box I include HTML5 Boilerplate, jQuery, Backbone.js and Modernizr.');
+    this.log('Out of the box I include HTML5 Boilerplate, jQuery and Backbone.js.');
 
     var prompts = [{
       type: 'checkbox',
@@ -84,6 +84,10 @@ var BackboneGenerator = yeoman.generators.Base.extend({
         name: 'Use RequireJs',
         value: 'requirejs',
         checked: this.options.requirejs || false
+      }, {
+        name: 'Use Modernizr',
+        value: 'modernizr',
+        checked: false
       }]
     }];
 
@@ -96,6 +100,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
       // we change a bit this way of doing to automatically do this in the self.prompt() method.
       this.sassBootstrap = hasFeature('sassBootstrap');
       this.includeRequireJS = hasFeature('requirejs');
+      this.includeModernizr = hasFeature('modernizr');
       this.config.set('sassBootstrap', this.sassBootstrap);
 
 

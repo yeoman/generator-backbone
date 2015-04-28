@@ -8,10 +8,10 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
+    <!-- endbuild --><% if (includeModernizr) { %>
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="bower_components/modernizr/modernizr.js"></script>
-    <!-- endbuild -->
+    <!-- endbuild --><% } %>
   </head>
   <body>
     <!--[if lt IE 10]>
@@ -52,10 +52,10 @@
 
           <h4>Bootstrap</h4>
           <p>Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.</p>
-
+          <% if (includeModernizr) { %>
           <h4>Modernizr</h4>
           <p>Modernizr is an open-source JavaScript library that helps you build the next generation of HTML5 and CSS3-powered websites.</p>
-
+          <% } %>
         </div>
         <div class="col-lg-6">
           <h4>Backbone.js</h4>
@@ -84,7 +84,7 @@
         <li>jQuery</li>
         <li>Backbone.js</li>
         <li>Lodash.js</li>
-        <li>Modernizr</li>
+        <% if (includeModernizr) { %><li>Modernizr</li><% } %>
         <% if (includeRequireJS) { %><li>RequireJS</li><% } %>
       </ul>
     </div>
