@@ -28,8 +28,7 @@ describe('Backbone generator test with --coffee option', function () {
 
   it('creates expected files', function () {
     var expectedContent = [
-      ['bower.json', /"name": "temp"/],
-      ['package.json', /"name": "temp"/]
+      ['bower.json', /"name": "temp"/]
     ];
     var expected = [
       'Gruntfile.js',

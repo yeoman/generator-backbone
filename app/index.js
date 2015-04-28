@@ -196,7 +196,6 @@ var BackboneGenerator = yeoman.generators.Base.extend({
         this.templatePath('_package.json'),
         this.destinationPath('package.json'),
         {
-          appSlugName: paramCase(this.appname),
           hasCoffee: this.options.coffee,
           includeRequireJS: this.includeRequireJS,
           sassBootstrap: this.sassBootstrap,

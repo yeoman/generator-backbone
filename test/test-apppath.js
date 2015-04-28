@@ -37,7 +37,6 @@ describe('backbone generator with appPath option', function () {
     it('in path specified by --appPath', function () {
       var expectedContent = [
         ['bower.json', /"name": "temp"/],
-        ['package.json', /"name": "temp"/],
         ['Gruntfile.js', /app: 'public'/]
       ];
 

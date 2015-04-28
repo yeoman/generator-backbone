@@ -38,8 +38,7 @@ describe('Backbone generator test', function () {
   describe('create expected files', function () {
     it('in path /app', function () {
       var expectedContent = [
-        ['bower.json', /"name": "temp"/],
-        ['package.json', /"name": "temp"/]
+        ['bower.json', /"name": "temp"/]
       ];
       var expected = [
         'Gruntfile.js',
