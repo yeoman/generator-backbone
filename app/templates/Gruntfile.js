@@ -14,10 +14,14 @@ var mountFolder = function (connect, dir) {
 // templateFramework: '<%= templateFramework %>'
 
 module.exports = function (grunt) {
+
   // show elapsed time at the end
   require('time-grunt')(grunt);
-  // load all grunt tasks
-  require('load-grunt-tasks')(grunt);
+
+  // Automatically load required Grunt tasks
+  require('jit-grunt')(grunt, {
+    useminPrepare: 'grunt-usemin'
+  });
 
   // configurable paths
   var yeomanConfig = {
