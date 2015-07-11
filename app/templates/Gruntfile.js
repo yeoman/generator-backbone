@@ -220,26 +220,33 @@ module.exports = function (grunt) {
     requirejs: {
       dist: {
         // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
-        options: {<% if (options.coffee) { %>
-          // `name` and `out` is set by grunt-usemin
+        options: {
+          almond: true,
+
+          replaceRequireScript: [{
+              files: ['<%%= yeoman.dist %>/index.html'],
+              module: 'main'
+          }],
+
+          modules: [{name: 'main'}],
+          <% if (options.coffee) { %>
           baseUrl: '.tmp/scripts',<% } else { %>
           baseUrl: '<%%= yeoman.app %>/scripts',<% } %>
-          optimize: 'none',
-          paths: {
-            'templates': '../../.tmp/scripts/templates',
-            'jquery': '../../<%%= yeoman.app %>/bower_components/jquery/dist/jquery',
-            'underscore': '../../<%%= yeoman.app %>/bower_components/lodash/dist/lodash',
-            'backbone': '../../<%%= yeoman.app %>/bower_components/backbone/backbone'
-          },
-          // TODO: Figure out how to make sourcemaps work with grunt-usemin
-          // https://github.com/yeoman/grunt-usemin/issues/30
-          //generateSourceMaps: true,
-          // required to support SourceMaps
-          // http://requirejs.org/docs/errors.html#sourcemapcomments
-          preserveLicenseComments: false,
+          mainConfigFile: '<%%= yeoman.app %>/scripts/main.js', // contains path specifications and nothing else important with respect to config
+          dir: '.tmp/scripts',
+
+          optimize: 'none', // optimize by uglify task
           useStrict: true<% if (templateFramework !== 'handlebars') { %>,
           wrap: true<% } %>
-          //uglify2: {} // https://github.com/mishoo/UglifyJS2
+        }
+      }
+    },
+    uglify: {
+      dist: {
+        files: {
+          '<%%= yeoman.dist %>/scripts/main.js': [
+            '.tmp/scripts/main.js'
+          ]
         }
       }
     },<% } else { %>
@@ -450,14 +457,15 @@ module.exports = function (grunt) {
     'handlebars',<% } else { %>
     'jst',<% } %><% if (sassBootstrap) { %>
     'sass:dist',<% } %>
-    'useminPrepare',<% if (includeRequireJS) { %>
-    'requirejs',<% } %>
+    'useminPrepare',
     'imagemin',
     'htmlmin',
     'concat',
     'cssmin',
-    'uglify',
-    'copy',
+    'uglify:generated',
+    'copy',<% if (includeRequireJS) { %>
+    'requirejs',<% } %>
+    'uglify:dist',
     'rev',
     'usemin'
   ]);
