@@ -81,7 +81,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
         value: 'coffee',
         checked: this.options.coffee || false
       }, {
-        name: 'Use RequireJs',
+        name: 'Use RequireJS',
         value: 'requirejs',
         checked: this.options.requirejs || false
       }, {
