@@ -27,10 +27,10 @@ var ModelGenerator = scriptBase.extend({
 
   writing: {
     createModelFiles: function () {
-      this._writeTemplate('model', path.join(this.env.options.appPath + '/scripts/models', this.name));
+      this._writeTemplate('model', path.join(this.env.options.appPath + '/scripts/models', this.filename));
 
       if (!this.options.requirejs) {
-        this._addScriptToIndex('models/' + this.name);
+        this._addScriptToIndex('models/' + this.filename);
       }
     },
 

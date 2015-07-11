@@ -13,10 +13,10 @@ var RouterGenerator = scriptBase.extend({
 
   writing: {
     routerFiles: function () {
-      this._writeTemplate('router', path.join(this.env.options.appPath + '/scripts/routes', this.name));
+      this._writeTemplate('router', path.join(this.env.options.appPath + '/scripts/routes', this.filename));
 
       if (!this.options.requirejs) {
-        this._addScriptToIndex('routes/' + this.name);
+        this._addScriptToIndex('routes/' + this.filename);
       }
     },
 

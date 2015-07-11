@@ -26,6 +26,8 @@ var ScriptBase = yeoman.generators.NamedBase.extend({
       this.env.options.requirejs = this.options.requirejs;
     }
 
+    this.filename = this._filename(this.name);
+
     this._.mixin({ 'classify': backboneUtils.classify });
   },
 
@@ -79,6 +81,12 @@ var ScriptBase = yeoman.generators.NamedBase.extend({
         ui: this.config.get('ui')
       });
     }
+  },
+  _filename: function (name) {
+    return this._(name).dasherize().trim('-').value()
+      .replace(/\/\//g,'/')
+      .replace(/\/-|\\-|\\/g, '/')
+      .toLowerCase();
   }
 });
 
