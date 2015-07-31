@@ -26,7 +26,7 @@
     "grunt-requirejs": "^0.4.2",<% } %>
     "grunt-rev": "^0.1.0",
     "grunt-open": "^0.2.3",<% if (sassBootstrap) { %>
-    "grunt-sass": "^1.0.0",<% } %>
+    "grunt-sass": "^3.2.0",<% } %>
     "connect-livereload": "^0.4.0",
     "jit-grunt": "^0.9.1",
     "time-grunt": "^1.0.0",
