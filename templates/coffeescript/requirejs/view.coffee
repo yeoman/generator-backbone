@@ -4,7 +4,7 @@ define [
   'backbone'
   'templates'
 ], ($, _, Backbone, JST) ->
-  class <%= _.classify(name) %>View extends Backbone.View
+  class <%= className %>View extends Backbone.View
     template: JST['<%= jst_path %>']
 
     tagName: 'div'

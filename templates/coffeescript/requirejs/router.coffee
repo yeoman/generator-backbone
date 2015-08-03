@@ -1,5 +1,5 @@
 define [
   'backbone'
 ], (Backbone) ->
-  class <%= _.classify(name) %>Router extends Backbone.Router
+  class <%= className %>Router extends Backbone.Router
     routes: {}

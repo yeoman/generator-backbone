@@ -1,13 +1,13 @@
-/*global <%= _.camelize(appname) %>, Backbone*/
+/*global <%= appClassName %>, Backbone*/
 
-<%= _.camelize(appname) %>.Collections = <%= _.camelize(appname) %>.Collections || {};
+<%= appClassName %>.Collections = <%= appClassName %>.Collections || {};
 
 (function () {
   'use strict';
 
-  <%= _.camelize(appname) %>.Collections.<%= _.classify(name) %> = Backbone.Collection.extend({
+  <%= appClassName %>.Collections.<%= className %> = Backbone.Collection.extend({
 
-    model: <%= _.camelize(appname) %>.Models.<%= _.classify(name) %>
+    model: <%= appClassName %>.Models.<%= className %>
 
   });
 

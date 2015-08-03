@@ -1,9 +1,12 @@
 'use strict';
 var util = require('util');
 var path = require('path');
+var ejs = require('ejs');
+var htmlWiring = require('html-wiring');
+var mkdirp = require('mkdirp');
+var pascalCase = require('pascal-case');
+var paramCase = require('param-case');
 var yeoman = require('yeoman-generator');
-var scriptBase = require('../script-base');
-var backboneUtils = require('../util.js');
 
 var BackboneGenerator = yeoman.generators.Base.extend({
   constructor: function () {
@@ -40,7 +43,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
 
     this.argument('app_name', { type: String, required: false });
     this.appname = this.app_name || this.appname;
-    this.appname = this._.classify(this.appname);
+    this.appname = pascalCase(this.appname);
 
     this.env.options.appPath = this.options.appPath || 'app';
     this.config.set('appPath', this.env.options.appPath);
@@ -58,7 +61,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
       includeRequireJS: this.includeRequireJS
     });
 
-    this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
+    this.indexFile = htmlWiring.readFileAsString(this.templatePath('index.html'));
   },
 
   prompting: function () {
@@ -120,29 +123,87 @@ var BackboneGenerator = yeoman.generators.Base.extend({
   writing: {
 
     git: function () {
-      this.template('gitignore', '.gitignore');
-      this.copy('gitattributes', '.gitattributes');
+      this.fs.copyTpl(
+        this.templatePath('gitignore'),
+        this.destinationPath('.gitignore'),
+        {
+          appPath: this.env.options.appPath
+        }
+      );
+      this.fs.copyTpl(
+        this.templatePath('gitattributes'),
+        this.destinationPath('.gitattributes')
+      );
     },
 
     bower: function () {
-      this.template('bowerrc', '.bowerrc');
-      this.copy('_bower.json', 'bower.json');
+      this.fs.copyTpl(
+        this.templatePath('bowerrc'),
+        this.destinationPath('.bowerrc'),
+        {
+          appPath: this.env.options.appPath
+        }
+      );
+      this.fs.copyTpl(
+        this.templatePath('_bower.json'),
+        this.destinationPath('bower.json'),
+        {
+          appSlugName: paramCase(this.appname),
+          sassBootstrap: this.sassBootstrap,
+          includeRequireJS: this.includeRequireJS,
+          includeModernizr: this.includeModernizr,
+          templateFramework: this.templateFramework
+        }
+      );
     },
 
     jshint: function () {
-      this.copy('jshintrc', '.jshintrc');
+      this.fs.copyTpl(
+        this.templatePath('jshintrc'),
+        this.destinationPath('.jshintrc'),
+        {
+          appName: this.appname,
+          appSlugName: paramCase(this.appname),
+          includeRequireJS: this.includeRequireJS
+        }
+      );
     },
 
     editorConfig: function () {
-      this.copy('editorconfig', '.editorconfig');
+      this.fs.copyTpl(
+        this.templatePath('editorconfig'),
+        this.destinationPath('.editorconfig')
+      );
     },
 
     gruntfile: function () {
-      this.template('Gruntfile.js');
+      this.fs.copyTpl(
+        this.templatePath('Gruntfile.js'),
+        this.destinationPath('Gruntfile.js'),
+        {
+          appPath: this.env.options.appPath,
+          hasCoffee: this.options.coffee,
+          includeRequireJS: this.includeRequireJS,
+          sassBootstrap: this.sassBootstrap,
+          templateFramework: this.templateFramework,
+          testFramework: this.testFramework
+        }
+      );
     },
 
     packageJSON: function () {
-      this.template('_package.json', 'package.json');
+      this.fs.copyTpl(
+        this.templatePath('_package.json'),
+        this.destinationPath('package.json'),
+        {
+          appSlugName: paramCase(this.appname),
+          hasCoffee: this.options.coffee,
+          includeRequireJS: this.includeRequireJS,
+          sassBootstrap: this.sassBootstrap,
+          templateFramework: this.templateFramework,
+          testFramework: this.testFramework
+        }
+      );
     },
 
     mainStylesheet: function () {
@@ -152,10 +213,16 @@ var BackboneGenerator = yeoman.generators.Base.extend({
       ];
       var ext = '.css';
       if (this.sassBootstrap) {
-        this.template('main.scss', this.env.options.appPath + '/styles/main.scss');
+        this.fs.copyTpl(
+          this.templatePath('main.scss'),
+          this.destinationPath(this.env.options.appPath + '/styles/main.scss')
+        );
         return;
       }
-      this.write(this.env.options.appPath + '/styles/main' + ext, contentText.join('\n'));
+      this.fs.write(
+        this.destinationPath(this.env.options.appPath + '/styles/main' + ext),
+        contentText.join('\n')
+      );
     },
 
     writeIndex: function () {
@@ -163,8 +230,16 @@ var BackboneGenerator = yeoman.generators.Base.extend({
         return;
       }
 
-      this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
-      this.indexFile = this.engine(this.indexFile, this);
+      this.indexFile = htmlWiring.readFileAsString(this.templatePath('index.html'));
+      this.indexFile = ejs.render(
+        this.indexFile,
+        {
+          appName: this.appname,
+          includeModernizr: this.includeModernizr,
+          includeRequireJS: this.includeRequireJS,
+          sassBootstrap: this.sassBootstrap
+        }
+      );
 
       var vendorJS = [
         'bower_components/jquery/dist/jquery.js',
@@ -176,11 +251,11 @@ var BackboneGenerator = yeoman.generators.Base.extend({
         vendorJS.push('bower_components/handlebars/handlebars.js');
       }
 
-      this.indexFile = this.appendScripts(this.indexFile, 'scripts/vendor.js', vendorJS);
+      this.indexFile = htmlWiring.appendScripts(this.indexFile, 'scripts/vendor.js', vendorJS);
 
       if (this.sassBootstrap) {
         // wire Twitter Bootstrap plugins
-        this.indexFile = this.appendScripts(this.indexFile, 'scripts/plugins.js', [
+        this.indexFile = htmlWiring.appendScripts(this.indexFile, 'scripts/plugins.js', [
           'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/affix.js',
           'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/alert.js',
           'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/button.js',
@@ -196,7 +271,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
         ]);
       }
 
-      this.indexFile = this.appendFiles({
+      this.indexFile = htmlWiring.appendFiles({
         html: this.indexFile,
         fileType: 'js',
         searchPath: ['.tmp', this.env.options.appPath],
@@ -212,38 +287,81 @@ var BackboneGenerator = yeoman.generators.Base.extend({
       if (!this.includeRequireJS) {
         return;
       }
-      this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
-      this.indexFile = this.engine(this.indexFile, this);
+      this.indexFile = htmlWiring.readFileAsString(this.templatePath('index.html'));
+      this.indexFile = ejs.render(
+        this.indexFile,
+        {
+          appName: this.appname,
+          includeModernizr: this.includeModernizr,
+          includeRequireJS: this.includeRequireJS,
+          sassBootstrap: this.sassBootstrap
+        }
+      );
 
-      this.indexFile = this.appendScripts(this.indexFile, 'scripts/main.js', [
+      this.indexFile = htmlWiring.appendScripts(this.indexFile, 'scripts/main.js', [
         'bower_components/requirejs/require.js'
       ], {'data-main': 'scripts/main'});
     },
 
     setupEnv: function () {
-      this.mkdir(this.env.options.appPath);
-      this.mkdir(this.env.options.appPath + '/scripts');
-      this.mkdir(this.env.options.appPath + '/scripts/vendor/');
-      this.mkdir(this.env.options.appPath + '/styles');
-      this.mkdir(this.env.options.appPath + '/images');
-      this.copy('app/404.html', this.env.options.appPath + '/404.html');
-      this.copy('app/favicon.ico', this.env.options.appPath + '/favicon.ico');
-      this.copy('app/robots.txt', this.env.options.appPath + '/robots.txt');
-      this.write(this.env.options.appPath + '/index.html', this.indexFile);
+      mkdirp.sync(
+        this.templatePath(this.env.options.appPath)
+      );
+      mkdirp.sync(
+        this.templatePath(this.env.options.appPath + '/scripts')
+      );
+      mkdirp.sync(
+        this.templatePath(this.env.options.appPath + '/scripts/vendor/')
+      );
+      mkdirp.sync(
+        this.templatePath(this.env.options.appPath + '/styles')
+      );
+      mkdirp.sync(
+        this.templatePath(this.env.options.appPath + '/images')
+      );
+      this.fs.copyTpl(
+        this.templatePath('app/404.html'),
+        this.destinationPath(this.env.options.appPath + '/404.html')
+      );
+      this.fs.copyTpl(
+        this.templatePath('app/favicon.ico'),
+        this.destinationPath(this.env.options.appPath + '/favicon.ico')
+      );
+      this.fs.copyTpl(
+        this.templatePath('app/robots.txt'),
+        this.destinationPath(this.env.options.appPath + '/robots.txt')
+      );
+      this.fs.write(
+        this.destinationPath(path.join(this.env.options.appPath, '/index.html')),
+        this.indexFile
+      );
     },
 
     createRequireJsAppFile: function () {
       if (!this.includeRequireJS) {
         return;
       }
-      this._writeTemplate('requirejs_app', this.env.options.appPath + '/scripts/main');
+      this._writeTemplate(
+        'requirejs_app',
+        this.env.options.appPath + '/scripts/main',
+        {
+          sassBootstrap: this.sassBootstrap,
+          templateFramework: this.templateFramework
+        }
+      );
     },
 
     createAppFile: function () {
       if (this.includeRequireJS) {
         return;
       }
-      this._writeTemplate('app', this.env.options.appPath + '/scripts/main');
+      this._writeTemplate(
+        'app',
+        this.env.options.appPath + '/scripts/main',
+        {
+          appSlugName: paramCase(this.appname)
+        }
+      );
     },
 
     composeTest: function () {
@@ -275,7 +393,11 @@ var BackboneGenerator = yeoman.generators.Base.extend({
     }
 
     var ext = this.scriptSuffix;
-    this.template(source + ext, destination + ext, data);
+    this.fs.copyTpl(
+      this.templatePath(source + ext),
+      this.destinationPath(destination + ext),
+      data
+    );
   },
 
   install: function () {

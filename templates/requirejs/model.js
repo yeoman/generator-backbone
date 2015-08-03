@@ -6,7 +6,7 @@ define([
 ], function (_, Backbone) {
   'use strict';
 
-  var <%= _.classify(name) %>Model = Backbone.Model.extend({
+  var <%= className %>Model = Backbone.Model.extend({
     url: '',
 
     initialize: function() {
@@ -23,5 +23,5 @@ define([
     }
   });
 
-  return <%= _.classify(name) %>Model;
+  return <%= className %>Model;
 });

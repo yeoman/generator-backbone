@@ -1,6 +1,6 @@
 'use strict';
 
-class <%= _.camelize(appname) %>.Views.<%= _.classify(name) %> extends Backbone.View
+class <%= appClassName %>.Views.<%= className %> extends Backbone.View
 
   template: JST['<%= jst_path %>']
 

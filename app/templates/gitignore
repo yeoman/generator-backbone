@@ -2,6 +2,6 @@ node_modules
 dist
 test/temp
 .sass-cache
-<%= env.options.appPath %>/bower_components
+<%= appPath %>/bower_components
 .tmp
 test/bower_components/

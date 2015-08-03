@@ -1,6 +1,6 @@
 'use strict';
 
-class <%= _.camelize(appname) %>.Models.<%= _.classify(name) %> extends Backbone.Model
+class <%= appClassName %>.Models.<%= className %> extends Backbone.Model
   url: '',
 
   initialize: () ->

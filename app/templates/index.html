@@ -2,23 +2,24 @@
 <html class="no-js" lang="">
   <head>
     <meta charset="utf-8">
-    <title><%= appname %></title>
+    <title><%= appName %></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild --><% if (includeModernizr) { %>
+    <!-- endbuild -->
+<% if (includeModernizr) { -%>
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="bower_components/modernizr/modernizr.js"></script>
-    <!-- endbuild --><% } %>
+    <!-- endbuild -->
+<% } -%>
   </head>
   <body>
     <!--[if lt IE 10]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-
-    <% if (sassBootstrap) { %>
+<% if (sassBootstrap) { -%>
     <div class="container">
       <div class="header">
         <ul class="nav nav-pills pull-right">
@@ -26,7 +27,7 @@
           <li><a href="#">About</a></li>
           <li><a href="#">Contact</a></li>
         </ul>
-        <h3 class="text-muted"><%= appname %></h3>
+        <h3 class="text-muted"><%= appName %></h3>
       </div>
 
       <div class="jumbotron">
@@ -52,10 +53,11 @@
 
           <h4>Bootstrap</h4>
           <p>Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.</p>
-          <% if (includeModernizr) { %>
+
+<% if (includeModernizr) { -%>
           <h4>Modernizr</h4>
           <p>Modernizr is an open-source JavaScript library that helps you build the next generation of HTML5 and CSS3-powered websites.</p>
-          <% } %>
+<% } -%>
         </div>
         <div class="col-lg-6">
           <h4>Backbone.js</h4>
@@ -64,9 +66,10 @@
           <h4>Lodash.js</h4>
           <p>A utility library delivering consistency, customization, performance, & extras. </p>
 
-          <% if (includeRequireJS) { %><h4>RequireJS</h4>
+<% if (includeRequireJS) { -%>
+          <h4>RequireJS</h4>
           <p>RequireJS is a JavaScript file and module loader. It is optimized for in-browser use, but it can be used in other JavaScript environments, like Rhino and Node.</p>
-          <% } %>
+<% } -%>
         </div>
       </div>
 
@@ -75,7 +78,7 @@
       </div>
 
     </div>
-    <% } else { // sassBootstrap %>
+<% } else { // sassBootstrap -%>
     <div class="hero-unit">
       <h1>'Allo, 'Allo!</h1>
       <p>You now have</p>
@@ -84,11 +87,16 @@
         <li>jQuery</li>
         <li>Backbone.js</li>
         <li>Lodash.js</li>
-        <% if (includeModernizr) { %><li>Modernizr</li><% } %>
-        <% if (includeRequireJS) { %><li>RequireJS</li><% } %>
+<% if (includeModernizr) { -%>
+        <li>Modernizr</li>
+<% } -%>
+<% if (includeRequireJS) { -%>
+        <li>RequireJS</li>
+<% } -%>
       </ul>
     </div>
-    <% } // sassBootstrap %>
+
+<% } // sassBootstrap -%>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>

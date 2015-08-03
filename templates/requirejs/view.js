@@ -8,7 +8,7 @@ define([
 ], function ($, _, Backbone, JST) {
   'use strict';
 
-  var <%= _.classify(name) %>View = Backbone.View.extend({
+  var <%= className %>View = Backbone.View.extend({
     template: JST['<%= jst_path %>'],
 
     tagName: 'div',
@@ -28,5 +28,5 @@ define([
     }
   });
 
-  return <%= _.classify(name) %>View;
+  return <%= className %>View;
 });

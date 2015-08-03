@@ -1,4 +1,4 @@
-window.<%= _.camelize(appname) %> =
+window.<%= appSlugName %> =
   Models: {}
   Collections: {}
   Views: {}
@@ -9,4 +9,4 @@ window.<%= _.camelize(appname) %> =
 
 $ ->
   'use strict'
-  <%= _.camelize(appname) %>.init();
+  <%= appSlugName %>.init();
