@@ -31,7 +31,6 @@ describe('Backbone generator test with --coffee and --requirejs option', functio
   it('creates expected files', function () {
     var expectedContent = [
       ['bower.json', /("name": "temp")(|.|\n)*(requirejs)/],
-      ['package.json', /"name": "temp"/],
       ['app/index.html', /(Bootstrap)(|.|\n)*(RequireJS)/i]
     ];
     var expected = [

@@ -1,7 +1,5 @@
 {
-  "name": "<%= appSlugName %>",
-  "version": "0.0.0",
-  "dependencies": {},
+  "private": true,
   "devDependencies": {
     "apache-server-configs": "^2.8.0",
     "grunt": "^0.4.5",

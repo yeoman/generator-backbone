@@ -30,7 +30,6 @@ describe('Backbone generator with RequireJS', function () {
     it('with sassBootstrap', function () {
       var expectedContent = [
         ['bower.json', /("name": "temp")(|.|\n)*(requirejs)/],
-        ['package.json', /"name": "temp"/],
         ['app/index.html', /(Bootstrap)(|.|\n)*(RequireJS)/i],
         ['app/scripts/main.js', /bootstrap/]
       ];
@@ -54,7 +53,6 @@ describe('Backbone generator with RequireJS', function () {
     it('without sassBootstrap', function () {
       var expectedContent = [
         ['bower.json', /("name": "temp")(|.|\n)*(requirejs)/],
-        ['package.json', /"name": "temp"/],
         ['Gruntfile.js', /requirejs/],
         ['app/index.html', /(RequireJS)/i]
       ];
