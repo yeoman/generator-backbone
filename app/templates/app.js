@@ -1,7 +1,7 @@
-/*global <%= _.camelize(appname) %>, $*/
+/*global <%= appSlugName %>, $*/
 
 
-window.<%= _.camelize(appname) %> = {
+window.<%= appSlugName %> = {
   Models: {},
   Collections: {},
   Views: {},
@@ -14,5 +14,5 @@ window.<%= _.camelize(appname) %> = {
 
 $(document).ready(function () {
   'use strict';
-  <%= _.camelize(appname) %>.init();
+  <%= appSlugName %>.init();
 });

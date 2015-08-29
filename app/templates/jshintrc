@@ -17,8 +17,8 @@
   "strict": true,
   "jquery": true,
   "globals": {
-    "<%= appname %>": true,
-    "<%= _.slugify(appname) %>": true,
+    "<%= appName %>": true,
+    "<%= appSlugName %>": true,
     "_": false,
     "Backbone": false,
     "JST": false,
@@ -27,8 +27,10 @@
     "it": false,
     "assert": true,
     "expect": true,
-    "should": true<% if (includeRequireJS) { %>,
+    "should": true,
+<% if (includeRequireJS) { -%>
     "require": false,
-    "define": false<% } %>
+    "define": false
+<% } -%>
   }
 }

@@ -7,34 +7,26 @@ var assert  = yeoman.assert;
 var fs      = require('fs');
 var test    = require('./helper.js');
 
+var config = [
+  '{',
+  '  "generator-backbone": {',
+  '    "appPath": "app",',
+  '    "appName": "Temp",',
+  '    "coffee": "true"',
+  '  }',
+  '}'
+].join('\n');
+
 describe('Backbone generator test with --coffee option', function () {
   beforeEach(function (done) {
-    helpers.testDirectory(path.join(__dirname, './temp'), function (err) {
-      if (err) {
-        return done(err);
-      }
-      this.backbone = {};
-      this.backbone.app = test.createAppGenerator();
+    var prompts = {
+      features: ['sassBootstrap', 'coffee']
+    };
 
-      helpers.mockPrompt(this.backbone.app, {
-        features: ['sassBootstrap', 'coffee']
-      });
-
-      var out = [
-        '{',
-        '  "generator-backbone": {',
-        '    "appPath": "app",',
-        '    "appName": "Temp"',
-        '  }',
-        '}'
-      ];
-      fs.writeFileSync('.yo-rc.json', out.join('\n'));
-
-      done();
-    }.bind(this));
+    test.createAppGenerator(config, prompts, done);
   });
 
-  it('creates expected files', function (done) {
+  it('creates expected files', function () {
     var expectedContent = [
       ['bower.json', /"name": "temp"/],
       ['package.json', /"name": "temp"/]
@@ -54,24 +46,19 @@ describe('Backbone generator test with --coffee option', function () {
       'app/scripts/main.coffee'
     ];
 
-    this.backbone.app.run([], function () {
-      assert.file(expected);
-      assert.fileContent(expectedContent);
-      done();
-    });
+    assert.file(expected);
+    assert.fileContent(expectedContent);
 
   });
 
   describe('creates model in coffeescript', function () {
     it('without failure', function (done) {
 
-      this.backbone.app.run([], function () {
-        test.createSubGenerator('model', function () {
-          assert.fileContent(
-            'app/scripts/models/foo.coffee', /class Temp.Models.Foo extends Backbone.Model/
-          );
-          done();
-        });
+      test.createSubGenerator(config, 'model', function () {
+        assert.fileContent(
+          'app/scripts/models/foo.coffee', /class Temp.Models.Foo extends Backbone.Model/
+        );
+        done();
       });
     });
   });
@@ -79,13 +66,11 @@ describe('Backbone generator test with --coffee option', function () {
   describe('creates collection in coffeescript', function () {
     it('without failure', function (done) {
 
-      this.backbone.app.run({}, function () {
-        test.createSubGenerator('collection', function () {
-          assert.fileContent(
-            'app/scripts/collections/foo.coffee', /class Temp.Collections.Foo extends Backbone.Collection/
-          );
-          done();
-        });
+      test.createSubGenerator(config, 'collection', function () {
+        assert.fileContent(
+          'app/scripts/collections/foo.coffee', /class Temp.Collections.Foo extends Backbone.Collection/
+        );
+        done();
       });
     });
   });
@@ -93,13 +78,11 @@ describe('Backbone generator test with --coffee option', function () {
   describe('creates router in coffeescript', function () {
     it('without failure', function (done) {
 
-      this.backbone.app.run({}, function () {
-        test.createSubGenerator('router', function () {
-          assert.fileContent(
-            'app/scripts/routes/foo.coffee', /class Temp.Routers.Foo extends Backbone.Router/
-          );
-          done();
-        });
+      test.createSubGenerator(config, 'router', function () {
+        assert.fileContent(
+          'app/scripts/routes/foo.coffee', /class Temp.Routers.Foo extends Backbone.Router/
+        );
+        done();
       });
     });
   });
@@ -107,14 +90,12 @@ describe('Backbone generator test with --coffee option', function () {
   describe('creates view in coffeescript', function () {
     it('without failure', function (done) {
 
-      this.backbone.app.run({}, function () {
-        test.createSubGenerator('view', function () {
-          assert.fileContent(
-            'app/scripts/views/foo.coffee', /class Temp.Views.Foo extends Backbone.View/
-          );
-          assert.file('app/scripts/templates/foo.ejs');
-          done();
-        });
+      test.createSubGenerator(config, 'view', function () {
+        assert.fileContent(
+          'app/scripts/views/foo.coffee', /class Temp.Views.Foo extends Backbone.View/
+        );
+        assert.file('app/scripts/templates/foo.ejs');
+        done();
       });
     });
   });

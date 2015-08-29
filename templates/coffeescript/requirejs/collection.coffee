@@ -1,8 +1,8 @@
 define [
   'underscore'
   'backbone'
-  'models/<%= _.classify(name) %>-model'
-], (_, Backbone, <%= _.classify(name) %>Model) ->
+  'models/<%= className %>-model'
+], (_, Backbone, <%= className %>Model) ->
 
-  class <%= _.classify(name) %>Collection extends Backbone.Collection
-    model: <%= _.classify(name) %>Model
+  class <%= className %>Collection extends Backbone.Collection
+    model: <%= className %>Model

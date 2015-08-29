@@ -1,11 +1,11 @@
-/*global <%= _.camelize(appname) %>, Backbone*/
+/*global <%= appClassName %>, Backbone*/
 
-<%= _.camelize(appname) %>.Models = <%= _.camelize(appname) %>.Models || {};
+<%= appClassName %>.Models = <%= appClassName %>.Models || {};
 
 (function () {
   'use strict';
 
-  <%= _.camelize(appname) %>.Models.<%= _.classify(name) %> = Backbone.Model.extend({
+  <%= appClassName %>.Models.<%= className %> = Backbone.Model.extend({
 
     url: '',
 

@@ -1,11 +1,11 @@
-/*global <%= _.camelize(appname) %>, Backbone*/
+/*global <%= appClassName %>, Backbone*/
 
-<%= _.camelize(appname) %>.Routers = <%= _.camelize(appname) %>.Routers || {};
+<%= appClassName %>.Routers = <%= appClassName %>.Routers || {};
 
 (function () {
   'use strict';
 
-  <%= _.camelize(appname) %>.Routers.<%= _.classify(name) %> = Backbone.Router.extend({
+  <%= appClassName %>.Routers.<%= className %> = Backbone.Router.extend({
 
   });
 

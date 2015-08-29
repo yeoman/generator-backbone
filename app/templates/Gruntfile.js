@@ -25,7 +25,7 @@ module.exports = function (grunt) {
 
   // configurable paths
   var yeomanConfig = {
-    app: '<%= env.options.appPath %>',
+    app: '<%= appPath %>',
     dist: 'dist'
   };
 
@@ -35,7 +35,7 @@ module.exports = function (grunt) {
       options: {
         nospawn: true,
         livereload: LIVERELOAD_PORT
-      },<% if (options.coffee) { %>
+      },<% if (hasCoffee) { %>
       coffee: {
         files: ['<%%= yeoman.app %>/scripts/{,*/}*.coffee'],
         tasks: ['coffee:dist']
@@ -147,7 +147,8 @@ module.exports = function (grunt) {
         '!<%%= yeoman.app %>/scripts/vendor/*',
         'test/spec/{,*/}*.js'
       ]
-    }<% if (testFramework === 'mocha') { %>,
+    },
+<% if (testFramework === 'mocha') { -%>
     mocha: {
       all: {
         options: {
@@ -155,10 +156,11 @@ module.exports = function (grunt) {
           urls: ['http://localhost:<%%= connect.test.options.port %>/index.html']
         }
       }
-    }<% } else { %>,
+    },
+<% } else { -%>
     jasmine: {
       all:{
-        src : '<%= yeoman.app %>/scripts/{,*/}*.js',
+        src : '<%%= yeoman.app %>/scripts/{,*/}*.js',
         options: {
           keepRunner: true,
           specs : 'test/spec/**/*.js',
@@ -170,7 +172,9 @@ module.exports = function (grunt) {
           ]
         }
       }
-    }<% } %>,<% if (options.coffee) { %>
+    },
+<% } -%>
+<% if (hasCoffee) { -%>
     coffee: {
       dist: {
         files: [{
@@ -192,7 +196,9 @@ module.exports = function (grunt) {
           ext: '.js'
         }]
       }
-    },<% } %><% if (sassBootstrap) { %>
+    },
+<% } -%>
+<% if (sassBootstrap) { -%>
     sass: {
       options: {
         sourceMap: true,
@@ -216,14 +222,22 @@ module.exports = function (grunt) {
           ext: '.css'
         }]
       }
-    },<% } %><% if (includeRequireJS) { %>
+    },
+<% } -%>
+<% if (includeRequireJS) { -%>
     requirejs: {
       dist: {
         // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
-        options: {<% if (options.coffee) { %>
+        options: {
+<% if (hasCoffee) { -%>
           // `name` and `out` is set by grunt-usemin
-          baseUrl: '.tmp/scripts',<% } else { %>
-          baseUrl: '<%%= yeoman.app %>/scripts',<% } %>
+          baseUrl: '.tmp/scripts',
+<% } else { -%>
+          baseUrl: '<%%= yeoman.app %>/scripts',
+<% } -%>
+<% if (templateFramework !== 'handlebars') { -%>
+          wrap: true,
+<% } -%>
           optimize: 'none',
           paths: {
             'templates': '../../.tmp/scripts/templates',
@@ -237,18 +251,19 @@ module.exports = function (grunt) {
           // required to support SourceMaps
           // http://requirejs.org/docs/errors.html#sourcemapcomments
           preserveLicenseComments: false,
-          useStrict: true<% if (templateFramework !== 'handlebars') { %>,
-          wrap: true<% } %>
+          useStrict: true
           //uglify2: {} // https://github.com/mishoo/UglifyJS2
         }
       }
-    },<% } else { %>
+    },
+<% } else { -%>
     // not enabled since usemin task does concat and uglify
     // check index.html to edit your build targets
     // enable this task if you prefer defining your build targets here
     /*uglify: {
       dist: {}
-    },*/<% } %>
+    },*/
+<% } -%>
     useminPrepare: {
       html: '<%%= yeoman.app %>/index.html',
       options: {
@@ -313,53 +328,68 @@ module.exports = function (grunt) {
           src: [
             '*.{ico,txt}',
             'images/{,*/}*.{webp,gif}',
-            'styles/fonts/{,*/}*.*',<% if (sassBootstrap) { %>
-            'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*.*'<% } %>
+            'styles/fonts/{,*/}*.*',
+<% if (sassBootstrap) { -%>
+            'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*.*'
+<% } -%>
           ]
         }, {
           src: 'node_modules/apache-server-configs/dist/.htaccess',
           dest: '<%%= yeoman.dist %>/.htaccess'
         }]
       }
-    },<% if (includeRequireJS) { %>
+    },
+<% if (includeRequireJS) { -%>
     bower: {
       all: {
         rjsConfig: '<%%= yeoman.app %>/scripts/main.js'
       }
-    },<% } %><% if (templateFramework === 'mustache') { %>
+    },
+<% } -%>
+<% if (templateFramework === 'mustache') { -%>
     mustache: {
       files: {
         src: '<%%= yeoman.app %>/scripts/templates/',
         dest: '.tmp/scripts/templates.js',
-        options: {<% if (includeRequireJS) { %>
+        options: {
+<%   if (includeRequireJS) { -%>
           prefix: 'define(function() { this.JST = ',
-          postfix: '; return this.JST;});'<% } else { %>
+          postfix: '; return this.JST;});'
+<%   } else { -%>
           prefix: 'this.JST = ',
-          postfix: ';'<% } %>
+          postfix: ';'
+<%   } -%>
         }
       }
-    }<% } else if (templateFramework === 'handlebars') { %>
+    }
+<% } else if (templateFramework === 'handlebars') { -%>
     handlebars: {
       compile: {
         options: {
-          namespace: 'JST'<% if (includeRequireJS) { %>,
-          amd: true<% } %>
+<%   if (includeRequireJS) { -%>
+          amd: true,
+<%   } -%>
+          namespace: 'JST'
         },
         files: {
           '.tmp/scripts/templates.js': ['<%%= yeoman.app %>/scripts/templates/*.hbs']
         }
       }
-    }<% } else { %>
-    jst: {<% if (includeRequireJS) { %>
+    }
+<% } else { -%>
+    jst: {
+<%   if (includeRequireJS) { -%>
       options: {
         amd: true
-      },<% } %>
+      },
+<%   } -%>
       compile: {
         files: {
           '.tmp/scripts/templates.js': ['<%%= yeoman.app %>/scripts/templates/*.ejs']
         }
       }
-    }<% } %>,
+    },
+<% } -%>
     rev: {
       dist: {
         files: {
@@ -367,8 +397,10 @@ module.exports = function (grunt) {
             '<%%= yeoman.dist %>/scripts/{,*/}*.js',
             '<%%= yeoman.dist %>/styles/{,*/}*.css',
             '<%%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
-            '<%= yeoman.dist %>/styles/fonts/{,*/}*.*',<% if (sassBootstrap) { %>
-            'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*.*'<% } %>
+            '<%%= yeoman.dist %>/styles/fonts/{,*/}*.*',
+<% if (sassBootstrap) { -%>
+            'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*.*'
+<% } -%>
           ]
         }
       }
@@ -391,13 +423,21 @@ module.exports = function (grunt) {
 
     if (target === 'test') {
       return grunt.task.run([
-        'clean:server',<% if (options.coffee) { %>
-        'coffee',<% } %>
-        'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
-        'mustache',<% } else if (templateFramework === 'handlebars') { %>
-        'handlebars',<% } else { %>
-        'jst',<% } %><% if (sassBootstrap) { %>
-        'sass:server',<% } %>
+        'clean:server',
+<% if (hasCoffee) { -%>
+        'coffee',
+<% } -%>
+        'createDefaultTemplate',
+<% if (templateFramework === 'mustache' ) { -%>
+        'mustache',
+<% } else if (templateFramework === 'handlebars') { -%>
+        'handlebars',
+<% } else { -%>
+        'jst',
+<% } -%>
+<% if (sassBootstrap) { -%>
+        'sass:server',
+<% } -%>
         'connect:test',
         'open:test',
         'watch'
@@ -405,13 +445,21 @@ module.exports = function (grunt) {
     }
 
     grunt.task.run([
-      'clean:server',<% if (options.coffee) { %>
-      'coffee:dist',<% } %>
-      'createDefaultTemplate',<% if (templateFramework === 'mustache') { %>
-      'mustache',<% } else if (templateFramework === 'handlebars') { %>
-      'handlebars',<% } else { %>
-      'jst',<% } %><% if (sassBootstrap) { %>
-      'sass:server',<% } %>
+      'clean:server',
+<% if (hasCoffee) { -%>
+      'coffee:dist',
+<% } -%>
+      'createDefaultTemplate',
+<% if (templateFramework === 'mustache') { -%>
+      'mustache',
+<% } else if (templateFramework === 'handlebars') { -%>
+      'handlebars',
+<% } else { -%>
+      'jst',
+<% } -%>
+<% if (sassBootstrap) { -%>
+      'sass:server',
+<% } -%>
       'connect:livereload',
       'open:server',
       'watch'
@@ -421,16 +469,27 @@ module.exports = function (grunt) {
   grunt.registerTask('test', function (isConnected) {
     isConnected = Boolean(isConnected);
     var testTasks = [
-        'clean:server',<% if (options.coffee) { %>
-        'coffee',<% } %>
-        'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
-        'mustache',<% } else if (templateFramework === 'handlebars') { %>
-        'handlebars',<% } else { %>
-        'jst',<% } %><% if (sassBootstrap) { %>
-        'sass',<% } %><% if(testFramework === 'mocha') { %>
+        'clean:server',
+<% if (hasCoffee) { -%>
+        'coffee',
+<% } -%>
+        'createDefaultTemplate',
+<% if (templateFramework === 'mustache' ) { -%>
+        'mustache',
+<% } else if (templateFramework === 'handlebars') { -%>
+        'handlebars',
+<% } else { -%>
+        'jst',
+<% } -%>
+<% if (sassBootstrap) { -%>
+        'sass',
+<% } -%>
+<% if(testFramework === 'mocha') { -%>
         'connect:test',
-        'mocha',<% } else { %>
-        'jasmine'<% } %>
+        'mocha'
+<% } else { -%>
+        'jasmine'
+<% } -%>
       ];
 
     if(!isConnected) {
@@ -443,15 +502,25 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('build', [
-    'clean:dist',<% if (options.coffee) { %>
-    'coffee',<% } %>
-    'createDefaultTemplate',<% if (templateFramework === 'mustache' ) { %>
-    'mustache',<% } else if (templateFramework === 'handlebars') { %>
-    'handlebars',<% } else { %>
-    'jst',<% } %><% if (sassBootstrap) { %>
-    'sass:dist',<% } %>
-    'useminPrepare',<% if (includeRequireJS) { %>
-    'requirejs',<% } %>
+    'clean:dist',
+<% if (hasCoffee) { -%>
+    'coffee',
+<% } -%>
+    'createDefaultTemplate',
+<% if (templateFramework === 'mustache' ) { -%>
+    'mustache',
+<% } else if (templateFramework === 'handlebars') { -%>
+    'handlebars',
+<% } else { -%>
+    'jst',
+<% } -%>
+<% if (sassBootstrap) { -%>
+    'sass:dist',
+<% } -%>
+    'useminPrepare',
+<% if (includeRequireJS) { -%>
+    'requirejs',
+<% } -%>
     'imagemin',
     'htmlmin',
     'concat',

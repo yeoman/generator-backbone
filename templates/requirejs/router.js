@@ -6,11 +6,11 @@ define([
 ], function ($, Backbone) {
   'use strict';
 
-  var <%= _.classify(name) %>Router = Backbone.Router.extend({
+  var <%= className %>Router = Backbone.Router.extend({
     routes: {
     }
 
   });
 
-  return <%= _.classify(name) %>Router;
+  return <%= className %>Router;
 });

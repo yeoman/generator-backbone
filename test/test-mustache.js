@@ -7,46 +7,26 @@ var assert  = yeoman.assert;
 var fs      = require('fs');
 var test    = require('./helper.js');
 
+var config = [
+  '{',
+  '  "generator-backbone": {',
+  '    "appPath": "app",',
+  '    "appName": "Temp",',
+  '    "templateFramework": "mustache"',
+  '  }',
+  '}'
+].join('\n');
+
 describe('Backbone generator with mustache', function () {
-  beforeEach(function (done) {
-    helpers.testDirectory(path.join(__dirname, './temp'), function (err) {
-      if (err) {
-        return done(err);
-      }
-      this.backbone = {};
-      this.backbone.app = test.createAppGenerator(['temp'], {'template-framework': 'mustache'});
-
-      helpers.mockPrompt(this.backbone.app, {
-        features: ['sassBootstrap'],
-        includeRequireJS: false
-      });
-
-      var out = [
-        '{',
-        '  "generator-backbone": {',
-        '    "appPath": "app",',
-        '    "appName": "Temp",',
-        '    "templateFramework": "mustache"',
-        '  }',
-        '}'
-      ];
-      fs.writeFileSync('.yo-rc.json', out.join('\n'));
-
-      done();
-    }.bind(this));
-
-  });
 
   it('creates backbone view', function (done) {
 
-    this.backbone.app.run({}, function () {
-      test.createSubGenerator('view', function () {
-        assert.fileContent(
-          'app/scripts/views/foo.js', /Views.Foo = Backbone.View.extend\(\{(.|\n)*foo-template/
-        );
-        assert.file('app/scripts/templates/foo-template.mustache');
-        done();
-      });
+    test.createSubGenerator(config, 'view', function () {
+      assert.fileContent(
+        'app/scripts/views/foo.js', /Views.Foo = Backbone.View.extend\(\{(.|\n)*foo-template/
+      );
+      assert.file('app/scripts/templates/foo-template.mustache');
+      done();
     });
   });
 });

@@ -1,6 +1,8 @@
 var path = require('path');
 var util = require('util');
+var mkdirp = require('mkdirp');
 var yeoman = require('yeoman-generator');
+var pascalCase = require('pascal-case');
 
 var BackboneGenerator = yeoman.generators.Base.extend({
   constructor: function () {
@@ -8,7 +10,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
 
     this.argument('app_name', { type: String, required: false });
     this.appname = this.app_name || this.appname;
-    this.appname = this._.classify(this.appname);
+    this.appname = pascalCase(this.appname);
 
     this.env.options.appPath = this.options.appPath || 'app';
     this.config.set('appPath', this.env.options.appPath);
@@ -51,9 +53,10 @@ var BackboneGenerator = yeoman.generators.Base.extend({
 
   writing: {
     createDirLayout: function () {
+      var done = this.async();
       this.dirs.forEach(function (dir) {
         this.log.create('app/scripts/' + dir);
-        this.mkdir(path.join('app/scripts', dir));
+        mkdirp(path.join('app/scripts', dir), done);
       }.bind(this));
     },
 

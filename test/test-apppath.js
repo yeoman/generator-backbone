@@ -7,34 +7,34 @@ var assert  = yeoman.assert;
 var fs      = require('fs');
 var test    = require('./helper.js');
 
+var config = [
+  '{',
+  '  "generator-backbone": {',
+  '    "appPath": "public",',
+  '    "appName": "Temp"',
+  '  }',
+  '}'
+].join('\n');
+
 describe('backbone generator with appPath option', function () {
   beforeEach(function (done) {
     var deps = [
       [helpers.createDummyGenerator(), 'mocha:app']
     ];
-    this.backbone = {};
-    this.backbone.app = helpers.run(path.join(__dirname, '../app'))
-      .inDir(path.join(__dirname, 'temp'), function () {
-        var out = [
-          '{',
-          '  "generator-backbone": {',
-          '    "appPath": "public",',
-          '    "appName": "Temp"',
-          '  }',
-          '}'
-        ];
-        fs.writeFileSync('.yo-rc.json', out.join('\n'));
+    helpers.run(path.join(__dirname, '../app'))
+      .inTmpDir(function () {
+        fs.writeFileSync('.yo-rc.json', config);
       })
       .withArguments(['temp'])
-      .withOptions({'skip-install': true, appPath: 'public'})
-      .withPrompt({features: ['sassBootstrap']})
-      .withGenerators(deps);
+      .withOptions({skipInstall: true, appPath: 'public'})
+      .withPrompts({features: ['sassBootstrap']})
+      .withGenerators(deps)
+      .on('end', done);
 
-    done();
   });
 
   describe('create expected files', function () {
-    it('in path specified by --appPath', function (done) {
+    it('in path specified by --appPath', function () {
       var expectedContent = [
         ['bower.json', /"name": "temp"/],
         ['package.json', /"name": "temp"/],
@@ -56,50 +56,40 @@ describe('backbone generator with appPath option', function () {
         'public/styles/main.scss'
       ];
 
-      this.backbone.app
-        .on('end', function () {
-          assert.file(expected);
-          assert.fileContent(expectedContent);
-          done();
-        });
+      assert.file(expected);
+      assert.fileContent(expectedContent);
     });
   });
 
   describe('creates model', function () {
     it('without failure', function (done) {
-      this.backbone.app.on('end', function () {
-        test.createSubGenerator('model', function () {
-          assert.fileContent(
-            'public/scripts/models/foo.js', /Models.Foo = Backbone.Model.extend\(\{/
-          );
-          done();
-        });
+      test.createSubGenerator(config, 'model', function () {
+        assert.fileContent(
+          'public/scripts/models/foo.js', /Models.Foo = Backbone.Model.extend\(\{/
+        );
+        done();
       });
     });
   });
 
   describe('creates collection', function () {
     it('without failure', function (done) {
-      this.backbone.app.on('end', function () {
-        test.createSubGenerator('collection', function () {
-          assert.fileContent(
-            'public/scripts/collections/foo.js', /Collections.Foo = Backbone.Collection.extend\(\{/
-          );
-          done();
-        });
+      test.createSubGenerator(config, 'collection', function () {
+        assert.fileContent(
+          'public/scripts/collections/foo.js', /Collections.Foo = Backbone.Collection.extend\(\{/
+        );
+        done();
       });
     });
   });
 
   describe('creates router', function () {
     it('without failure', function (done) {
-      this.backbone.app.on('end', function () {
-        test.createSubGenerator('router', function () {
-          assert.fileContent(
-            'public/scripts/routes/foo.js', /Routers.Foo = Backbone.Router.extend\(\{/
-          );
-          done();
-        });
+      test.createSubGenerator(config, 'router', function () {
+        assert.fileContent(
+          'public/scripts/routes/foo.js', /Routers.Foo = Backbone.Router.extend\(\{/
+        );
+        done();
       });
     });
   });
@@ -107,14 +97,12 @@ describe('backbone generator with appPath option', function () {
   describe('creates view', function () {
     it('without failure', function (done) {
 
-      this.backbone.app.on('end', function () {
-        test.createSubGenerator('view', function () {
-          assert.fileContent(
-            'public/scripts/views/foo.js', /Views.Foo = Backbone.View.extend\(\{(.|\n)*public\/scripts\/templates\/foo.ejs/
-          );
-          assert.file('public/scripts/templates/foo.ejs');
-          done();
-        });
+      test.createSubGenerator(config, 'view', function () {
+        assert.fileContent(
+          'public/scripts/views/foo.js', /Views.Foo = Backbone.View.extend\(\{(.|\n)*public\/scripts\/templates\/foo.ejs/
+        );
+        assert.file('public/scripts/templates/foo.ejs');
+        done();
       });
     });
   });

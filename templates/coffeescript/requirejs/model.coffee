@@ -4,7 +4,7 @@ define [
 ], (_, Backbone) ->
   'use strict';
 
-  class <%= _.classify(name) %>Model extends Backbone.Model
+  class <%= className %>Model extends Backbone.Model
     url: '',
 
     initialize: () ->
