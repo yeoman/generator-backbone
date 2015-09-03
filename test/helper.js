@@ -3,10 +3,8 @@ var helpers = yeoman.test;
 var path    = require('path');
 var fs      = require('fs');
 
-exports.createSubGenerator = function (config, type, asserts) {
-  var deps = [
-    [helpers.createDummyGenerator(), 'backbone-mocha:' + type]
-  ];
+exports.createSubGenerator = function (config, type, asserts, deps) {
+  deps = deps || [];
   helpers.run(path.join(__dirname, '../generators/' + type))
     .inDir(path.join(__dirname, 'temp'), function () {
       fs.writeFileSync('.yo-rc.json', config);

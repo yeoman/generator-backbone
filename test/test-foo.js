@@ -110,4 +110,44 @@ describe('Backbone generator test', function () {
     });
   });
 
+  describe('creates backbone all', function () {
+    it('without failure', function (done) {
+
+      // mocks composed generators to test for their execution
+      var hasBeenCalled = {};
+      var depNames = [
+        'backbone:model',
+        'backbone:collection',
+        'backbone:router',
+        'backbone:view'
+      ];
+      var deps = depNames.map(function (name) {
+        return [
+          yeoman.Base.extend({
+            exec: function () {
+              hasBeenCalled[name] = true;
+              testDepsBeenCalled();
+            }
+          }),
+          name
+        ];
+      });
+
+      // tests that all dependencies have been called, will timeout otherwise
+      var testDepsBeenCalled = function () {
+        var allDepsCalled = depNames.every(function (name) {
+          return hasBeenCalled[name];
+        });
+        if (allDepsCalled) {
+          assert(true);
+          done();
+        }
+      };
+
+      // runs backbone:all generator
+      test.createSubGenerator(config, 'all', testDepsBeenCalled, deps);
+    });
+  });
+
+
 });
