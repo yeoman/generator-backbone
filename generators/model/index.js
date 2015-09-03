@@ -3,7 +3,7 @@ var path = require('path');
 var util = require('util');
 var pascalCase = require('pascal-case');
 var yeoman = require('yeoman-generator');
-var scriptBase = require('../script-base');
+var scriptBase = require('../../script-base');
 
 var ModelGenerator = scriptBase.extend({
   constructor: function (name) {

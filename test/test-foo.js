@@ -27,12 +27,12 @@ describe('Backbone generator test', function () {
 
   it('every generator can be required without throwing', function () {
     // not testing the actual run of generators yet
-    this.all = require('../all');
-    this.app = require('../app');
-    this.collection = require('../collection');
-    this.model = require('../model');
-    this.router = require('../router');
-    this.view = require('../view');
+    this.all = require('../generators/all');
+    this.app = require('../generators/app');
+    this.collection = require('../generators/collection');
+    this.model = require('../generators/model');
+    this.router = require('../generators/router');
+    this.view = require('../generators/view');
   });
 
   describe('create expected files', function () {

@@ -46,11 +46,11 @@ var ScriptBase = yeoman.generators.NamedBase.extend({
   },
 
   _setupSourceRootAndSuffix: function () {
-    var sourceRoot = '/templates';
+    var sourceRoot = '/generators/templates';
     this.scriptSuffix = '.js';
 
     if (this.env.options.coffee || this.options.coffee) {
-      sourceRoot = '/templates/coffeescript';
+      sourceRoot = '/generators/templates/coffeescript';
       this.scriptSuffix = '.coffee';
     }
 

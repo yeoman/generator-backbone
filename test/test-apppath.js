@@ -21,7 +21,7 @@ describe('backbone generator with appPath option', function () {
     var deps = [
       [helpers.createDummyGenerator(), 'mocha:app']
     ];
-    helpers.run(path.join(__dirname, '../app'))
+    helpers.run(path.join(__dirname, '../generators/app'))
       .inTmpDir(function () {
         fs.writeFileSync('.yo-rc.json', config);
       })
