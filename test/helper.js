@@ -7,7 +7,7 @@ exports.createSubGenerator = function (config, type, asserts) {
   var deps = [
     [helpers.createDummyGenerator(), 'backbone-mocha:' + type]
   ];
-  helpers.run(path.join(__dirname, '../' + type))
+  helpers.run(path.join(__dirname, '../generators/' + type))
     .inDir(path.join(__dirname, 'temp'), function () {
       fs.writeFileSync('.yo-rc.json', config);
     })
@@ -25,7 +25,7 @@ exports.createAppGenerator = function (config, prompts, done) {
   var deps = [
     [helpers.createDummyGenerator(), 'mocha:app']
   ];
-  helpers.run(path.join(__dirname, '../app'))
+  helpers.run(path.join(__dirname, '../generators/app'))
     .inDir(path.join(__dirname, 'temp'), function () {
       fs.writeFileSync('.yo-rc.json', config);
     })

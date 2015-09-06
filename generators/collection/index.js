@@ -3,20 +3,21 @@ var path = require('path');
 var util = require('util');
 var pascalCase = require('pascal-case');
 var yeoman = require('yeoman-generator');
-var scriptBase = require('../script-base');
+var scriptBase = require('../../script-base');
 
-var RouterGenerator = scriptBase.extend({
+var CollectionGenerator = scriptBase.extend({
   constructor: function () {
     scriptBase.apply(this, arguments);
+
     var dirPath = this.options.coffee ? '../templates/coffeescript/' : '../templates';
     this.sourceRoot(path.join(__dirname, dirPath));
   },
 
   writing: {
-    routerFiles: function () {
+    createControllerFiles: function () {
       this._writeTemplate(
-        'router',
-        path.join(this.env.options.appPath + '/scripts/routes', this.name),
+        'collection',
+        path.join(this.env.options.appPath + '/scripts/collections', this.name),
         {
           appClassName: pascalCase(this.appname),
           className: pascalCase(this.name)
@@ -24,14 +25,15 @@ var RouterGenerator = scriptBase.extend({
       );
 
       if (!this.options.requirejs) {
-        this._addScriptToIndex('routes/' + this.name);
+        this._addScriptToIndex('collections/' + this.name);
       }
     },
-
     composeTest: function () {
-      this._generateTest('router');
+      this._generateTest('collection');
     }
-  }
+  },
+
+
 });
 
-module.exports = RouterGenerator;
+module.exports = CollectionGenerator;

@@ -10,7 +10,7 @@
     "backbone"
   ],
   "author": "Yeoman",
-  "main": "app/index.js",
+  "main": "generators/app/index.js",
   "repository": "yeoman/generator-backbone",
   "scripts": {
     "test": "mocha --reporter spec"
@@ -35,13 +35,13 @@
   },
   "license": "BSD",
   "files": [
-    "all",
-    "app",
-    "collection",
-    "model",
-    "router",
-    "templates",
-    "view",
+    "generators/all",
+    "generators/app",
+    "generators/collection",
+    "generators/model",
+    "generators/router",
+    "generators/templates",
+    "generators/view",
     "script-base.js",
     "util.js"
   ]
