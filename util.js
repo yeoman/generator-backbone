@@ -44,13 +44,10 @@ function rewrite(args) {
 }
 
 function rewriteFile(args) {
-  args.path = args.path || process.cwd();
-  var fullPath = path.join(args.path, args.file);
-
-  args.haystack = fs.readFileSync(fullPath, 'utf8');
+  args.haystack = fs.readFileSync(args.file, 'utf8');
   var body = rewrite(args);
 
-  fs.writeFileSync(fullPath, body);
+  fs.writeFileSync(args.file, body);
 }
 
 module.exports = {
