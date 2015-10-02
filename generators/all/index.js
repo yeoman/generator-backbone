@@ -58,10 +58,6 @@ var BackboneGenerator = yeoman.generators.Base.extend({
         this.log.create('app/scripts/' + dir);
         mkdirp(path.join('app/scripts', dir), done);
       }.bind(this));
-    },
-
-    composeSubGenerators: function () {
-      this.composeWith('backbone:app', {arguments: this.args});
     }
   },
 
