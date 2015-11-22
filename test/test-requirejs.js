@@ -119,4 +119,13 @@ describe('Backbone generator with RequireJS', function () {
       });
     });
   });
+
+  describe('creates script tag without usemin block', function() {
+    it('without failure', function() {
+      var unexpectedContent = [
+        ['app/index.html', /<!-- build:js .*? -->(((?!build).|\n)*requirejs)+((?!build).|\n)*?<!-- endbuild -->/i],
+      ];
+      assert.noFileContent(unexpectedContent);
+    });
+  });
 });
