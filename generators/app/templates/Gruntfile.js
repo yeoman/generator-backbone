@@ -229,30 +229,35 @@ module.exports = function (grunt) {
       dist: {
         // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
         options: {
-<% if (hasCoffee) { -%>
-          // `name` and `out` is set by grunt-usemin
+          almond: true,
+
+          replaceRequireScript: [{
+            files: ['<%%= yeoman.dist %>/index.html'],
+            module: 'main'
+          }],
+
+          modules: [{name: 'main'}],
+<% if (hasCoffee) { %>
           baseUrl: '.tmp/scripts',
-<% } else { -%>
+<% } else { %>
           baseUrl: '<%%= yeoman.app %>/scripts',
-<% } -%>
-<% if (templateFramework !== 'handlebars') { -%>
-          wrap: true,
-<% } -%>
-          optimize: 'none',
-          paths: {
-            'templates': '../../.tmp/scripts/templates',
-            'jquery': '../../<%%= yeoman.app %>/bower_components/jquery/dist/jquery',
-            'underscore': '../../<%%= yeoman.app %>/bower_components/lodash/dist/lodash',
-            'backbone': '../../<%%= yeoman.app %>/bower_components/backbone/backbone'
-          },
-          // TODO: Figure out how to make sourcemaps work with grunt-usemin
-          // https://github.com/yeoman/grunt-usemin/issues/30
-          //generateSourceMaps: true,
-          // required to support SourceMaps
-          // http://requirejs.org/docs/errors.html#sourcemapcomments
-          preserveLicenseComments: false,
-          useStrict: true
-          //uglify2: {} // https://github.com/mishoo/UglifyJS2
+<% } %>
+          mainConfigFile: '<%%= yeoman.app %>/scripts/main.js', // contains path specifications and nothing else important with respect to config
+          dir: '.tmp/scripts',
+
+          optimize: 'none', // optimize by uglify task
+          useStrict: true<% if (templateFramework !== 'handlebars') { %>,
+          wrap: true
+<% } %>
+        }
+      }
+    },
+    uglify: {
+      dist: {
+        files: {
+          '<%%= yeoman.dist %>/scripts/main.js': [
+            '.tmp/scripts/main.js'
+          ]
         }
       }
     },
@@ -518,14 +523,14 @@ module.exports = function (grunt) {
     'sass:dist',
 <% } -%>
     'useminPrepare',
-<% if (includeRequireJS) { -%>
-    'requirejs',
-<% } -%>
     'imagemin',
     'htmlmin',
     'concat',
     'cssmin',
+<% if (includeRequireJS) { -%>
+    'requirejs',
     'uglify',
+<% } -%>
     'copy',
     'rev',
     'usemin'

@@ -296,10 +296,6 @@ var BackboneGenerator = yeoman.generators.Base.extend({
           sassBootstrap: this.sassBootstrap
         }
       );
-
-      this.indexFile = htmlWiring.appendScripts(this.indexFile, 'scripts/main.js', [
-        'bower_components/requirejs/require.js'
-      ], {'data-main': 'scripts/main'});
     },
 
     setupEnv: function () {
