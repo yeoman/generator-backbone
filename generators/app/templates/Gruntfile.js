@@ -529,8 +529,8 @@ module.exports = function (grunt) {
     'cssmin',
 <% if (includeRequireJS) { -%>
     'requirejs',
-    'uglify',
 <% } -%>
+    'uglify',
     'copy',
     'rev',
     'usemin'
