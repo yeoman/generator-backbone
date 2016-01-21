@@ -237,12 +237,17 @@ module.exports = function (grunt) {
           }],
 
           modules: [{name: 'main'}],
-<% if (hasCoffee) { %>
-          baseUrl: '.tmp/scripts',
-<% } else { %>
           baseUrl: '<%%= yeoman.app %>/scripts',
-<% } %>
+<% if (hasCoffee) { %>
+          paths: {
+            'main': '../../.tmp/scripts/main'
+          },
+          keepBuildDir: true,
+          allowSourceOverwrites: true,
+          mainConfigFile: '.tmp/scripts/main.js', // contains path specifications and nothing else important with respect to config
+<% } else { %>
           mainConfigFile: '<%%= yeoman.app %>/scripts/main.js', // contains path specifications and nothing else important with respect to config
+<% } %>
           dir: '.tmp/scripts',
 
           optimize: 'none', // optimize by uglify task
