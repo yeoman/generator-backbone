@@ -380,7 +380,7 @@ module.exports = function (grunt) {
           '.tmp/scripts/templates.js': ['<%%= yeoman.app %>/scripts/templates/*.hbs']
         }
       }
-    }
+    },
 <% } else { -%>
     jst: {
 <%   if (includeRequireJS) { -%>
