@@ -27,8 +27,7 @@
     "it": false,
     "assert": true,
     "expect": true,
-    "should": true,
-<% if (includeRequireJS) { -%>
+    "should": true<% if (includeRequireJS) { -%>,
     "require": false,
     "define": false
 <% } -%>

@@ -13,7 +13,7 @@
 <% } if (includeModernizr) { -%>
     "modernizr": "~2.7.1",
 <% } if (templateFramework === 'handlebars') { -%>
-    "handlebars": "~1.3.0"
+    "handlebars": "~1.3.0",
 <% } -%>
     "lodash": "~2.4.1"
   },
