@@ -242,12 +242,12 @@ module.exports = function (grunt) {
           paths: {
             'main': '../../.tmp/scripts/main'
           },
-          keepBuildDir: true,
           allowSourceOverwrites: true,
           mainConfigFile: '.tmp/scripts/main.js', // contains path specifications and nothing else important with respect to config
 <% } else { %>
           mainConfigFile: '<%%= yeoman.app %>/scripts/main.js', // contains path specifications and nothing else important with respect to config
 <% } %>
+          keepBuildDir: true,
           dir: '.tmp/scripts',
 
           optimize: 'none', // optimize by uglify task
