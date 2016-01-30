@@ -396,8 +396,14 @@ var BackboneGenerator = yeoman.generators.Base.extend({
   },
 
   install: function () {
-    if (['backbone:app', 'backbone'].indexOf(this.options.namespace) >= 0) {
-      this.installDependencies({ skipInstall: this.options['skip-install'] });
+    var shouldInstall = !this.options['skip-install'];
+    var isInstallable = ['backbone:app', 'backbone'].indexOf(this.options.namespace) > -1;
+    if (shouldInstall && isInstallable) {
+      this.npmInstall();
+      this.bowerInstall('', {
+        'config.cwd': this.destinationPath('.'),
+        'config.directory': path.join(this.config.get('appPath'), 'bower_components')
+      });
     }
   }
 });
