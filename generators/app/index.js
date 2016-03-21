@@ -163,7 +163,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
         this.destinationPath('.jshintrc'),
         {
           appName: this.appname,
-          appSlugName: paramCase(this.appname),
+          appSlugName: pascalCase(this.appname),
           includeRequireJS: this.includeRequireJS
         }
       );
@@ -354,7 +354,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
         'app',
         this.env.options.appPath + '/scripts/main',
         {
-          appSlugName: paramCase(this.appname)
+          appSlugName: pascalCase(this.appname)
         }
       );
     },
