@@ -2,6 +2,7 @@
 var path = require('path');
 var util = require('util');
 var yeoman = require('yeoman-generator');
+var pascalCase = require('pascal-case');
 var backboneUtils = require('./util.js');
 
 var ScriptBase = yeoman.generators.NamedBase.extend({
@@ -73,15 +74,53 @@ var ScriptBase = yeoman.generators.NamedBase.extend({
   },
 
   _canGenerateTests: function () {
-    return this.config.get('testFramework') === 'mocha' && !this.config.get('includeRequireJS');
+    return this.config.get('testFramework') === 'mocha';
   },
 
-  _generateTest: function (type) {
+  _getMochaUi: function() {
+    var ui = this.config.get('ui');
+
+    if (!ui) {
+      try {
+        ui = require(path.join(process.cwd(), '.yo-rc.json'))['generator-mocha'].ui;
+      } catch (e) {
+        ui = 'bdd';
+      }
+    }
+
+    return ui;
+  },
+
+  _getGenerateOptions: function (options) {
+    options = options || {};
+    options.appClassName = options.appClassName || pascalCase(this.appname);
+    options.className = options.className || pascalCase(this.name);
+    options.name = options.name || this.name;
+    return options;
+  },
+
+  _generate: function (type, options, dest) {
+    dest = dest || type + 's';
+    this._writeTemplate(
+      type,
+      path.join(this.env.options.appPath, 'scripts', dest, this.name),
+      this._getGenerateOptions(options)
+    );
+
+    if (!this.options.requirejs) {
+      this._addScriptToIndex(path.join(dest, this.name));
+    }
+  },
+
+  _generateTest: function (type, options, dest) {
     if (this._canGenerateTests()) {
-      this.composeWith('backbone-mocha:' + type, { arguments: [this.name] }, {
-        coffee: this.config.get('coffee'),
-        ui: this.config.get('ui')
-      });
+      dest = dest || type + 's';
+
+      this._writeTemplate(
+        path.join('test', this.config.get('testFramework'), this._getMochaUi(), type),
+        path.join('test', 'spec', dest, this.name + '.spec'),
+        this._getGenerateOptions(options)
+      );
     }
   }
 });

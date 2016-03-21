@@ -1,7 +1,6 @@
 /*jshint latedef:false */
 var path = require('path');
 var util = require('util');
-var pascalCase = require('pascal-case');
 var yeoman = require('yeoman-generator');
 var scriptBase = require('../../script-base');
 
@@ -14,19 +13,8 @@ var CollectionGenerator = scriptBase.extend({
   },
 
   writing: {
-    createControllerFiles: function () {
-      this._writeTemplate(
-        'collection',
-        path.join(this.env.options.appPath + '/scripts/collections', this.name),
-        {
-          appClassName: pascalCase(this.appname),
-          className: pascalCase(this.name)
-        }
-      );
-
-      if (!this.options.requirejs) {
-        this._addScriptToIndex('collections/' + this.name);
-      }
+    createCollectionFiles: function () {
+      this._generate('collection');
     },
     composeTest: function () {
       this._generateTest('collection');

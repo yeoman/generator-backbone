@@ -362,12 +362,15 @@ var BackboneGenerator = yeoman.generators.Base.extend({
     composeTest: function () {
       if (['backbone:app', 'backbone'].indexOf(this.options.namespace) >= 0) {
         this.composeWith(this.testFramework, {
-          'skip-install': this.options['skip-install'],
-          'ui': this.options.ui,
-          'skipMessage': true,
+          options: {
+            'skip-install': this.options['skip-install'],
+            'ui': this.options.ui,
+            'skipMessage': true
+          }
         });
       }
     }
+
   },
 
   setSuffix: function () {

@@ -1,5 +1,6 @@
 /*global <%= appClassName %>, Backbone, JST*/
 
+<%= appClassName %> = window.<%= appClassName %> || {};
 <%= appClassName %>.Views = <%= appClassName %>.Views || {};
 
 (function () {

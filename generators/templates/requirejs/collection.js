@@ -3,7 +3,7 @@
 define([
   'underscore',
   'backbone',
-  'models/<%= className %>'
+  'models/<%= name %>'
 ], function (_, Backbone, <%= className %>Model) {
   'use strict';
 
