@@ -58,7 +58,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
       testFramework: this.testFramework,
       templateFramework: this.templateFramework,
       sassBootstrap: this.sassBootstrap,
-      includeRequireJS: this.includeRequireJS
+      includeRequireJS: this.options.requirejs
     });
 
     this.indexFile = htmlWiring.readFileAsString(this.templatePath('index.html'));
