@@ -148,7 +148,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
         this.templatePath('_bower.json'),
         this.destinationPath('bower.json'),
         {
-          appSlugName: paramCase(this.appname),
+          appParamCaseName: paramCase(this.appname),
           sassBootstrap: this.sassBootstrap,
           includeRequireJS: this.includeRequireJS,
           includeModernizr: this.includeModernizr,
@@ -163,7 +163,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
         this.destinationPath('.jshintrc'),
         {
           appName: this.appname,
-          appSlugName: pascalCase(this.appname),
+          appPascalCaseName: pascalCase(this.appname),
           includeRequireJS: this.includeRequireJS
         }
       );
@@ -354,7 +354,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
         'app',
         this.env.options.appPath + '/scripts/main',
         {
-          appSlugName: pascalCase(this.appname)
+          appPascalCaseName: pascalCase(this.appname)
         }
       );
     },

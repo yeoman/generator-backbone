@@ -1,7 +1,7 @@
-/*global <%= appSlugName %>, $*/
+/*global <%= appPascalCaseName %>, $*/
 
 
-window.<%= appSlugName %> = {
+window.<%= appPascalCaseName %> = {
   Models: {},
   Collections: {},
   Views: {},
@@ -14,5 +14,5 @@ window.<%= appSlugName %> = {
 
 $(document).ready(function () {
   'use strict';
-  <%= appSlugName %>.init();
+  <%= appPascalCaseName %>.init();
 });

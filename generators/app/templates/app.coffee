@@ -1,4 +1,4 @@
-window.<%= appSlugName %> =
+window.<%= appPascalCaseName %> =
   Models: {}
   Collections: {}
   Views: {}
@@ -9,4 +9,4 @@ window.<%= appSlugName %> =
 
 $ ->
   'use strict'
-  <%= appSlugName %>.init();
+  <%= appPascalCaseName %>.init();
