@@ -1,5 +1,5 @@
 {
-  "name": "<%= appSlugName %>",
+  "name": "<%= appParamCaseName %>",
   "version": "0.0.0",
   "dependencies": {
 <% if (sassBootstrap) { -%>

@@ -18,7 +18,7 @@
   "jquery": true,
   "globals": {
     "<%= appName %>": true,
-    "<%= appSlugName %>": true,
+    "<%= appPascalCaseName %>": true,
     "_": false,
     "Backbone": false,
     "JST": false,
