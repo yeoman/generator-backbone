@@ -77,20 +77,6 @@ var ScriptBase = yeoman.generators.NamedBase.extend({
     return this.config.get('testFramework') === 'mocha';
   },
 
-  _getMochaUi: function() {
-    var ui = this.config.get('ui');
-
-    if (!ui) {
-      try {
-        ui = require(path.join(process.cwd(), '.yo-rc.json'))['generator-mocha'].ui;
-      } catch (e) {
-        ui = 'bdd';
-      }
-    }
-
-    return ui;
-  },
-
   _getGenerateOptions: function (options) {
     options = options || {};
     options.appClassName = options.appClassName || pascalCase(this.appname);
@@ -117,7 +103,7 @@ var ScriptBase = yeoman.generators.NamedBase.extend({
       dest = dest || type + 's';
 
       this._writeTemplate(
-        path.join('test', this.config.get('testFramework'), this._getMochaUi(), type),
+        path.join('test', this.config.get('testFramework'), type),
         path.join('test', 'spec', dest, this.name + '.spec'),
         this._getGenerateOptions(options)
       );

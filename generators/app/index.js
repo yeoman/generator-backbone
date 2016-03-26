@@ -53,7 +53,6 @@ var BackboneGenerator = yeoman.generators.Base.extend({
 
     this.config.defaults({
       appName: this.appname,
-      ui: this.options.ui,
       coffee: this.options.coffee,
       testFramework: this.testFramework,
       templateFramework: this.templateFramework,
@@ -364,7 +363,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
         this.composeWith(this.testFramework, {
           options: {
             'skip-install': this.options['skip-install'],
-            'ui': this.options.ui,
+            'ui': 'bdd',
             'skipMessage': true
           }
         });
