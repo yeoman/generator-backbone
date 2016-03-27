@@ -2,14 +2,9 @@
 var path = require('path');
 var util = require('util');
 var yeoman = require('yeoman-generator');
-var scriptBase = require('../../script-base');
+var ScriptBase = require('../../script-base');
 
-var RouterGenerator = scriptBase.extend({
-  constructor: function () {
-    scriptBase.apply(this, arguments);
-    var dirPath = this.options.coffee ? '../templates/coffeescript/' : '../templates';
-    this.sourceRoot(path.join(__dirname, dirPath));
-  },
+var RouterGenerator = ScriptBase.extend({
 
   writing: {
     createRouterFiles: function () {
@@ -20,6 +15,7 @@ var RouterGenerator = scriptBase.extend({
       this._generateTest('router', {}, 'routes');
     }
   }
+
 });
 
 module.exports = RouterGenerator;

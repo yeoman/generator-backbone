@@ -1,11 +1,11 @@
 /*jshint latedef:false */
 var util = require('util');
 var yeoman = require('yeoman-generator');
-var scriptBase = require('../../script-base');
+var ScriptBase = require('../../script-base');
 
-var ModelGenerator = scriptBase.extend({
+var ModelGenerator = ScriptBase.extend({
   constructor: function (name) {
-    scriptBase.apply(this, arguments);
+    ScriptBase.apply(this, arguments);
 
     // XXX default and banner to be implemented
     this.argument('attributes', {

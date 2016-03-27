@@ -2,15 +2,9 @@
 var path = require('path');
 var util = require('util');
 var yeoman = require('yeoman-generator');
-var scriptBase = require('../../script-base');
+var ScriptBase = require('../../script-base');
 
-var ViewGenerator = scriptBase.extend({
-  constructor: function () {
-    scriptBase.apply(this, arguments);
-
-    var dirPath = this.options.coffee ? '../templates/coffeescript/' : '../templates';
-    this.sourceRoot(path.join(__dirname, dirPath));
-  },
+var ViewGenerator = ScriptBase.extend({
 
   writing: {
     createViewFiles: function () {
@@ -41,6 +35,7 @@ var ViewGenerator = scriptBase.extend({
       this._generateTest('view');
     }
   }
+
 });
 
 module.exports = ViewGenerator;
