@@ -363,6 +363,7 @@ var BackboneGenerator = yeoman.generators.Base.extend({
         this.composeWith(this.testFramework, {
           options: {
             'skip-install': this.options['skip-install'],
+            'rjs': this.includeRequireJS,
             'ui': 'bdd',
             'skipMessage': true
           }
