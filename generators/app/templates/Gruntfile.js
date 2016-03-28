@@ -46,7 +46,7 @@ module.exports = function (grunt) {
       },<% } %><% if (sassBootstrap) { %>
       sass: {
         files: ['<%%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-        tasks: ['sass:server']
+        tasks: ['sass:server', 'postcss']
       },<% } %>
       livereload: {
         options: {
@@ -54,7 +54,7 @@ module.exports = function (grunt) {
         },
         files: [
           '<%%= yeoman.app %>/*.html',
-          '{.tmp,<%%= yeoman.app %>}/styles/{,*/}*.css',
+          '.tmp/styles/{,*/}*.css',
           '{.tmp,<%%= yeoman.app %>}/scripts/{,*/}*.js',
           '<%%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
           '<%%= yeoman.app %>/scripts/templates/*.{ejs,mustache,hbs}',
@@ -79,6 +79,10 @@ module.exports = function (grunt) {
         ],
         tasks: ['jst']
       }<% } %>,
+      styles: {
+        files: ['<%%= yeoman.app %>/styles/{,*/}*.css'],
+        tasks: ['copy:styles', 'postcss']
+      },
       test: {
         files: ['<%%= yeoman.app %>/scripts/{,*/}*.js', 'test/spec/**/*.js'],
         tasks: ['test:true']
@@ -130,6 +134,25 @@ module.exports = function (grunt) {
       },
       test: {
         path: 'http://localhost:<%%= connect.test.options.port %>'
+      }
+    },
+    postcss: {
+      options: {
+        map: true,
+          processors: [
+            // Add vendor prefixed styles
+            require('autoprefixer')({
+              browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']
+            })
+        ]
+      },
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '.tmp/styles/',
+          src: '{,*/}*.css',
+          dest: '.tmp/styles/'
+        }]
       }
     },
     clean: {
@@ -329,6 +352,15 @@ module.exports = function (grunt) {
       }
     },
     copy: {
+      styles: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%%= yeoman.app %>/styles',
+          dest: '.tmp/styles/',
+          src: '{,*/}*.css'
+        }]
+      },
       dist: {
         files: [{
           expand: true,
@@ -448,6 +480,7 @@ module.exports = function (grunt) {
 <% if (sassBootstrap) { -%>
         'sass:server',
 <% } -%>
+        'postcss',
         'connect:test',
         'open:test',
         'watch'
@@ -470,6 +503,7 @@ module.exports = function (grunt) {
 <% if (sassBootstrap) { -%>
       'sass:server',
 <% } -%>
+      'postcss',
       'connect:livereload',
       'open:server',
       'watch'
@@ -494,6 +528,7 @@ module.exports = function (grunt) {
 <% if (sassBootstrap) { -%>
         'sass',
 <% } -%>
+        'postcss',
 <% if(testFramework === 'mocha') { -%>
         'connect:test',
         'mocha'
@@ -527,6 +562,7 @@ module.exports = function (grunt) {
 <% if (sassBootstrap) { -%>
     'sass:dist',
 <% } -%>
+    'postcss',
     'useminPrepare',
     'imagemin',
     'htmlmin',
