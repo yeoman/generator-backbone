@@ -2,6 +2,7 @@
 var path = require('path');
 var util = require('util');
 var yeoman = require('yeoman-generator');
+var pascalCase = require('pascal-case');
 var backboneUtils = require('./util.js');
 
 var ScriptBase = yeoman.generators.NamedBase.extend({
@@ -25,7 +26,6 @@ var ScriptBase = yeoman.generators.NamedBase.extend({
 
       this.env.options.requirejs = this.options.requirejs;
     }
-
   },
 
   _addScriptToIndex: function (script) {
@@ -45,43 +45,67 @@ var ScriptBase = yeoman.generators.NamedBase.extend({
     }
   },
 
-  _setupSourceRootAndSuffix: function () {
-    var sourceRoot = '/generators/templates';
+  _setupSuffix: function () {
     this.scriptSuffix = '.js';
 
     if (this.env.options.coffee || this.options.coffee) {
-      sourceRoot = '/generators/templates/coffeescript';
       this.scriptSuffix = '.coffee';
     }
+  },
+
+  _getTemplateName: function (source) {
 
     if (this.env.options.requirejs || this.options.requirejs) {
-      sourceRoot += '/requirejs';
+      source = 'requirejs_' + source;
     }
 
-    this.sourceRoot(path.join(__dirname, sourceRoot));
+    return source;
   },
 
   _writeTemplate: function (source, destination, data) {
 
-    this._setupSourceRootAndSuffix();
-    var ext = this.scriptSuffix;
+    this._setupSuffix();
     this.fs.copyTpl(
-      this.templatePath(source + ext),
-      this.destinationPath(destination + ext),
+      this.templatePath(source + this.scriptSuffix),
+      this.destinationPath(destination + this.scriptSuffix),
       data
     );
   },
 
   _canGenerateTests: function () {
-    return this.config.get('testFramework') === 'mocha' && !this.config.get('includeRequireJS');
+    return this.config.get('testFramework') === 'mocha';
   },
 
-  _generateTest: function (type) {
+  _getGenerateOptions: function (options) {
+    options = options || {};
+    options.appClassName = options.appClassName || pascalCase(this.appname);
+    options.className = options.className || pascalCase(this.name);
+    options.name = options.name || this.name;
+    return options;
+  },
+
+  _generate: function (type, options, dest) {
+    dest = dest || type + 's';
+    this._writeTemplate(
+      this._getTemplateName(type),
+      path.join(this.env.options.appPath, 'scripts', dest, this.name),
+      this._getGenerateOptions(options)
+    );
+
+    if (!this.options.requirejs) {
+      this._addScriptToIndex(path.join(dest, this.name));
+    }
+  },
+
+  _generateTest: function (type, options, dest) {
     if (this._canGenerateTests()) {
-      this.composeWith('backbone-mocha:' + type, { arguments: [this.name] }, {
-        coffee: this.config.get('coffee'),
-        ui: this.config.get('ui')
-      });
+      dest = dest || type + 's';
+
+      this._writeTemplate(
+        path.join('test', this.config.get('testFramework'), this._getTemplateName(type)),
+        path.join('test', 'spec', dest, this.name + '.spec'),
+        this._getGenerateOptions(options)
+      );
     }
   }
 });

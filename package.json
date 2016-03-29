@@ -24,8 +24,7 @@
     "yeoman-generator": "^0.21.1"
   },
   "peerDependencies": {
-    "generator-mocha": ">=0.1.3",
-    "generator-backbone-mocha": ">=0.0.2"
+    "generator-mocha": ">=0.1.3"
   },
   "devDependencies": {
     "mocha": "*"

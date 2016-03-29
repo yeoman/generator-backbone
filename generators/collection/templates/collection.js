@@ -1,5 +1,6 @@
 /*global <%= appClassName %>, Backbone*/
 
+<%= appClassName %> = window.<%= appClassName %> || {};
 <%= appClassName %>.Collections = <%= appClassName %>.Collections || {};
 
 (function () {

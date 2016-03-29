@@ -1,13 +1,11 @@
 /*jshint latedef:false */
-var path = require('path');
 var util = require('util');
-var pascalCase = require('pascal-case');
 var yeoman = require('yeoman-generator');
-var scriptBase = require('../../script-base');
+var ScriptBase = require('../../script-base');
 
-var ModelGenerator = scriptBase.extend({
+var ModelGenerator = ScriptBase.extend({
   constructor: function (name) {
-    scriptBase.apply(this, arguments);
+    ScriptBase.apply(this, arguments);
 
     // XXX default and banner to be implemented
     this.argument('attributes', {
@@ -28,18 +26,7 @@ var ModelGenerator = scriptBase.extend({
 
   writing: {
     createModelFiles: function () {
-      this._writeTemplate(
-        'model',
-        path.join(this.env.options.appPath, '/scripts/models', this.name),
-        {
-          appClassName: pascalCase(this.appname),
-          className: pascalCase(this.name)
-        }
-      );
-
-      if (!this.options.requirejs) {
-        this._addScriptToIndex('models/' + this.name);
-      }
+      this._generate('model');
     },
 
     composeTest: function () {
