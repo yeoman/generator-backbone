@@ -19,9 +19,9 @@
     "ejs": "^2.3.0",
     "html-wiring": "^1.0.0",
     "mkdirp": "^0.5.1",
-    "param-case": "^1.1.0",
-    "pascal-case": "^1.1.0",
-    "yeoman-generator": "^0.21.1"
+    "param-case": "^2.1.0",
+    "pascal-case": "^2.0.0",
+    "yeoman-generator": "^1.1.0"
   },
   "peerDependencies": {
     "generator-mocha": ">=0.1.3",
