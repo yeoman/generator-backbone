@@ -4,6 +4,8 @@ A Backbone generator for Yeoman that provides a functional boilerplate Backbone 
 
 Optional RequireJS (AMD) support has recently been added as a prompt when using the generator on new projects.
 
+## Dependencies
+Currently depends on node 0.10.x until the next release.  Use the HEAD of master if you would like to use node 0.12.x. 
 
 ## Usage
 
