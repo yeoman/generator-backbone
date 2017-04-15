@@ -37,7 +37,7 @@ yo backbone:model blog
 yo backbone:collection blog
 yo backbone:router blog
 yo backbone:view blog
-grunt serve
+grunt server
 ```
 
 Also checkout this [NetTuts write-up](http://net.tutsplus.com/tutorials/javascript-ajax/building-apps-with-the-yeoman-workflow/) for a guide to building Backbone.js apps using this generator.
